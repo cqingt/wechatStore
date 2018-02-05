@@ -1,0 +1,9 @@
+<view>
+  <view><icon type="success" size="80"/></view>
+  <view class="paySuccess-tip">支付成功</view>
+  <view class="paySuccess-detail">¥ <text class="pay-count">{{ totalPayment }}</text></view>
+  <view>
+    <button type="primary" bindtap="transferSuccessCallback">完成</button>
+    <button type="default" bindtap="goToOrderDetail">查看订单</button>
+  </view>
+</view>

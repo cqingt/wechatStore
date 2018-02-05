@@ -1,0 +1,4 @@
+<view class="back-to-home-page" hidden='{{!backToHomePage.showButton}}' style='{{!backToHomePage.showTip ? "width:100rpx;" : "width:100%;background-color:rgba(0, 0, 0, 0.6);"}}' catchtap='backToHomePage'>
+  <view class='icon-back-to-home ico-moon' catchtap='backToHomePage' style="background-color:{{!backToHomePage.showTip ? 'rgba(0, 0, 0, 0.6);' : ''}}"></view>
+  <view class='click-tip' hidden="{{!backToHomePage.showTip}}">点击进入当前小程序首页<text class="ico-moon icon-closes" catchtap='closeTip'  ></text></view>
+</view>

@@ -1,0 +1,109 @@
+page{
+  background-color:#eee;
+}
+.newAddressView {
+  border-bottom: 1px solid #f3f3f3;
+}
+.newAddressBox {
+  background: #fff;
+  padding: 10rpx 30rpx;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+  border-radius: 4px;
+}
+.newAddressBox > view {
+  line-height: 84rpx;
+}
+.newAddressBox input {
+  display: inline-block;
+  line-height:84rpx;
+  height:84rpx;
+  vertical-align:middle;
+  width: 520rpx;
+}
+.newAddressBox label {
+  width: 124rpx;
+  display: inline-block;
+  vertical-align: middle;
+  color: #333;
+}
+.newAddressBox .adressLabel {
+  display: inline-block;
+  border: 1px solid #D5D5DE;
+  color: #999;
+  width: 120rpx;
+  line-height: 50rpx;
+  text-align: center;
+  margin-right: 20rpx;
+  border-radius: 2px;
+}
+.newAddressBox .adressLabel.active {
+  border: 1px solid #ff7100;
+  color: #ff7100;
+}
+.newAddressBox .specialInput {
+  display: inline-block;
+  border-bottom: 1px solid #eee;
+  width: calc( 100% - 128rpx);
+}
+.newAddressBottom {
+  padding: 30rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.newAddressBottom .sureAddAddress {
+  background: #ff7100;
+  color: #fff;
+  line-height: 80rpx;
+  border-radius: 4px;
+}
+.newAddressBottom .cancelAddAddress {
+  line-height: 88rpx;
+  border-radius: 4px;
+  background: #fff;
+  margin-top: 20rpx;
+}
+.prov-city-dirs{
+  position: absolute;
+  top: 82rpx;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 82rpx);
+  text-align: center;
+  background-color: rgba(0,0,0,0.5)
+}
+.prov-city-dirs .picker-btn{
+  position: absolute;
+  bottom: 50%;
+  width: 100%;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 30rpx;
+  background-color: #fff;
+}
+.prov-city-dirs .picker-btn .cancel-picker{
+  float: left;
+  margin-left: 50rpx;
+  color: #838383;
+}
+.prov-city-dirs .picker-btn .sure-picker{
+  float: right;
+  margin-right: 50rpx;
+  color: #ff7100;
+}
+.province,
+.city,
+.dirstrict{
+  line-height: 82rpx;
+  height: 82rpx;
+  text-indent: 20rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #999;
+}
+.province.active,
+.city.active,
+.dirstrict.active{
+  color: #333;
+}

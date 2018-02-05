@@ -1,0 +1,19 @@
+page {
+  text-align: center;
+  padding-top: 60px;
+}
+button {
+  margin: 10px 15px;
+}
+.paySuccess-tip {
+  margin: 12px 0 18px;
+  font-size: 16px;
+  color: #1aad19;
+}
+.pay-count {
+  font-size: 22px;
+  vertical-align: sub;
+}
+.paySuccess-detail {
+  margin-bottom: 60px;
+}

@@ -1,0 +1,300 @@
+page {
+  height: 100%;
+  background-color: #eee;
+  font-size: 29rpx;
+}
+.dialog-block-item {
+  padding: 8px 0;
+}
+.myOrder-wrap {
+  height: 100%;
+}
+.myOrder-content-body {
+  height:calc(100% - 186rpx);
+  margin-top: 186rpx;
+}
+.lengthOneBody {
+  height:calc(100% - 94rpx);
+  margin-top: 94rpx;
+}
+.myOrder-content-container {
+  height: 100%;
+}
+.myOrder-tab-list {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  line-height: 85rpx;
+  height: 88rpx;
+  font-size: 33rpx;
+  background: #fff;
+  text-align: center;
+}
+.myOrder-tab-list view {
+  border-bottom: 2px solid transparent;
+}
+.myOrder-tab-list view.active {
+  border-color: #ff7100;
+}
+.myOrder-list-wrap {
+  padding: 0 23rpx;
+  margin-bottom: 19rpx;
+  background-color: #fff;
+}
+.myOrder-tostore .myOrder-list-wrap {
+  font-size: 13px;
+  margin-bottom: 10rpx;
+}
+.tostore-see-detail {
+  color: #999;
+  font-size: 24rpx;
+}
+.myOrder-goods-cover {
+  position: absolute;
+  left: 0;
+  width: 50px;
+  height: 50px;
+}
+.myOrder-tostore .myOrder-goods-cover {
+  width: 140rpx;
+  height: 140rpx;
+}
+.myOrder-goods-cover.transfer-order-cover {
+  border-radius: 50%;
+  background-color: #09ba07;
+  line-height: 50px;
+  font-size: 34px;
+  text-align: center;
+  color: #fff;
+}
+.myOrder-goods-title {
+  padding: 0 70px 0 60px;
+  height: 50px;
+  word-break: break-all;
+  overflow: hidden;
+}
+.myOrder-transfer .myOrder-goods-title {
+  padding-top: 15px;
+  height: 35px;
+}
+.tostore-goods-detail {
+  padding-left: 160rpx;
+  height: 140rpx;
+  box-sizing:border-box;
+  font-size: 24rpx;
+}
+.myOrder-tostore-title {
+  margin-bottom:5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  width: calc(100% - 150rpx);
+  display:inline-block;
+}
+.myOrder-goods-right {
+  position: absolute;
+  top: 0.625rem;
+  right: 0;
+  max-width: 4.5625rem;
+  line-height: 1.25rem;
+  text-align: right;
+}
+.myOrder-transfer .myOrder-goods-right {
+  top: 1.35rem;
+}
+.myOrder-goods-count {
+  margin-left: 10rpx;
+}
+.myOrder-total-item {
+  text-align: right;
+}
+.myOrder-list-bottom {
+  text-align: right;
+  line-height: 64rpx;
+  padding: 16rpx 0;
+}
+.myOrder-transfer .myOrder-list-bottom {
+  padding: 22rpx 0;
+}
+.myOrder-list-count {
+  margin-right: 10px;
+}
+.myOrder-pay-price, .myOrder-order-status {
+  color: #ff7100;
+}
+.myOrder-list-bottom .btn {
+  font-size: 29rpx;
+  padding: 0.1875rem 0.5rem;
+  margin-right: 0.625rem;
+  border-radius: 1px;
+  color: #444;
+}
+.myOrder-list-bottom .btn:last-child {
+  margin-right:0;
+}
+.btn.btn-orange {
+  color: #ff7100;
+  background-color: #fff;
+}
+.noMoreNewDataTip {
+  text-align: center;
+  color: #aaa;
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+.scrollContainer {
+  height: 100%;
+}
+.myOrder-franchisee-name {
+  padding: 5px 0;
+  color: #aaa;
+}
+.tostore-order-status {
+  margin-left: 15px;
+  color: #ff7100;
+}
+.tostore-order-waittime {
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: left;
+  color: #616161;
+}
+
+.myOrder-ebusiness .myOrder-list-wrap,
+.myOrder-appointment .myOrder-list-wrap {
+  padding: 0 29rpx;
+}
+.myOrder-ebusiness .dialog-block-item,
+.myOrder-appointment .dialog-block-item {
+  padding: 29rpx 0;
+  border-bottom: none;
+}
+.myOrder-ebusiness .myOrder-goods-list,
+.myOrder-appointment .myOrder-goods-list {
+  padding: 0 25rpx;
+  margin: 0 -25rpx;
+  background-color: #f8f8f8;
+}
+.myOrder-ebusiness .myOrder-goods-list .dialog-block-item,
+.myOrder-appointment .myOrder-goods-list .dialog-block-item {
+  padding-top: 12rpx;
+  padding-bottom: 12rpx;
+  border-bottom: 1px solid #f2f2f2;
+}
+.myOrder-ebusiness .myOrder-goods-list .dialog-block-item:last-child,
+.myOrder-appointment .myOrder-goods-list .dialog-block-item:last-child {
+  border-bottom: none;
+}
+.myOrder-ebusiness .myOrder-goods-right,
+.myOrder-appointment .myOrder-goods-right {
+  top: 12rpx;
+  max-width: 115rpx;
+  line-height: 1.5;
+}
+.myOrder-ebusiness .myOrder-list-bottom,
+.myOrder-appointment .myOrder-list-bottom {
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  border-top: 1px solid #f2f2f2;
+}
+.myOrder-ebusiness .myOrder-goods-cover,
+.myOrder-appointment .myOrder-goods-cover {
+  width: 120rpx;
+  height: 120rpx;
+}
+.myOrder-ebusiness .myOrder-goods-title,
+.myOrder-appointment .myOrder-goods-title {
+  height: 120rpx;
+  padding: 0 120rpx 0 145rpx;
+}
+/*外卖*/
+.myOrder-takeout .myOrder-goods-cover{
+  height: 66rpx;
+  width: 66rpx;
+  border-radius: 4px;
+}
+.myOrder-takeout .myOrder-takeout-Info {
+  margin-left: 86rpx;
+}
+.myOrder-takeout .takeout-order-status {
+  color: #666;
+}
+.myOrder-takeout .dialog-block-item{
+  border: none;
+  padding:15px 0;
+}
+.myOrder-takeout .takeout-goods-detail{
+  padding-left:86rpx;
+  padding-bottom:16rpx;
+}
+.myOrder-takeout .myOrder-takeout-title {
+  margin-bottom:5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size: 28rpx;
+  padding-bottom: 20rpx;
+  color: #666;
+}
+.myOrder-gift-text {
+  position: absolute;
+  bottom: 40rpx;
+  left: 146rpx;
+  border: 1rpx solid #ff7100;
+  color: #ff7100;
+}
+.gift-text {
+  display: inline-block;
+  border: 1rpx solid #ff7100;
+  color: #ff7100;
+}
+.tostorePrice-num {
+  width: 150rpx;
+  display:inline-block;
+  vertical-align:top;
+  text-align:right;
+}
+.myOrder-tostore-bottom {
+  text-align:right;
+  line-height:80rpx;
+  font-size: 26rpx;
+}
+/* 子菜单 */
+.tab-list-submenu {
+  position: fixed;
+  top: 92rpx;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  line-height: 85rpx;
+  height: 88rpx;
+  font-size: 33rpx;
+  background: #fff;
+  text-align: center;
+  color: #999;
+}
+.tab-list-submenu view.active,.tostore-list-submenu view.active{
+  color: #ff7100;
+  border: none;
+}
+.MeanTab {
+  display: inline-block;
+  margin: 0 20rpx;
+}
+.tostore-sub-box {
+  display: inline-block;
+  padding: 0 10px;
+}
+.tostore-list-submenu {
+  overflow-x: auto;
+  white-space: nowrap;
+  background: #fff;
+  color: #999;
+  margin-top: 2px;
+  border-bottom: none;
+}
+.myOrder-tab-list .tostore-list-submenu view {
+  border-bottom: none;
+}

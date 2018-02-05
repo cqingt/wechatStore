@@ -1,0 +1,86 @@
+<view class="search-address">
+  <text bindtap='showProDialog' >{{ regionStr[2] || regionStr[1] || '请选择'}}<text class="ico-moon icon-fesdown"></text></text><input placeholder='请输入地址' bindinput="searchAddress"></input>
+</view>
+<scroll-view scroll-y="true" style="height: calc(100% - 84rpx);">
+<view class="myAddress-wrap page" id="myAddress" style='height: 100%;'>
+  <block wx:if="{{from == 'takeout'}}">
+    <view class="address-list-title">当前地址</view>
+    <view class="address-local"><text class='current-address' data-addressinfo="{{localLatLng}}" bindtap="turnBackPageByLoacl">{{localAddress || '定位中...'}}</text><text class="ico-moon icon-relocate" catchtap="relocate">重新定位</text>
+    </view>
+    <view wx:if="{{searchAddress.length}}">
+      <!-- 地址搜索结果判断与渲染 -->
+      <view class="address-list-title">搜索地址</view>
+      <block wx:for="{{searchAddress}}" wx:key="">
+        <view class="single-search-result" data-addressinfo="{{item}}" data-type="search" catchtap="turnBackPage">
+          <view class="single-search-title">{{item.title}}</view>
+          <view class="single-search-detail">{{item.address}}</view>
+        </view>
+      </block>
+    </view>
+    <view class="address-list-title">收货地址</view>
+    <block wx:if="{{ !addressList.length }}">
+      <view style="color:#a8a8a8; padding:20px;">暂无收货地址</view>
+    </block>
+    <block wx:else>
+      <block wx:for="{{ addressList }}" wx:key="">
+        <view class="myAddress-address" wx:if="{{item.latitude != ''}}">
+          <view class="myAddress-address-top" data-info="{{item}}" bindtap="selectAddress" data-id="{{ item.id }}">
+            <view>
+              <label class="home address-label" wx:if="{{ item.address_info.label == 0 }}">家</label>
+              <label class="company address-label" wx:if="{{ item.address_info.label == 2 }}">公司</label>
+              <label class="school address-label" wx:if="{{ item.address_info.label == 1 }}">学校</label>
+              <text class="address-detail">{{ item.address_info.province.text + item.address_info.city.text + item.address_info.district.text + item.address_info.detailAddress}}</text>
+            </view>
+            <text class="address-person">{{ item.address_info.name }} {{item.address_info.sex == 1 ? '(先生)': (item.address_info.sex == 0 ? '(女士)':'')}} {{ item.address_info.contact }}</text>
+          </view>
+        </view>
+      </block>
+      <block wx:if="{{!hasInDistance}}">
+        <view class="address-list-title">以下地址信息不全（需重新编辑）</view>
+        <block wx:for="{{ addressList }}" wx:key="">
+          <view class="myAddress-address" wx:if="{{item.latitude == ''}}" style="background-color:#eee;">
+            <view class="myAddress-address-top" data-info="{{item}}" data-id="{{ item.id }}">
+              <view>
+                <label class="home address-label" wx:if="{{ item.address_info.label == 0 }}">家</label>
+                <label class="company address-label" wx:if="{{ item.address_info.label == 2 }}">公司</label>
+                <label class="school address-label" wx:if="{{ item.address_info.label == 1 }}">学校</label>
+                <text class="address-detail">{{ item.address_info.province.text + item.address_info.city.text + item.address_info.district.text + item.address_info.detailAddress}}</text>
+              </view>
+              <text class="address-person">{{ item.address_info.name }} {{item.address_info.sex == 1 ? '(先生)': (item.address_info.sex == 0 ? '(女士)':'')}} {{ item.address_info.contact }}</text>
+            </view>
+          </view>
+        </block>
+      </block>
+    </block>
+  </block>
+  <view wx:if="{{searchAddress.length && from != 'takeout'}}">
+    <!-- 地址搜索结果判断与渲染 -->
+    <view class="address-list-title">搜索地址</view>
+    <block wx:for="{{searchAddress}}" wx:key="">
+      <view class="single-search-result" data-addressinfo="{{item}}" data-type="search" catchtap="turnBackPage">
+        <view class="single-search-title">{{item.title}}</view><view class="single-search-detail">{{item.address}}</view>
+      </view>
+    </block>
+  </view>
+  <view class="myAddress-near-address" wx:if="{{nearbyAddress.length && (from == 'takeout' || from=='addAddress') }}" wx:key="">
+  <view class="address-list-title">附近地址</view>
+    <block wx:for="{{nearbyAddress}}" wx:key="">
+      <view class="single-nearby-address" data-addressinfo="{{item}}" data-type="nearby" catchtap="turnBackPage">{{item.title}}</view>
+    </block>
+  </view>
+</view>
+<view class='prov-city-dirs' hidden='{{selectProCityDirs}}'>
+  <view class="picker-btn"><text class="cancel-picker" bindtap="hideProCityDirs">取消</text><text class="sure-picker" bindtap="submitRegion">确定</text></view>
+  <picker-view value="{{selectRegion}}" indicator-style="height: 50px;" style="width: 100%; height: 50%;text-align:center;position: absolute;  bottom: 0;background-color:#fff;" bindchange="changeRegion">
+    <picker-view-column>
+      <view wx:for="{{province}}" wx:key="" style="line-height: 50px">{{item.name}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{province[selectRegion[0]].city}}" wx:key="" style="line-height: 50px;height:50px;">{{item.name}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{province[selectRegion[0]].city[selectRegion[1]].dirstrict}}" wx:key="" style="line-height: 50px">{{item.name || '请选择'}}</view>
+    </picker-view-column>
+  </picker-view>
+</view>
+</scroll-view>

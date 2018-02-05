@@ -1,0 +1,57 @@
+.page-qr-code-dialog {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100%;
+  bottom: 0;
+  z-index: 50;
+  background-color: rgba(0,0,0,.7);
+}
+.page-qr-code {
+  margin: 40rpx auto 0;
+  width: 500rpx;
+  border-radius: 10rpx;
+  text-align: center;
+  background: #fff;
+  padding: 25rpx 65rpx;
+  overflow:auto;
+  min-height:85%;
+  max-height:calc(100% - 90rpx);
+}
+.custom-cover {
+  width: 100%;
+  border:1px solid #ddd;
+  margin-bottom: 30rpx;
+}
+.custom-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx;
+  min-height: 30rpx;
+  background-color: rgba(0,0,0,.4);
+  color: #fff;
+}
+.qr-code {
+  width: 168rpx;
+  height: 168rpx;
+}
+.page-bottom-dialog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 750rpx;
+  background-color: rgba(238, 238, 238, 1);
+}
+.button {
+  border-radius: 0;
+  height: 100rpx;
+  color: #666;
+  font-size: 28rpx;
+  line-height: 100rpx;
+}
+.shareToMoments {
+  border-top: 1px solid #f4f4f4;
+  margin-bottom: 20rpx;
+}

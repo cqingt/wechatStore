@@ -1,0 +1,42 @@
+<view id="newAddressDialog">
+  <view class="newAddressBox">
+    <view class="">
+      <label>联系人</label>
+      <view class="specialInput">
+        <input type="text" placeholder="姓名" bindinput="addAdressName" value="{{address_info.name}}" />
+      </view>
+    </view>
+    <view class="newAddressView">
+      <label></label>
+      <view class="adressLabel {{ address_info.sex == 1 ? 'active' : ''}}" bindtap="selectAddressSex" data-sex="1">先生</view>
+      <view class="adressLabel {{ address_info.sex == 0 ? 'active' : ''}}" bindtap="selectAddressSex" data-sex="0">女士</view>
+    </view>
+    <view class="newAddressView">
+      <label>电话</label>
+      <input type="text" placeholder="手机号码" bindinput="addAdressContact" value="{{address_info.contact}}" />
+    </view>
+    <view class="newAddressView" bindtap="addSelectAddress">
+      <label>地址</label>
+      <input type="text" placeholder="选择收货地址" disabled="true" value="{{ address_info.province.text +  address_info.city.text + address_info.district.text}}"
+      />
+      <text class="ico-moon icon-rightarrow" style="float: right;font-size: 12px;color: #d5d5d5;"></text>
+    </view>
+    <view>
+      <label>补充说明</label>
+      <view class="specialInput">
+        <input type="text" placeholder="详细地址（例如门牌号等）" bindinput="addAdressDetailAddress" value="{{address_info.detailAddress}}"
+        />
+      </view>
+    </view>
+    <view>
+      <label></label>
+      <view class="adressLabel {{ address_info.label == 0 ? 'active' : ''}}" bindtap="selectAddressLabel" data-label="0">家</view>
+      <view class="adressLabel {{ address_info.label == 1 ? 'active' : ''}}" bindtap="selectAddressLabel" data-label="1">学校</view>
+      <view class="adressLabel {{ address_info.label == 2 ? 'active' : ''}}" bindtap="selectAddressLabel" data-label="2">公司</view>
+    </view>
+  </view>
+  <view class="newAddressBottom">
+    <view class="sureAddAddress" bindtap="sureAddAddress">确认</view>
+    <view class="cancelAddAddress" bindtap="cancelAddAddress">取消</view>
+  </view>
+</view>

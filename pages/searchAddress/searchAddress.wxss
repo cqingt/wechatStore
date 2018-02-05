@@ -1,0 +1,336 @@
+page {
+  background-color: #fff;
+  overflow: hidden;
+  height: 100%;
+}
+.search-address {
+  background-color:#000;
+  text-align:center;
+  height:62rpx;
+  padding:10rpx 0rpx 12rpx;
+}
+.search-address > text{
+  display: inline-block; 
+  width: 200rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 30rpx;
+  color: #fff;
+}
+.icon-fesdown{
+  font-size:14rpx;
+  margin-left:16rpx;
+  vertical-align:top;
+}
+.search-address input {
+  width: 520rpx;
+  border-radius: 8rpx;
+  background-color: #fff;
+  height: 64rpx;
+  line-height: 64rpx;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 30rpx;
+}
+.single-search-result {
+  padding: 30rpx;
+  background-color: #fff;
+}
+.single-search-result:not(:last-child){
+  border-bottom:1px solid #ececec;
+}
+.single-search-title {
+  font-size: 26rpx;
+  color: #333;
+}
+.single-search-detail {
+  font-size: 24rpx;
+  color:#999;
+  line-height:40rpx;
+}
+.address-list-title {
+  width: 100%;
+  height: 66rpx;
+  background-color: #f3f3f3;
+  color: #666;
+  font-size: 26rpx;
+  text-indent: 30rpx;
+  line-height: 66rpx;
+}
+.address-local {
+  height: 82rpx;
+  line-height: 82rpx;
+  color: #ff7100;
+  background-color: #fff;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+}
+.current-address {
+  width: 520rpx;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.icon-relocate {
+  float: right;
+}
+.icon-relocate::before{
+  margin-right: 10rpx;
+}
+.myAddress-top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 42px;
+  line-height: 42px;
+  padding: 0 10px;
+  text-align: center;
+  box-shadow: 0 1px 2px #eee;
+  background-color: #fff;
+}
+.myAddress-top-right {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  width: 40px;
+}
+.myAddress-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  line-height: 48px;
+  z-index: 1;
+  font-size: 15px;
+  text-align: center;
+  color: #666;
+  background-color: #fff;
+  box-shadow: 0 -1px 2px #eee;
+}
+.myAddress-bottom-nav text{
+  vertical-align: middle;
+  margin: 0 8rpx;
+}
+.myAddress-content-container {
+  background-color: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.myAddress-address {
+  position: relative;
+  padding: 15px 0;
+  line-height: 20px;
+  border-bottom:1px solid #eee;
+}
+.address-label {
+  font-size: 22rpx;
+  padding: 0 16rpx;
+  margin-right: 10rpx;
+  border-radius: 2px;
+  vertical-align:middle;
+}
+.home {
+  border: 1px solid #ff7100;
+  color: #ff7100;
+}
+.company {
+  border: 1px solid #3091f2;
+  color: #3091f2;
+}
+.school {
+  border: 1px solid #3091f2;
+  color: #3091f2;
+}
+.myAddress-address view {
+  position: relative;
+}
+.check-box-container {
+  position: relative;
+  padding: 10px;
+  margin: 0 5px;
+  z-index:1;
+  float: left;
+}
+.myAddress-delete {
+  position:absolute;
+  right:0;
+  top:0;
+  padding: 15px 10px;
+  color: #F57979;
+}
+.myAddress-address-top {
+  padding: 0 30rpx;
+}
+.myAddress-address-top .address-detail {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 600;
+  display:inline-block;
+  width: 500rpx;
+  vertical-align:top;
+  line-height:44rpx;
+}
+.myAddress-address-top .address-person{
+  font-size: 24rpx;
+  color: #666;
+  line-height: 50rpx;
+  display: block;
+}
+.single-nearby-address {
+  height:82rpx;
+  line-height:82rpx;
+  color:#333;
+  background-color:#fff;
+  padding:0 30rpx;
+  font-size:28rpx;
+  position: relative;
+}
+.single-nearby-address:not(:last-child):after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 690rpx;
+  bottom: 0;
+  left: 30rpx;
+  background-color: #f3f3f3;
+  height: 1px;
+}
+.add-btn {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1px solid #ff7100;
+  position: relative;
+  vertical-align:middle;
+}
+.add-btn:before, 
+.add-btn:after{
+  position: absolute;
+  content: "";
+  display: block;
+  background-color: #ff7100;
+}
+.add-btn:before{
+  width: 7px;
+  height: 1px;
+  left:3px;
+  top:6px;
+}
+.add-btn:after {
+  width: 1px;
+  height: 7px;
+  left: 6px;
+  top: 3px;
+} 
+/* 新增地址 */
+.newAddressView {
+  border-bottom: 1px solid #f3f3f3;
+}
+.newAddressBox {
+  background: #fff;
+  padding: 10rpx 30rpx;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+  border-radius: 4px;
+}
+.newAddressBox > view {
+  line-height: 84rpx;
+}
+.newAddressBox input {
+  display: inline-block;
+  line-height:84rpx;
+  height:84rpx;
+  vertical-align:middle;
+  width: 520rpx;
+}
+.newAddressBox label {
+  width: 124rpx;
+  display: inline-block;
+  vertical-align: middle;
+  color: #333;
+}
+.newAddressBox .adressLabel {
+  display: inline-block;
+  border: 1px solid #D5D5DE;
+  color: #999;
+  width: 120rpx;
+  line-height: 50rpx;
+  text-align: center;
+  margin-right: 20rpx;
+  border-radius: 2px;
+}
+.newAddressBox .adressLabel.active {
+  border: 1px solid #ff7100;
+  color: #ff7100;
+}
+.newAddressBox .specialInput {
+  display: inline-block;
+  border-bottom: 1px solid #eee;
+  width: calc( 100% - 128rpx);
+}
+.newAddressBottom {
+  padding: 30rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.newAddressBottom .sureAddAddress {
+  background: #ff7100;
+  color: #fff;
+  line-height: 80rpx;
+  border-radius: 4px;
+}
+.newAddressBottom .cancelAddAddress {
+  line-height: 88rpx;
+  border-radius: 4px;
+  background: #fff;
+  margin-top: 20rpx;
+}
+.prov-city-dirs{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+}
+.prov-city-dirs .picker-btn{
+  position: absolute;
+  bottom: 50%;
+  width: 100%;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 30rpx;
+  background-color: #fff;
+}
+.prov-city-dirs .picker-btn .cancel-picker{
+  float: left;
+  margin-left: 50rpx;
+  color: #838383;
+}
+.prov-city-dirs .picker-btn .sure-picker{
+  float: right;
+  margin-right: 50rpx;
+  color: #ff7100;
+}
+.province,
+.city,
+.dirstrict{
+  line-height: 82rpx;
+  height: 82rpx;
+  text-indent: 20rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #999;
+}
+.province.active,
+.city.active,
+.dirstrict.active{
+  color: #333;
+}

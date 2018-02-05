@@ -1,0 +1,14 @@
+<!-- 组件引用路径path  基于引用页面的当前文件夹 -->
+<view class="page-qr-code-dialog" catchtap="hideShareDialog" style='top:{{pageQRCodeData.shareDialogShow}}' hidde='{{!pageQRCodeData.shareDialogShow}}'>
+  <view class="page-qr-code" hidden="{{ !pageQRCodeShow }}" catchtap='stopPropagation'>
+    <image class="custom-cover" mode="widthFix" src="http://test.zhichiwangluo.com/index.php?r=AppShop/ShowShareQRCode&str={{pageQRCodeData.imageUrl}}"></image>
+    <view style='margin-bottom:14rpx;color:#999;'>保存后分享至朋友圈</view>
+    <button type="primary" class="save-btn" data-src="{{pageQRCodeData.imageUrl}}" catchtap="savePageCode">保存图片</button>
+  </view>
+  <view class="page-bottom-dialog" style='position: absolute;  bottom: -320rpx;  left: 0;  width: 750rpx;  background-color: rgba(238, 238, 238, 1);'
+    animation="{{pageQRCodeData.animation}}" hidde="{{ !pageQRCodeData.shareMenuShow }}">
+    <button class="button " open-type="share" catchtap="hidePageCode">转发至好友</button>
+    <button class="button shareToMoments" catchtap="showPageCode">转发至朋友圈</button>
+    <button class="button " catchtap="hideShareDialog">取消</button>
+  </view>
+</view>

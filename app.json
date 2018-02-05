@@ -1,0 +1,76 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/category/category",
+    "pages/cart/cart",
+    "pages/user/user",
+    "pages/bindCellphone/bindCellphone",
+    "pages/advanceSearch/advanceSearch",
+    "pages/searchAddress/searchAddress",
+    "pages/myIntegral/myIntegral",
+    "pages/myAddress/myAddress",
+    "pages/addAddress/addAddress",
+    "pages/transferPage/transferPage",
+    "pages/transferOrderDetail/transferOrderDetail",
+    "pages/transferPaySuccess/transferPaySuccess",
+    "pages/userCenter/userCenter",
+    "pages/myMessage/myMessage",
+    "pages/vipCard/vipCard",
+    "pages/makeComment/makeComment",
+    "pages/orderDetail/orderDetail",
+    "pages/goodsAdditionalInfo/goodsAdditionalInfo",
+    "pages/logisticsPage/logisticsPage",
+    "pages/myOrder/myOrder",
+    "pages/tabbarMyOrder/tabbarMyOrder",
+    "pages/shoppingCart/shoppingCart",
+    "pages/tabbarShoppingCart/tabbarShoppingCart",
+    "pages/previewGoodsOrder/previewGoodsOrder",
+    "pages/goodsOrderDetail/goodsOrderDetail",
+    "pages/goodsOrderPaySuccess/goodsOrderPaySuccess",
+    "pages/goodsComment/goodsComment",
+    "pages/goodsDetail/goodsDetail"
+  ],
+  "window": {
+    "enablePullDownRefresh": false ,
+    "onReachBottomDistance": "50"
+  },
+    "tabBar": {
+      "borderStyle":"white",
+      "color":"#CCCCCC",
+      "selectedColor":"#2D2D2D",
+      "backgroundColor":"#FFFFFF",
+      "list":[
+        {
+          "iconPath":"images/index.png",
+          "selectedIconPath":"images/index2.png",
+          "text":"首页",
+          "pagePath":"pages/index/index"
+        },
+        {
+          "iconPath":"images/cate.png",
+          "selectedIconPath":"images/cate2.png",
+          "text":"分类",
+          "pagePath":"pages/category/category"
+        },
+        {
+          "iconPath":"images/cart.png",
+          "selectedIconPath":"images/cart2.png",
+          "text":"购物车",
+          "pagePath":"pages/shoppingCart/shoppingCart"
+        },
+        {
+          "iconPath":"images/user.png",
+          "selectedIconPath":"images/user2.png",
+          "text":"我的",
+          "pagePath":"pages/user/user"
+        }
+      ]
+    },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

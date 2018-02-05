@@ -1,0 +1,125 @@
+page {
+  background-color: #eee;
+  overflow: hidden;
+  height: 100%;
+}
+.address-list-title {
+  width: 100%;
+  height: 66rpx;
+  background-color: #f3f3f3;
+  color: #666;
+  font-size: 26rpx;
+  text-indent: 30rpx;
+  line-height: 66rpx;
+}
+.myAddress-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  line-height: 48px;
+  z-index: 1;
+  font-size: 15px;
+  text-align: center;
+  color: #666;
+  background-color: #fff;
+  box-shadow: 0 -1px 2px #eee;
+}
+.myAddress-bottom-nav text{
+  vertical-align: middle;
+  margin: 0 8rpx;
+}
+.myAddress-content-container {
+  background-color: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.myAddress-address {
+  position: relative;
+  padding: 15px 0;
+  line-height: 20px;
+  border-bottom:1px solid #eee;
+}
+.address-label {
+  font-size: 22rpx;
+  padding: 0 16rpx;
+  margin-right: 10rpx;
+  border-radius: 2px;
+  vertical-align:middle;
+}
+.home {
+  border: 1px solid #ff7100;
+  color: #ff7100;
+}
+.company {
+  border: 1px solid #3091f2;
+  color: #3091f2;
+}
+.school {
+  border: 1px solid #3091f2;
+  color: #3091f2;
+}
+.myAddress-address view {
+  position: relative;
+}
+.check-box-container {
+  position: relative;
+  padding: 10px;
+  margin: 0 5px;
+  z-index:1;
+  float: left;
+}
+.myAddress-delete {
+  position:absolute;
+  right:0;
+  top:0;
+  padding: 15px 10px;
+  color: #999;
+}
+.myAddress-address-top {
+  padding: 0 30rpx;
+}
+.myAddress-address-top .address-detail {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 600;
+  display:inline-block;
+  width: 550rpx;
+  vertical-align:top;
+  line-height:44rpx;
+}
+.myAddress-address-top .address-person{
+  font-size: 24rpx;
+  color: #666;
+  line-height: 50rpx;
+  display: block;
+}
+.add-btn {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1px solid #ff7100;
+  position: relative;
+  vertical-align:middle;
+}
+.add-btn:before, 
+.add-btn:after{
+  position: absolute;
+  content: "";
+  display: block;
+  background-color: #ff7100;
+}
+.add-btn:before{
+  width: 7px;
+  height: 1px;
+  left:3px;
+  top:6px;
+}
+.add-btn:after {
+  width: 1px;
+  height: 7px;
+  left: 6px;
+  top: 3px;
+} 

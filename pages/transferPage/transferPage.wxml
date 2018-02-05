@@ -1,0 +1,23 @@
+<view class="transfer-wrap">
+  <view class="store-name">
+    <view class="store-icon"><span class="ico-moon icon-store"></span></view>{{ appTitle }}
+  </view>
+  <view class="transfer-section consume-section">消费金额<span class="pull-right">¥ <input focus class="count-input" bindinput="inputPrice" /></span></view>
+  <view class="transfer-section discount-section" wx:if="{{ discountList.length }}">
+    <view>优惠信息
+      <picker bindchange="discountChange" value="{{ selectDiscountIndex }}" range="{{ discountList }}" range-key="title">
+        <view>{{ selectDiscountInfo.name }}<text class="dicount-cut-price" hidden="{{ selectDiscountIndex == 0 }}">- ¥ {{ discount_cut_price }}</text></view>
+      </picker>
+    </view>
+  </view>
+  <view class="transfer-section balance-section" wx:if="{{ balance != 0 }}">
+    <view>储值抵扣<switch class="pull-right" checked="{{ useBalance }}" type="switch" bindchange="ifUseBalance" />
+    </view>
+    <view style="margin-top:10px;line-height:20px;" hidden="{{ !useBalance }}">抵扣金额
+      <text class="pull-right dicount-cut-price">- ¥ {{ use_balance_count }}</text>
+    </view>
+  </view>
+  <view class="transfer-section remark-section"><input placeholder="给对方留言" bindinput="inputRemark" /></view>
+  <view class="support-tip">即速应用提供技术支持</view>
+  <button type="primary" disabled="{{ (totalPayment === '' || requesting) ? true : false }}" bindtap="confirmPay">支付 <text style="margin:2px 0 0 5px;">¥ {{ totalPayment }}</text></button>
+</view>

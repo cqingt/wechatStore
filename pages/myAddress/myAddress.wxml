@@ -1,0 +1,39 @@
+<scroll-view 
+  scroll-y="true"
+  style="height: calc(100% - 55px);">
+  <view class="myAddress-wrap page" id="myAddress" style="height: 100%;">
+    <view class="myAddress-content-container">
+        <view class="address-list-title">收货地址</view>
+        <block wx:if="{{ !addressList.length }}">
+          <view style="color:#a8a8a8; padding:20px;">暂无收货地址</view>
+        </block>
+        <block wx:else>
+          <block wx:for="{{ addressList }}" wx:key="">
+          <view class="myAddress-address" wx:if="{{(from == 'previewtakeout' && item.is_distance == 1) || from != 'previewtakeout'}}">
+            <view class="myAddress-address-top" data-info="{{item}}" bindtap="{{ from == 'userCenterEle' ? 'editAddress' :  'selectAddress' }}" data-id="{{ item.id }}">
+                <view><label class="home address-label" wx:if="{{ item.address_info.label == 0 }}">家</label><label class="company address-label" wx:if="{{ item.address_info.label == 2 }}">公司</label><label class="school address-label" wx:if="{{ item.address_info.label == 1 }}">学校</label><text class="address-detail">{{ item.address_info.province.text + item.address_info.city.text + item.address_info.district.text + item.address_info.detailAddress }}</text></view>
+                <text class="address-person">{{ item.address_info.name }} {{item.address_info.sex == 1 ? '(先生)': (item.address_info.sex == 0 ? '(女士)':'')}} {{ item.address_info.contact }}</text>
+              </view>
+              <text class="myAddress-delete ico-moon icon-delete" bindtap="deleteAddress" data-id="{{ item.id }}"></text>
+          </view>
+        </block>
+        <block wx:if="{{from == 'previewtakeout' && !hasInDistance}}">
+          <view class="address-list-title">以下地址不在配送范围</view>
+          <block wx:for="{{ addressList }}" wx:key="">
+            <view class="myAddress-address" style="background-color: #fdfdfd;" wx:if="{{(from == 'previewtakeout' && item.is_distance != 1) || from != 'previewtakeout'}}">
+              <view class="myAddress-address-top">
+                <view>
+                  <text class="address-detail" style="color: #999;width:auto;">{{ item.address_info.province.text + item.address_info.city.text + item.address_info.district.text + item.address_info.detailAddress
+                    }}
+                  </text>
+                </view>
+                <text class="address-person" style="color: #999;">{{ item.address_info.name }} {{item.address_info.sex == 1 ? '(先生)': (item.address_info.sex == 0 ? '(女士)':'')}} {{ item.address_info.contact }}</text>
+              </view>
+              </view>
+            </block>
+          </block>
+        </block>
+    </view>
+  </view>
+</scroll-view>
+<view class="myAddress-bottom-nav" bindtap="addNewAddress" wx:if="{{fromAddAdress || from == 'userCenterEle' || selectAddressId }}"><text class="add-btn"></text><text>新增地址</text></view>

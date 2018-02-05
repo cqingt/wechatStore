@@ -1,0 +1,29 @@
+tec-support<view class="transfer-wrap">
+  <view class="transfer-order-section transfer-goto-homepage" bindtap="goToHomepage" wx:if="{{ isFromTemplateMsg }}">
+    <view class="ico-moon icon-rightarrow"></view>
+    返回首页
+  </view>
+  <view class="transfer-top-section">
+    <view>实付金额</view>
+    <span class="pay-text"><text style="font-size:16px;">¥ </text>{{ orderInfo.total_price }}</span>
+  </view>
+  <view class="transfer-order-section"><span>订单号</span><text>{{ orderInfo.order_id }}</text></view>
+  <view class="transfer-order-section"><span>付款时间</span><text>{{ orderInfo.add_time }}</text></view>
+  <view class="transfer-order-section"><span>应付</span><text>¥ {{ orderInfo.original_price }}</text></view>
+  <view class="transfer-order-section" wx:if="{{ orderInfo.selected_benefit && orderInfo.selected_benefit.discount_type }}"><span>优惠 {{ orderInfo.selected_benefit.title }}</span><text>- ¥{{ orderInfo.discount_cut_price }}</text></view>
+  <view class="transfer-order-section" wx:if="{{ orderInfo.use_balance != 0 }}"><span>储值抵扣</span><text>- ¥{{ orderInfo.use_balance }}</text></view>
+  <view class="transfer-order-section"><span>实付</span><text class="pay-text">¥ {{ orderInfo.total_price }}</text></view>
+  <view class="transfer-order-section transfer-order-remark-section"><span>备注信息:</span><view>{{ orderInfo.remark || '无' }}</view></view>
+  <view class="transfer-bottom-operation">
+    <block wx:if="{{ orderInfo.status == 0 }}">
+      <text class="btn" bindtap="cancelOrder">取消支付</text>
+      <text class="btn btn-red" bindtap="payOrder">支付</text>
+    </block>
+    <block wx:if="{{ orderInfo.status == 6 }}">
+      <text>已完成</text>
+    </block>
+    <block wx:if="{{ orderInfo.status == 7 }}">
+      <text>已关闭</text>
+    </block>
+  </view>
+</view>

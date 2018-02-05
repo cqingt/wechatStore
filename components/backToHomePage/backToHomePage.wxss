@@ -1,0 +1,46 @@
+@charset 'utf-8';
+@import "/utils/font_icon.wxss";
+.back-to-home-page{
+  height: 100rpx;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.icon-back-to-home {
+  height: 80rpx;
+  width: 80rpx;
+  display: inline-block;
+  color:  #fff;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 40rpx;
+  border-radius: 50%;
+  margin: 10rpx;
+}
+.click-tip{
+  position: absolute;
+  top: 0;
+  left: 100rpx;
+  height: 100rpx;
+  width: 650rpx;
+  font-size: 30rpx;
+  color: #fff;
+  line-height: 100rpx;
+  text-indent: 34rpx;
+}
+.click-tip::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 32rpx;
+  width: 1px;
+  background-color: #fff;
+  margin: 38rpx 0;
+}
+.icon-closes{
+  float: right;
+  margin-right: 30rpx;
+}

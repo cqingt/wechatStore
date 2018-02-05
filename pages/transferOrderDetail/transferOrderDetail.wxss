@@ -1,0 +1,49 @@
+page {
+  background-color: #ebebeb;
+}
+.transfer-wrap {
+  background-color: #fff;
+}
+.transfer-goto-homepage .icon-rightarrow {
+  position:absolute;
+  right:10px;
+  display:block;
+  font-size:18px;
+}
+.transfer-top-section {
+  padding: 18px 0;
+  text-align: center;
+  color: #818181;
+}
+.pay-text {
+  color: red;
+}
+.transfer-top-section .pay-text {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 24px;
+}
+.transfer-order-section {
+  padding: 0 15px;
+  line-height: 38px;
+  border-top: 1px solid #e6e6e6;
+}
+.transfer-order-section span {
+  color: #818181;
+}
+.transfer-order-section text {
+  float: right;
+}
+.transfer-order-section.transfer-order-remark-section view {
+  line-height: 20px;
+  padding-bottom: 7px;
+  color: #818181;
+}
+.transfer-bottom-operation {
+  padding: 10px 15px;
+  border-top: 1px solid #e6e6e6;
+  text-align: right;
+}
+.transfer-bottom-operation .btn {
+  margin-left:10px;
+}

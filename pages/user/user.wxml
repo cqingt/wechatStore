@@ -1,0 +1,100 @@
+<view class="app" hidden="{{page_hidden}}"><component-share pageQRCodeData="{{pageQRCodeData}}"></component-share><component-backhome backToHomePage="{{backToHomePage}}"></component-backhome>
+<template name="zcUserCenter">
+  <view class="user-center usercenter-mode1 background-ele {{ data.customFeature['with-horizontal'] ? 'with-horizontal-view': '' }}" style="{{data.style}}">
+    <view class="show-view" catchtap="userCenterTurnToPage" data-router="userCenter" 
+          style="{{ data.customFeature.topSectionStyle['background-image'] ? ('background-image:' + data.customFeature.topSectionStyle['background-image']) : ('background-color:' + data.customFeature.topSectionStyle['background-color']) }}" >
+      <label class="empty-span"></label>
+      <image class="cover-thumb" src="{{ userInfo.cover_thumb || 'http://img.zhichiwangluo.com/zc_app_default_photo.png'}}"></image>
+      <label class="nickname">{{ userInfo.nickname || '用户名' }}</label>
+      <label class="ico-moon icon-rightarrow"></label>
+    </view>
+    <block wx:if="{{ data.customFeature['with-horizontal'] }}">
+      <view class="horizontal-view">
+        <view class="horizontal-router-container1">
+          <block>
+            <wxs module="myOrder">
+              var isMyorder = function(data){
+                return data.customFeature.appendComponent.indexOf('myOrder') >= 0 ? true : false;
+              }
+              module.exports.isMyorder = isMyorder;
+            </wxs>
+            <view wx:if="{{ myOrder.isMyorder(data) && data.customFeature.orderType == undefined}}" 
+                  catchtap="userCenterTurnToPage"
+                  data-router="myOrder"
+                  data-goods-type="{{ data.customFeature.orderType }}"
+                  data-open-verify-phone="{{ data.customFeature.appendComponentAttr['myOrder']['openVerifyPhone'] }}"
+                  style="margin-top: {{ data.customFeature.appendComponentAttr['myOrder']['margin-top'] }}">
+              <label class="ico-moon icon-notebook"></label>
+              <text>我的订单</text>
+              <label class="ico-moon icon-rightarrow"></label>
+            </view>
+            <view wx:elif="{{ myOrder.isMyorder(data) && data.customFeature.orderType == 0}}" 
+                  catchtap="userCenterTurnToPage"
+                  data-router="myOrder"
+                  data-goods-type="{{ data.customFeature.orderType }}"
+                  data-open-verify-phone="{{ data.customFeature.appendComponentAttr['myOrder']['openVerifyPhone'] }}"
+                  style="margin-top: {{ data.customFeature.appendComponentAttr['myOrder']['margin-top'] }}"
+                  class="orderTypeStyle">
+              <view class="myorderSubmenu" data-index="0"><text data-index="0">我的订单</text><label class="ico-moon icon-rightarrow" data-index="0"></label></view>
+              <view class="orderSubmenu"><view data-index="1"><text class="ico-moon icon-pendingPayment" data-index="1"></text><view class="countStatusOrder" hidden="{{ data.countStatusOrder[0] == 0 || data.countStatusOrder == undefined}}">{{ data.countStatusOrder[0] }}</view>待付款</view><view data-index="2"><text class="ico-moon icon-beDelivered" data-index="2"></text><view class="countStatusOrder" hidden="{{ data.countStatusOrder[1] == 0 || data.countStatusOrder == undefined}}">{{ data.countStatusOrder[1] }}</view>待发货</view><view data-index="3"><text class="ico-moon icon-beReceived" data-index="3"></text><view class="countStatusOrder" hidden="{{ data.countStatusOrder[2] == 0 || data.countStatusOrder == undefined}}">{{ data.countStatusOrder[2] }}</view>待收货</view><view data-index="4"><text class="ico-moon icon-beEvaluated" data-index="4"></text><view class="countStatusOrder" hidden="{{ data.countStatusOrder[3] == 0 || data.countStatusOrder == undefined}}">{{ data.countStatusOrder[3] }}</view>待评价</view></view>
+            </view>
+            <view wx:elif="{{ myOrder.isMyorder(data) && data.customFeature.orderType == 3}}" 
+                  catchtap="userCenterTurnToPage"
+                  data-router="myOrder"
+                  data-goods-type="{{ data.customFeature.orderType }}"
+                  data-open-verify-phone="{{ data.customFeature.appendComponentAttr['myOrder']['openVerifyPhone'] }}"
+                  style="margin-top: {{ data.customFeature.appendComponentAttr['myOrder']['margin-top'] }}"
+                  class="orderTypeStyle">
+              <view class="myorderSubmenu" data-index="0"><text data-index="0">我的订单</text><label class="ico-moon icon-rightarrow" data-index="0"></label></view>
+              <view class="orderSubmenu"><view data-index="1"><text class="ico-moon icon-pendingPayment" data-index="1"></text><view class="countStatusOrder" hidden="{{ data.countStatusOrder[0] == 0 || data.countStatusOrder == undefined}}">{{ data.countStatusOrder[0] }}</view>待付款</view><view data-index="2"><text class="ico-moon icon-beConfirmed" data-index="2"></text><view class="countStatusOrder" hidden="{{ data.countStatusOrder[1] == 0 || data.countStatusOrder == undefined}}">{{ data.countStatusOrder[1] }}</view>待确认</view><view data-index="3"><text class="ico-moon icon-tostoreBusinessSure" data-index="3"></text><view class="countStatusOrder" hidden="{{ data.countStatusOrder[2] == 0 || data.countStatusOrder == undefined}}">{{ data.countStatusOrder[2] }}</view>商家确认</view><view data-index="4"><text class="ico-moon icon-beEvaluated" data-index="4"></text><view class="countStatusOrder" hidden="{{ data.countStatusOrder[3] == 0 || data.countStatusOrder == undefined}}">{{ data.countStatusOrder[3] }}</view>待评价</view></view>
+            </view>
+          </block>
+          <block wx:for="{{ data.customFeature.appendComponent }}" wx:key="">
+            <view wx:if="{{ item == 'myAddress' }}" 
+                  catchtap="userCenterTurnToPage" 
+                  data-router="myAddress" 
+                  data-open-verify-phone="{{ data.customFeature.appendComponentAttr['myAddress']['openVerifyPhone'] }}"
+                  style="margin-top: {{ data.customFeature.appendComponentAttr['myAddress']['margin-top'] }}">
+              <label class="ico-moon icon-location"></label>
+              <text>地址管理</text>
+              <label class="ico-moon icon-rightarrow"></label>
+            </view>
+            <view wx:if="{{ item == 'myIntegral' }}" 
+                  catchtap="userCenterTurnToPage" 
+                  data-router="myIntegral" 
+                  data-open-verify-phone="{{ data.customFeature.appendComponentAttr['myIntegral']['openVerifyPhone'] }}"
+                  style="margin-top: {{ data.customFeature.appendComponentAttr['myIntegral']['margin-top'] }}">
+              <label class="ico-moon icon-location"></label>
+              <text>积分管理</text>
+              <label class="ico-moon icon-rightarrow"></label>
+            </view>
+            <view wx:if="{{ item == 'vipCard' }}" 
+                  catchtap="userCenterTurnToPage" 
+                  data-router="vipCard" 
+                  data-open-verify-phone="{{ data.customFeature.appendComponentAttr['vipCard']['openVerifyPhone'] }}"
+                  style="margin-top: {{ data.customFeature.appendComponentAttr['vipCard']['margin-top'] }}">
+              <label class="ico-moon icon-location"></label>
+              <text>会员卡管理</text>
+              <label class="ico-moon icon-rightarrow"></label>
+            </view>
+            <view wx:elif="{{ item == 'myMessage' }}"
+                  catchtap="userCenterTurnToPage"
+                  data-router="myMessage"
+                  data-open-verify-phone="{{ data.customFeature.appendComponentAttr['myMessage']['openVerifyPhone'] }}"
+                  style="margin-top: {{ data.customFeature.appendComponentAttr['myMessage']['margin-top'] }}">
+              <label class="ico-moon icon-notify"></label>
+              <text>系统通知</text>
+              <label class="ico-moon icon-rightarrow"></label>
+            </view>
+          </block>
+        </view>
+      </view>
+    </block>
+  </view>
+</template>
+<view class="ele-container">
+  <template is="zcUserCenter" data="{{data:user_center1, userInfo: userInfo}}"></template>
+</view>
+
+
+</view>

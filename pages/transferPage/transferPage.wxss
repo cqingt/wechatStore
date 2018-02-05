@@ -1,0 +1,82 @@
+page {
+  background-color: #ebebeb;
+}
+.transfer-wrap {
+  margin: 0 0 15px;
+}
+.store-name {
+  padding: 15px;
+  text-align: center;
+}
+.store-icon {
+  display: inline-block;
+  margin-right: 12px;
+  width: 34px;
+  height: 34px;
+  line-height:34px;
+  border-radius: 50%;
+  font-size: 24px;
+  vertical-align: middle;
+  color:#fff;
+  background-color: #09ba07;
+}
+.transfer-section {
+  padding: 15px 16px;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+  line-height: 28px;
+}
+.transfer-section.balance-section {
+  color: #818181;
+}
+.transfer-section.balance-section switch {
+  margin-top: -5px;
+}
+.transfer-section.consume-section {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.transfer-section.discount-section {
+  color: #818181;
+}
+.transfer-section.remark-section {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.transfer-section.consume-section .count-input {
+  display: inline-block;
+  margin-top:-4px;
+  width: 60px;
+  font-size: 20px;
+  text-align:right;
+  vertical-align:sub;
+}
+.transfer-section.discount-section .total-pay {
+  font-size: 14px;
+  color: red;
+}
+.discount-section picker {
+  float: right;
+  width: calc(100% - 80px);
+  text-align: right;
+}
+.support-tip {
+  margin: 20px auto 40px;
+  font-size: 12px;
+  color: #ccc;
+  text-align: center;
+}
+.dicount-cut-price {
+  margin-left: 10px;
+  vertical-align: middle;
+  color: #f15a0c;
+}
+button {
+  margin: 0 15px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
