@@ -18,11 +18,10 @@
     </view>
   </view>
   <view class="makeCom-item" style="padding:10px; line-height:30px;">
-    <view style="font-size:16px;">店铺评分</view>
     <view>描述相符：<view class="makeCom-mark-container makeCom-fit-score"><label class="ico-moon icon-star{{ submitData.score >= 1 ? '' : '-empty' }}" data-score="1" bindtap="setDescScore"></label><label class="ico-moon icon-star{{ submitData.score >= 2 ? '' : '-empty' }}" data-score="2" bindtap="setDescScore"></label><label class="ico-moon icon-star{{ submitData.score >= 3 ? '' : '-empty' }}" data-score="3" bindtap="setDescScore"></label><label class="ico-moon icon-star{{ submitData.score >= 4 ? '' : '-empty' }}" data-score="4" bindtap="setDescScore"></label><label class="ico-moon icon-star{{ submitData.score >= 5 ? '' : '-empty' }}" data-score="5" bindtap="setDescScore"></label></view></view>
-    <view  wx:if="{{goodsType != '1'}}">物流服务：<view class="makeCom-mark-container makeCom-logistics-score"><label class="ico-moon icon-star{{ submitData.logistics_score >= 1 ? '' : '-empty' }}" data-score="1" bindtap="setLogisticsScore"></label><label class="ico-moon icon-star{{ submitData.logistics_score >= 2 ? '' : '-empty' }}" data-score="2" bindtap="setLogisticsScore"></label><label class="ico-moon icon-star{{ submitData.logistics_score >= 3 ? '' : '-empty' }}" data-score="3" bindtap="setLogisticsScore"></label><label class="ico-moon icon-star{{ submitData.logistics_score >= 4 ? '' : '-empty' }}" data-score="4" bindtap="setLogisticsScore"></label><label class="ico-moon icon-star{{ submitData.logistics_score >= 5 ? '' : '-empty' }}" data-score="5" bindtap="setLogisticsScore"></label></view></view>
+    <view>物流服务：<view class="makeCom-mark-container makeCom-logistics-score"><label class="ico-moon icon-star{{ submitData.logistics_score >= 1 ? '' : '-empty' }}" data-score="1" bindtap="setLogisticsScore"></label><label class="ico-moon icon-star{{ submitData.logistics_score >= 2 ? '' : '-empty' }}" data-score="2" bindtap="setLogisticsScore"></label><label class="ico-moon icon-star{{ submitData.logistics_score >= 3 ? '' : '-empty' }}" data-score="3" bindtap="setLogisticsScore"></label><label class="ico-moon icon-star{{ submitData.logistics_score >= 4 ? '' : '-empty' }}" data-score="4" bindtap="setLogisticsScore"></label><label class="ico-moon icon-star{{ submitData.logistics_score >= 5 ? '' : '-empty' }}" data-score="5" bindtap="setLogisticsScore"></label></view></view>
   </view>
-  <view class="makeCom-bottom-nav" bindtap="makeComment"><label class="makeCom-make-comment btn btn-orange">发表评价</label></view>
+  <view class="makeCom-bottom-nav" bindtap="makeComment"><label class="makeCom-make-comment btn">发表评价</label></view>
 </view>
 
 

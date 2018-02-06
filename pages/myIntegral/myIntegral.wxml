@@ -64,7 +64,7 @@
       </view>
       <view class="rule-item">
         <view class="item-name">提醒</view>
-        <view class="item-content">消费积分并不会影响升级会员卡，与会员升级相关的是总积分</view>
+        <view class="item-content">消费积分只能用于下单抵扣运费</view>
       </view>
     </view>
     <view class="confirm-btn" catchtap="hideIntegralRule">确定</view>

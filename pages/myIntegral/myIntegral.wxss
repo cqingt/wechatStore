@@ -7,7 +7,7 @@
 }
 #myIntegral .integral-detail {
   position: relative;
-  background: #5db968;
+  background: #333;
   height: 125px;
   margin-bottom: 10px;
   color: #fff;
@@ -16,7 +16,7 @@
   width: 20px;
   height: 20px;
   background: #fff;
-  color: #5db968;
+  color: #333;
   border-radius: 50%;
   display: inline-block;
   text-align: center;
@@ -51,7 +51,7 @@
   height: 14px;
   line-height: 14px;
   margin-right: 5px;
-  background: #5db968;
+  background: #333;
   color: #fff;
   border-radius: 50%;
   text-align: center;
@@ -93,8 +93,8 @@
   margin-right: 15px;
 }
 #myIntegral .message-nav .type-item.active {
-  color: #55b737;
-  border-bottom: 1px solid #55b737;
+  color: #f53530;
+  border-bottom: 1px solid #f53530;
 }
 #myIntegral .message-content {
   display: none;
@@ -121,7 +121,7 @@
 }
 #myIntegral .message-item .message-time {
   margin: 10px 0 12px 15px;
-  color: #d6d6d6;
+  color: #999;
   font-size: 12px;
 }
 #myIntegral .message-item .message-num {
@@ -130,7 +130,7 @@
   right: 15px;
   overflow: hidden;
   font-size: 14px;
-  color: #5db968;
+  color: #333;
 }
 
 /* 积分商品 积分规则页面*/
@@ -177,7 +177,7 @@
 #myIntegral .myIntegral-rule .confirm-btn {
   margin: 14px 10px;
   padding: 10px 0;
-  background: #55b737;
+  background: #f53530;
   border-radius: 5px;
   color: #fff;
   text-align: center;

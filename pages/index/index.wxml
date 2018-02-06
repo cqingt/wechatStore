@@ -1,6 +1,22 @@
 <view class="app" hidden="{{page_hidden}}">
 <component-share pageQRCodeData="{{pageQRCodeData}}"></component-share>
 <component-backhome backToHomePage="{{backToHomePage}}"></component-backhome>
+<!-- 轮播图 -->
+  <template name="zcCarousel">
+    <swiper indicator-dots="true" circular="true" autoplay="{{data.customFeature.autoplay}}" vertical="{{data.customFeature.vertical}}" interval="{{data.customFeature.interval*1000}}" duration="750" style="{{data.style}}">
+      <block wx:for="{{data.content}}" wx:key="">
+        <swiper-item data-event-params="{{item.eventParams}}" catchtap="{{item.eventHandler}}">
+          <image class="swiper-item" src="{{item.pic}}"/>
+          <view  wx:if="{{item.eventHandler == 'tapVideoPlayHandler'}}" class="carousel-video-play icon-play ico-moon"></view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </template>
+
+<view class="ele-container">
+  <template is="zcCarousel" data="{{data:carousel}}"></template>
+</view>
+<!-- 轮播图 -->
 
 <template name="zcSearch1">
   <view class="element search {{data.customFeature.ifLocation?'another-style':''}}" style="{{data.style}}">
@@ -45,20 +61,11 @@ module.exports.isArray = isArray;
   </block>
 </template>
 
-<view class="ele-container">
-  <block wx:if="{{real_value}}">
+<!-- <view class="ele-container">
+  <block>
     <template is="zcPicture" data="{{data:picture2, detail_data: detail_data}}"></template>
   </block>
-  <block wx:elif="{{detail_data && in_dynamic_vessel !== 'true'}}">
-    <template is="zcPicture" data="{{data:picture2, detail_data: detail_data}}"></template>
-  </block>
-  <block wx:elif="{{in_dynamic_vessel === 'true'}}">
-    <template is="zcPicture" data="{{data:picture2, detail_data: detail_data}}"></template>
-  </block>
-  <block wx:else>
-    <template is="zcPicture" data="{{data:picture2, detail_data: detail_data}}"></template>
-  </block>
-</view>
+</view> -->
 
 <view class="ele-container">
   <template is="zcSearch1" data="{{data:search1}}"></template>

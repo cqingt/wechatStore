@@ -2,8 +2,7 @@ var app      = getApp();
 
 var pageData = {
   data: { 
-    "user_center1": 
-    {
+    "user_center1": {
       "type": "user-center", 
       "style": "opacity:1;color:rgb(255, 255, 255);margin-top:0;font-size:37.5rpx;height:auto;margin-left:auto;", 
       "content": "", 

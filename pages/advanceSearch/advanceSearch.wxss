@@ -219,6 +219,7 @@ page {
 .container .item {
   height: 130px;
   overflow: hidden;
+  border-bottom: 1px solid #dcdcdc;
 }
 
 .container .item-pic {
@@ -277,6 +278,8 @@ page {
 .container .item-sales {
   color: #999;
   font-size: 14px;
+  float:right;
+  padding-right:36rpx;
 }
 
 /*样式1*/
@@ -287,16 +290,20 @@ page {
 }
 
 .colume-2 .item {
-  height: 570rpx;
+  height: 520rpx;
   overflow: hidden;
   width: 49%;
   float: left;
   background: #fff;
-  margin-bottom: 2%;
+  /* margin-bottom: 2%; */
+  border-bottom: 1px solid #dcdcdc;
+}
+.colume-2 .item:nth-child(odd) {
+  border-right: 1px solid #dcdcdc;
 }
 
 .colume-2 .item:nth-child(odd) {
-  margin-right: 2%;
+  /* margin-right: 2%; */
 }
 
 .colume-2 .item-pic {
@@ -310,7 +317,7 @@ page {
   position: relative;
   float: left;
   width: calc(100% - 20rpx);
-  height: 210rpx;
+  height: 160rpx;
   padding: 0 10rpx;
 }
 
@@ -331,6 +338,8 @@ page {
   font-size: 14px;
   color: #f95d5d;
   margin-right: 15rpx;
+  width:50%;
+  display: inline-block;
 }
 
 .colume-2 .item-price text {
@@ -352,6 +361,8 @@ page {
 .colume-2 .item-sales {
   color: #999;
   font-size: 14px;
+  float: right;
+  padding-right: 20rpx;
 }
 
 /*历史记录样式*/
@@ -360,8 +371,8 @@ page {
   text-align: center;
   height: 30px;
   line-height: 30px;
-  color: #dcdcdc;
-  font-size: 16px;
+  color: #ccc;
+  font-size: 26rpx;
 }
 
 .title {

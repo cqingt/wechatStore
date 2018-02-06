@@ -6,7 +6,7 @@
   margin: 12px 0;
 }
 .logistics-top-section, .logistics-info-container {
-  padding: 15px;
+  padding: 15px 15px 0 15px;
   background-color: #fff;
 }
 .logistics-order-status.success, .logistics-info-item:first-child {

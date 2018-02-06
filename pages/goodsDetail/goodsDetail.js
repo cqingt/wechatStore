@@ -19,8 +19,21 @@ Page({
       shareDialogShow: "100%",
       shareMenuShow: false,
     },
-    commentNums: [],
-    commentExample: '',
+    commentNums: [1],
+    commentExample: {
+      "buyer_headimgurl": "http:\/\/cdn.jisuapp.cn\/zhichi_frontend\/static\/webapp\/images\/default_photo.png", 
+      "buyer_nickname": "default", 
+      "add_time": 
+      "2018-02-06 18:26", 
+      "assess_info": { 
+        "content": "\u8bc4\u8bba\u5185\u5bb9", 
+        "has_img": 1, 
+        "img_arr": [
+          "https:\/\/img.yzcdn.cn\/upload_files\/2016\/11\/25\/FpqPXlrMRjKwJs8VdTu3ZDJCj4j5.jpeg?imageView2\/2\/w\/200\/h\/200\/q\/90\/format\/jpeg", 
+          "http:\/\/img.weiye.me\/zcimgdir\/thumb\/t_148939466558c65be937c02.png"
+          ]
+      }
+    },
     defaultPhoto: '',
     allStock: '',
     addToShoppingCartHidden: true,
@@ -103,8 +116,10 @@ Page({
     app.turnToPage(pagePath, true);
   },
   goToShoppingCart: function(){
+
     var franchiseeId = this.data.franchiseeId,
         pagePath = '/pages/shoppingCart/shoppingCart'+(franchiseeId ? '?franchisee='+franchiseeId : '');
+        console.log(pagePath);
     app.turnToPage(pagePath, true);
   },
   goToHomepage: function(){
@@ -237,6 +252,7 @@ Page({
     });
     _this.getAssessList();
   },
+  // 评价
   getAssessList: function(){
     var that = this;
     app.getAssessList({
@@ -252,7 +268,6 @@ Page({
         },
         page: 1,
         page_size: 20,
-        sub_shop_app_id: this.data.franchiseeId
       },
       success: function(res){
         var commentExample = res.data[0];

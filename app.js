@@ -94,12 +94,6 @@ App({
     let header = param.header;
     let requestUrl;
 
-    if(data.app_id){
-      data._app_id = data.app_id;
-    } else {
-      data._app_id = data.app_id = this.getAppId();
-    }
-
     if(!this.globalData.notBindXcxAppId){
       data.session_key = this.getSessionKey();
     }
@@ -1578,7 +1572,6 @@ App({
           data: param,
           method: 'post',
           success: function (res) {
-            console.log(1752);
             if (res.status == 0) {
               let rdata = res.data,
                   newdata = {},
@@ -1851,7 +1844,6 @@ App({
       data: param,
       method: 'post',
       success: function (res) {
-        console.log(2022);
         if (res.status == 0) {
           pageInstance.requesting = false;
           let categoryId = param.idx_arr.idx_value == '' ? 'all' : param.idx_arr.idx_value;
@@ -2104,7 +2096,6 @@ App({
           hideLoading: true,
           url: '/index.php?r=AppShop/countStatusOrder',
           data: {
-            parent_shop_app_id: this.getAppId(),
             goods_type: goodsType
           },
           method: 'post',
@@ -2502,7 +2493,6 @@ App({
       data: param,
       method: 'post',
       success: function (res) {
-        console.log(2674);
         newdata = {};
         newdata[compid + '.goods_data'] = compData.goods_data.concat(res.data);
         newdata[compid + '.is_more'] = res.is_more;
@@ -2614,7 +2604,6 @@ App({
       data: param,
       method: 'post',
       success: function (res) {
-        console.log(2786);
         newdata = {};
         let rdata = res.data,
             downcountArr = pageInstance.data.downcountArr || [];
@@ -3306,7 +3295,6 @@ App({
       data: component_params.param,
       method: 'post',
       success: function (res) {
-        console.log(3477);
         if (res.status == 0) {
           let newdata = {};
           let compid  = component_params['compid'];
@@ -4768,7 +4756,6 @@ App({
       method: 'post',
       data: requestData,
       success: function(res){
-        console.log(4939);
         var newData = {};
         for (let i in res.data) {
           if (res.data[i].form_data.goods_model) {
@@ -5781,7 +5768,7 @@ App({
 
   globalData:{
     appId: 'wx31c29e4d7c15086a',
-    tabBarPagePathArr: '["/pages/index/index","/pages/category/category","/pages/cart/cart","/pages/user/user"]',
+    tabBarPagePathArr: '["/pages/index/index","/pages/category/category","/pages/shoppingCart/shoppingCart","/pages/user/user"]',
     homepageRouter: 'index',
     formData: null,
     userInfo: {

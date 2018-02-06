@@ -11,7 +11,7 @@ page {
   margin-bottom: 18rpx;
   padding: 26rpx 30rpx;
   background: #fff;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid #dcdcdc;
 }
 .orderDetail-goto-homepage .icon-rightarrow {
   position: absolute;
@@ -20,9 +20,9 @@ page {
   font-size: 36rpx;
 }
 .top-section {
-  font-size: 36rpx;
+  font-size: 32rpx;
   color: #fff;
-  background-color: #535961;
+  background-color: #333
 }
 .address-info-section {
   /*line-height: 44rpx;*/
@@ -109,8 +109,9 @@ page {
   border-radius: 2px;
 }
 .btn.btn-orange {
-  color: #ff7100;
+  color: #f53530;
   background-color: #fff;
+  border-color: #f53530;
 }
 .section-title, .section-content {
   display: inline-block;

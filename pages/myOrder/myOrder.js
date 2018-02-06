@@ -6,11 +6,11 @@ Page({
     orderLists: [],
     pages: 1,
     types: {
-      0: [undefined, 0, 1, 2, 3]
+      0: [undefined, 0, 1, 2, 3,4,5,6,7]
     },
     noMore: false,
     currentTabIndex: 0,
-    currentGoodsType: '',                
+    currentGoodsType: 0,                
     goodsTypeList: [0],
     isFromBack: false
   },
@@ -52,23 +52,13 @@ Page({
         },
         type;
 
-    if ( this.data.currentGoodsType != ""){
-      type = this.data.types[this.data.currentGoodsType][param.tabIndex];
+    if (this.data.currentGoodsType != undefined){
+      status = this.data.types[this.data.currentGoodsType][param.tabIndex];
 
-      if(type != undefined){
-        data.idx_arr = {
-          idx: 'status',
-          idx_value: type
-        }
+      if (status != undefined){
+        data.status = status;
       }
       data.goods_type = this.data.currentGoodsType
-    }
-
-    data.parent_shop_app_id = app.getAppId(); 
-
-    if(param.firstLoad && this.data.currentGoodsType == ""){
-    
-      data.use_default_goods_type = 1;
     }
     app.sendRequest({
       url: '/index.php?r=AppShop/orderList',
@@ -171,8 +161,7 @@ Page({
         app.sendRequest({
           url: '/index.php?r=AppShop/cancelOrder',
           data: {
-            order_id: orderId,
-            sub_shop_app_id: subShopId
+            order_id: orderId
           },
           success: function(res){
             var index = that.data.currentTabIndex,
@@ -201,8 +190,7 @@ Page({
         app.sendRequest({
           url: '/index.php?r=AppShop/applyRefund',
           data: {
-            order_id: orderId,
-            sub_shop_app_id: subShopId
+            order_id: orderId
           },
           success: function(res){
             var index = that.data.currentTabIndex,
@@ -237,7 +225,6 @@ Page({
           url: '/index.php?r=AppShop/comfirmOrder',
           data: {
             order_id: orderId,
-            sub_shop_app_id: subShopId
           },
           success: function(res){
             var index = that.data.currentTabIndex,
@@ -266,7 +253,7 @@ Page({
   verificationCode: function(e){
     var orderId = e.target.dataset.id;
     var franchiseeId = e.target.dataset.franchisee;
-    app.turnToPage('/pages/verificationCodePage/verificationCodePage?detail=' + orderId + '&sub_shop_app_id=' + franchiseeId);
+    app.turnToPage('/pages/verificationCodePage/verificationCodePage?detail=' + orderId );
   },
   scrollToListBottom: function(){
     var currentTabIndex = this.data.currentTabIndex;

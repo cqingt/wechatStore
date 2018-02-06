@@ -26,7 +26,7 @@
       </block>
     </view>
   </view>
-  <view class="order-detail-section" style="margin-bottom: 0; padding-bottom: 0; border-bottom: none;">
+  <view class="order-detail-section" style="margin-bottom: 0; padding-bottom: 0;">
     <view class="goods-list-item" wx:for="{{ orderInfo.goods_info }}" wx:key="" wx:for-item="goods" wx:for-index="goodsIndex">
       <image class="goods-cover" src="{{ goods.cover }}"></image>
       <block>
@@ -46,20 +46,21 @@
     <text class="pull-right">¥ {{ orderInfo.original_price }}</text>
   </view>
 
-  <view class="order-detail-section">优惠抵扣
+  <view class="order-detail-section" style='display:none'>优惠抵扣
     <text class="pull-right">- ¥ {{ discount_cut_price }}</text>
   </view>
   <view class="order-detail-section" style="margin-bottom: 0; border-top:1px solid #e8e8e8;">运费
     <text class="pull-right">¥ {{ express_fee }}</text>
   </view>
+    <view class="order-detail-section" style="margin-bottom: 0; border-top:1px solid #e8e8e8;">运费积分抵扣
+    <text class="pull-right">- ¥ {{ integral_used }}</text>
+  </view>
   <view class="order-detail-section">订单总价
     <text class="pull-right">¥ {{ orderInfo.order_total_price }}</text>
   </view>
-  <view class="order-detail-section" wx:if="{{ orderInfo.status != 0 }}" style="margin-bottom: 0; border-top:1px solid #e8e8e8;">储值抵扣
-    <text class="pull-right">- ¥ {{ useBalance }}</text>
-  </view>
+
   <view class="order-detail-section">需付款
-    <text class="pull-right" style="color: #ff7100;">¥ {{ orderInfo.total_price }}</text>
+    <text class="pull-right" style="color: #f53530;">¥ {{ orderInfo.total_price }}</text>
   </view>
   <view class="order-detail-section" wx:if="{{ hasAdditionalInfo }}" bindtap="seeAdditionalInfo" style="border-top:1px solid #e8e8e8;">补充信息
     <view class="ico-moon icon-rightarrow pull-right"></view>

@@ -1,5 +1,5 @@
 <view class="myOrder-wrap page" id="myOrder">
-  <view class="flex-box myOrder-tab-list" wx:if="{{ goodsTypeList.length == 1 && (goodsTypeList[0] == 0) }}">
+  <view class="flex-box myOrder-tab-list">
     <view class="flex-sub-box-5 {{ currentTabIndex == 0 ? 'active' : '' }}" bindtap="clickOrderTab" data-index="0" >全部</view>
     <view class="flex-sub-box-5 {{ currentTabIndex == 1 ? 'active' : '' }}" bindtap="clickOrderTab" data-index="1" >待付款</view>
     <view class="flex-sub-box-5 {{ currentTabIndex == 2 ? 'active' : '' }}" bindtap="clickOrderTab" data-index="2" >待发货</view>
@@ -7,7 +7,7 @@
     <view class="flex-sub-box-5 {{ currentTabIndex == 4 ? 'active' : '' }}" bindtap="clickOrderTab" data-index="4" >待评价</view>
   </view>
 
-  <view class="myOrder-content-body lengthOneBody" wx:if="{{ goodsTypeList.length == 1 }}" >
+  <view class="myOrder-content-body lengthOneBody">
 
       <view class="scrollContainer" hidden="{{ currentTabIndex != 0 }}">
         <scroll-view class="myOrder-all myOrder-content-container myOrder-ebusiness" lower-threshold="10" scroll-y="true" bindscrolltolower="scrollToListBottom">
@@ -24,10 +24,11 @@
               <text wx:elif="{{ item.status == 7 }}" class="pull-right myOrder-order-status">已关闭</text>
             </view>
             <view class="myOrder-goods-list" bindtap="goToOrderDetail" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}" data-type="eBusiness">
-              <view wx:for="{{ item.goods_info }}" wx:key="" wx:for-item="goods">
+              <view wx:for="{{ item.goods_info }}" wx:key="" wx:for-item="goods" class="key-{{ index % 2 ? 'underline' : '' }}">
                 <view class="dialog-block-item">
                   <image class="myOrder-goods-cover" src="{{ goods.cover }}"></image>
                   <view class="myOrder-goods-title">{{ goods.goods_name }}</view>
+                  <view class="myOrder-goods-attr">{{ goods.module_attr }}</view>
                   <view wx:if="{{ !goods.is_benefit_goods }}" class="myOrder-goods-right">
                     <view>¥ <text class="myOrder-goods-price">{{ goods.price }}</text></view>
                     <view>×<text class="myOrder-goods-count">{{ goods.num }}</text></view>
@@ -64,7 +65,7 @@
               <text class="btn myOrder-check-logistics" bindtap="checkLogistics" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}" wx:if="{{item.is_self_delivery == 0}}">查看物流</text>
             </view>
           </view>
-          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">已经没有新数据了</view>
+          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">我是有底线的</view>
         </scroll-view>
       </view>
       <view class="scrollContainer" hidden="{{ currentTabIndex != 1 }}">
@@ -96,7 +97,7 @@
               <label><text class="btn myOrder-cancel-order" bindtap="cancelOrder" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">取消订单</text> <text class="btn btn-orange myOrder-pay-directly" bindtap="goToOrderDetail" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}" data-type="eBusiness">支付</text></label>
             </view>
           </view>
-          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">已经没有新数据了</view>
+          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">我是有底线的</view>
         </scroll-view>
       </view>
       <view class="scrollContainer" hidden="{{ currentTabIndex != 2 }}">
@@ -128,7 +129,7 @@
               <label><text class="btn myOrder-apply-drawback" bindtap="applyDrawback" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">申请退款</text></label>
             </view>
           </view>
-          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">已经没有新数据了</view>
+          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">我是有底线的</view>
         </scroll-view>
       </view>
       <view class="scrollContainer" hidden="{{ currentTabIndex != 3 }}">
@@ -165,7 +166,7 @@
               </label>
             </view>
           </view>
-          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">已经没有新数据了</view>
+          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">我是有底线的</view>
         </scroll-view>
       </view>
       <view class="scrollContainer" hidden="{{ currentTabIndex != 4 }}">
@@ -202,7 +203,7 @@
               </label>
             </view>
           </view>
-          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">已经没有新数据了</view>
+          <view hidden="{{ !noMore }}" class="noMoreNewDataTip">我是有底线的</view>
         </scroll-view>
       </view>
   </view>

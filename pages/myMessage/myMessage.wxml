@@ -1,5 +1,5 @@
 <view class="myMessage-wrap page" id="myMessage">
-  <view class="myMessage-top-nav" wx:if="{{ messageDetail == 0 }}">
+  <view class="myMessage-top-nav" wx:if="{{ false }}">
     <view class="myMessage-type-list">
       <view class="myMessage-type-item {{ messageType == 5 ? 'active' : '' }}" catchtap="changeMessageType" data-message-type="5" >系统消息</view>
       <view class="myMessage-type-item {{ messageType == 6 ? 'active' : '' }} {{ interactBranch.unreadCount > 0 ? 'has-noread' : '' }}" catchtap="changeMessageType" data-message-type="6" >互动消息</view>

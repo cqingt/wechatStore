@@ -15,8 +15,7 @@ Page({
   },
   onLoad: function(options){
     this.setData({
-      'submitData.order_id': options.detail,
-      'submitData.sub_shop_app_id': options.franchisee || ''
+      'submitData.order_id': options.detail
     })
     this.getOrderDetail();
   },
@@ -28,8 +27,8 @@ Page({
         sub_shop_app_id: this.data.submitData.sub_shop_app_id
       },
       success: function(res){
-        var goodsType = res.data[0].form_data.goods_type,
-            goodsInfo = res.data[0].form_data.goods_info,
+        var goodsType = 0,
+            goodsInfo = res.data.form_data.goods_info,
             goods = [];
 
         for (var i = 0, j = goodsInfo.length - 1; i <= j; i++) {

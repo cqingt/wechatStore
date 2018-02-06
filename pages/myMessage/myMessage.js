@@ -35,17 +35,19 @@ Page({
   getMessageData: function(type, page){
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=AppNotify/GetUserAppNotifyMsg',
+      url: '/index.php?r=AppShop/getNotifyMsg',
       data: {
-        'app_id': app.globalData.appId,
         'types': type || '',
         'page': page || ''
       },
       success: function(res){
         for(var key in res.data){
+          
           switch(parseInt(key)){
             // 系统消息分支：站内消息、支付消息、表单消息
             case 5:
+              console.log(res.data[key].data);
+              console.log(that.parseMessageData(res.data[key].data));
               that.setData({
                 'systemBranch.data': that.data.systemBranch.data ? that.data.systemBranch.data.concat(that.parseMessageData(res.data[key].data)) : that.parseMessageData(res.data[key].data) ,
                 'systemBranch.isMore': res.data[key].is_more,
@@ -125,14 +127,14 @@ Page({
           item.messageTitle = '评论消息';
           item.messageTime = data[i].add_time;
           item.messageImg = 'icon-message-comment';
-          item.messageContent = data[i].content + ' 回复了你的话题';
+          item.messageContent = data[i].content + ' 回复了你的评论';
           array.push(item);
           break;
         case 8:
           item = {};
           item.messageType = parseInt(data[i].type);
           item.className = 'type-Administrators';
-          item.messageTitle = '管理员通知';
+          item.messageTitle = '系统通知';
           item.messageTime = data[i].add_time;
           item.messageImg = 'icon-notify';
           item.messageContent = data[i].content.replace(/\\n/g, '\n');
@@ -195,9 +197,8 @@ Page({
     app.setPageTitle('表单消息');
     // 请求数据
     app.sendRequest({
-      url: '/index.php?r=pc/WebAppMgr/getForm',
+      url: '/index.php?r=Appshop/webAppMgr',
       data: {
-        'app_id': app.globalData.appId,
         'form_id': _formId,
       },
       success: function(res){
@@ -205,9 +206,8 @@ Page({
         _formData_list.shift(); // 默认去除第一个（非用户创建）
         // 获取该表单的本次提交数据
         app.sendRequest({
-          url: '/index.php?r=AppData/getFormData',
+          url: '/index.php?r=Appshop/getFormData',
           data: {
-            'app_id': app.globalData.appId,
             'form': _form,
             'data_id': _formDataId,
           },

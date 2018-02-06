@@ -30,12 +30,12 @@
         <text>{{item.form_data.price}}</text>
       </view>
       <text class="item-sales">销量：{{item.form_data.sales}}</text>
-      <view class="ico-moon icon-shoppingcart item-buy" catchtap="addToCart" data-id="{{item.form_data.id}}"></view>
+      <!-- <view class="ico-moon icon-shoppingcart item-buy" catchtap="addToCart" data-id="{{item.form_data.id}}"></view> -->
     </view>
   </view>
-  <view class="nomore {{pageData.is_more == 0 ? '' : 'hide'}}">没有啦！~</view>
+  
 </scroll-view>
-
+<view class="nomore {{pageData.is_more == 0 ? '' : 'hide'}}">我是有底线的^_^</view>
 <view class="history {{showResult?'hide':''}}">
   <view class="title">
     <text class="left">历史搜索</text>
@@ -52,7 +52,7 @@
       <view class="filter-title">分类</view>
       <view class="cate filter-item {{currentCategory == item.id ? 'active' : ''}}" wx:for="{{cateData}}" wx:key="{{item.id}}" data-id="{{item.id}}" data-idx="category" catchtap="setCategoryFilter">{{item.name}}</view>
     </view>
-    <view class="filter-location">
+    <view class="filter-location" style='display:none'>
       <view class="filter-title">当前位置</view>
       <view class="ico-moon icon-location filter-item">{{currentLocation||'全国'}}</view>
       <button class="ico-moon icon-edit location filter-item hide" catchtap="getCurrentLocation">定位</button>

@@ -39,7 +39,7 @@ Page({
   },
   onLoad: function(){
     this.getIntegralDetailData();
-    this.getIntegralRuleData();
+    //this.getIntegralRuleData();
     this.getMessageData('income');
     this.getMessageData('outcome');
   },
@@ -51,13 +51,15 @@ Page({
     let that = this;
     app.sendRequest({
       url: '/index.php?r=AppShop/GetIntegralInfo',
-      // data: {
-      //   'id': app.getUserInfo().id
-      // },
       success: function(res){
         that.setData({
           'canUseIntegral': res.data.can_use_integral,
-          'totalIntegral': res.data.total_integral
+          'totalIntegral': res.data.total_integral,
+          'integralRule.convertNum': res.data.convert_num,
+          'integralRule.consumeNum': res.data.consume_num,
+          'integralRule.loginNum': res.data.login_num,
+          'integralRule.postCommentNum': res.data.post_comment_num,
+          'integralRule.shareNum': res.data.share_num,
         });
       }
     });
@@ -81,16 +83,11 @@ Page({
   // 获取对应消息数据
   getMessageData: function(type, page){
     let that = this;
-    let action = '';
-    if (type == 'income') {
-      action = 'add';
-    } else if (type = 'outcome') {
-      action = 'minus';
-    }
+  
     app.sendRequest({
       url: '/index.php?r=AppShop/UserIntegralAction',
       data: {
-        'action': action,
+        'action': type,
         'page': page || 1
       },
       success: function(res){

@@ -40,8 +40,8 @@
         </view>
         
         <view class="goods-other-info">
-          <view>运费:{{ goodsInfo.express_fee || '包邮' }}</view>
-          <view wx:if="{{!hidestock}}">库存:{{ allStock || goodsInfo.stock }}</view>
+          <view class='goods-express'>运费:{{ goodsInfo.express_fee || '包邮' }}</view>
+          <view class='goods-stock' wx:if="{{!hidestock}}">库存:{{ allStock || goodsInfo.stock }}</view>
         </view>
       </view>
     </view>

@@ -7,7 +7,7 @@ Page({
    */
   data: {
     showResult: false, //搜索结果展示
-    itemStyle: 1, //商品列表显示方式 单列显示 1  双列显示 2
+    itemStyle: 2, //商品列表显示方式 单列显示 1  双列显示 2
     tab: 0,
     direction: 0,
     prevPage: 0,
@@ -49,8 +49,8 @@ Page({
     })
 
     this.getCategory();
-    this.getLocations();
-    this.getCurrentLocation();
+    //this.getLocations();
+    //this.getCurrentLocation();
   },
 
   /**
@@ -305,6 +305,7 @@ Page({
    * 获取定位列表
    */
   getLocations: function () {
+    return false;
     let _this = this;
     appInstance.sendRequest({
       url: '/index.php?r=AppRegion/getAllExistedDataRegionList&is_xcx=1',
@@ -330,7 +331,8 @@ Page({
             longitude: longitude
           },
           success: function (res) {
-            _this.setData({ currentLocation: res.data.addressComponent.district });
+            _this.setData({ currentLocation: '福州' });
+            //_this.setData({ currentLocation: res.data.addressComponent.district });
           }
         })
       }
@@ -350,7 +352,7 @@ Page({
   getCategory: function () {
     let _this = this;
     appInstance.sendRequest({
-      url: '/index.php?r=pc/AppAdminCategory/list',
+      url: '/index.php?r=AppShop/Category',
       method: 'post',
       data: { form: 'goods' },
       success: function (res) {

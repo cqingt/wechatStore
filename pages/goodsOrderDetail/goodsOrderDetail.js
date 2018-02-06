@@ -57,7 +57,7 @@ Page({
             additional_info_goods = [],
             additional_goodsid_arr = [],
             address_id = '';
-        console.log(form_data);
+
         for (var i = 0; i < form_data.goods_info.length; i++) {
           var deliveryId = form_data.goods_info[i].delivery_id,
               goodsId = form_data.goods_info[i].id;
@@ -74,7 +74,8 @@ Page({
           hasAdditionalInfo: hasAdditionalInfo,
           discount_cut_price: form_data.discount_cut_price,
           useBalance: Number(form_data['use_balance']),
-          express_fee: form_data.express_fee
+          express_fee: form_data.express_fee,
+          integral_used: form_data.integral_used
         });
         app.setPreviewGoodsInfo(additional_info_goods);
 

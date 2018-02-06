@@ -253,7 +253,7 @@ a {
 .btn {
   display: inline-block;
   background-color: #fff;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #ddd;
   border-radius: 3px;
   padding: 7px;
   margin: 0;
@@ -312,6 +312,7 @@ a {
 }
 .pills-list {
   list-style: none;
+  font-size: 26rpx;
 }
 .pills-list:after {
   content: '';
@@ -1890,8 +1891,8 @@ a {
   right:0;
   width:20%;
   text-align:center;
-  background-color:#dfdfdf;
-  color:#999;
+  background-color:#ccc;
+  color:#777;
 }
 .title-ele {
   line-height: 58.5rpx;
@@ -2098,7 +2099,8 @@ a {
 }
 .app .goods-list .title-container .price,
 .app .seckill .title-container .price {
-  color: #f60;
+  /* color: #f60; */
+  color: #f53530;
   margin-right: 10px;
 }
 .app .goods-list .title-container .virtual_price,
@@ -4810,5 +4812,5 @@ a {
 .ele-container .shop-recommend{
   font-size:32rpx;  
   padding-left:20rpx;
-  color:#f50;
+  color: #f53530;
 }

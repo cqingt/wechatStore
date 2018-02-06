@@ -88,7 +88,7 @@ page {
   display: inline-block;
 }
 .makeCom-level-span[data-level="1"].active {
-  color: #eb5a09;
+  color: #f53530
 }
 .makeCom-level-span[data-level="2"].active {
   color: #ffb033;
@@ -96,6 +96,7 @@ page {
 .makeCom-level-span[data-level="3"].active {
   color: #6c593b;
 }
+.makeCom-make-comment{background: #f53530;color: #fff;}
 .makeCom-pic-wrap {
   position: relative;
   display: inline-block;
@@ -138,7 +139,7 @@ page {
   text-align: center;
 }
 .makeCom-mark-container .icon-star {
-  color: #f0b127;
+  color: #f53530;
 }
 .makeCom-bottom-nav {
   position: fixed;

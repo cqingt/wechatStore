@@ -5,6 +5,37 @@ var pageData = {
     "search1":{"type":"search","style":"margin-top:0;margin-left:auto;","content":{"placeholder":"\u641c\u7d22\u60a8\u7684\u7f8e\u5473"},"customFeature":{"hasQuickTags":true,"quickTags":["\u9e21","\u9c7c","\u8089","\u82f9\u679c"],"searchObject":{"subPageResponse":"inner-link","subFuntionResponse":"call","animations":[],"type":"goods-list","name":"\u5546\u54c1\u5217\u8868","content":"","customFeature":{"lineBackgroundColor":"rgb(255, 255, 255)","lineBackgroundImage":"","margin":0,"lineHeight":212,"imgWidth":"150","imgHeight":"150","vesselAutoheight":1,"height":"300px","form":"goods","mode":1,"name":"\u5546\u54c1\u5217\u8868","ifUseContact":true,"id":"list-37220340"},"style":{"background-color":"rgb(243, 243, 243)","background-image":"","margin-top":"0px","opacity":1,"color":"rgb(102, 102, 102)","font-size":"14px"},"id":"zhichi_4876600202"}},"animations":[],"page_form":"","compId":"search1","parentCompid":"search1"},
     "picture2":{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:405.46875rpx;width:750rpx;margin-left:auto;margin-right:auto;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_58c6400de9737.png","customFeature":{"boxShadow":"5","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5"},"animations":[],"page_form":"","compId":"picture2","parentCompid":"picture2"},
     "goods_list3":{"type":"goods-list","style":"background-color:rgb(243, 243, 243);opacity:1;color:rgb(102, 102, 102);font-size:32.8125rpx;height:auto;margin-left:auto;","content":"","customFeature":{"lineBackgroundColor":"rgb(255, 255, 255)","lineBackgroundImage":"","margin":0,"lineHeight":212,"imgWidth":"150","imgHeight":"150","vesselAutoheight":1,"height":"300px","form":"goods","mode":1,"name":"\u5546\u54c1\u5217\u8868","ifUseContact":true,"id":"list-37220340"},"animations":[],"page_form":"","compId":"goods_list3","parentCompid":"goods_list3","list_style":"background-color:rgb(255, 255, 255);height:496.875rpx;margin-left:auto;","img_style":"width:351.5625rpx;height:351.5625rpx;margin-left:auto;","title_width":{"width":"375rpx"},"param":"{\"id\":\"list-37220340\",\"form\":\"goods\",\"goods_type\":0,\"page\":1,\"app_id\":\"RFF1h2JIfF\",\"is_count\":0,\"is_integral\":0}"},
+    "carousel": {
+      "type": "carousel",
+      "style": "height:482.8125rpx;margin-left:auto;margin-right:auto;margin-top:0;opacity:1;",
+      "content": [
+        {
+          "customFeature": {
+            "action": "goods-trade",
+            "goods-id": "1018983",
+            "goods-name": "\u5988\u5988\u7269\u8bed"
+          },
+          "pic": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_58ef16b51c4bd.jpg",
+          "itemIndex": 0,
+          "eventParams": "{\"goods_id\":\"1018983\",\"goods_type\":null}",
+          "eventHandler": "tapGoodsTradeHandler"
+        },
+        {
+          "customFeature": {
+            "action": "community",
+            "community-id": "516",
+            "community-name": " \u5988\u5988\u6d3e"
+          },
+          "pic": "http:\/\/img.weiye.me\/zcimgdir\/album\/file_58f6fb921bce4.jpg",
+          "itemIndex": 1,
+          "eventParams": "{\"community_id\":\"516\"}", "eventHandler": "tapCommunityHandler"
+        }
+      ],
+      "customFeature": { "autoplay": true, "interval": 3 },
+      "animations": [],
+      "page_form": "",
+      "compId": "carousel1"
+    },
     "has_tabbar":1,
     "page_hidden":true,
     "page_form":"",
