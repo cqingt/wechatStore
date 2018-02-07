@@ -173,7 +173,7 @@ page {
   border-bottom: none;
 }
 .myOrder-ebusiness .dialog-block-item{
-  border-bottom:1px solid #dcdcdc;
+  border-bottom:1px solid #f1f1f1;
 }
 .myOrder-ebusiness .myOrder-total-item{
   border-bottom: none;
@@ -184,14 +184,14 @@ page {
 .myOrder-appointment .myOrder-goods-list {
   padding: 0 25rpx;
   margin: 0 -25rpx;
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
 
 }
 .myOrder-ebusiness .myOrder-goods-list .dialog-block-item,
 .myOrder-appointment .myOrder-goods-list .dialog-block-item {
   padding-top: 12rpx;
   padding-bottom: 12rpx;
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1px solid #f1f1f1;
 }
 .myOrder-ebusiness .myOrder-goods-list .dialog-block-item:last-child,
 .myOrder-appointment .myOrder-goods-list .dialog-block-item:last-child {
@@ -207,7 +207,7 @@ page {
 .myOrder-appointment .myOrder-list-bottom {
   padding-top: 12rpx;
   padding-bottom: 12rpx;
-  border-top: 1px solid #dcdcdc;
+  border-top: 1px solid #f1f1f1;
 }
 .myOrder-ebusiness .myOrder-goods-cover,
 .myOrder-appointment .myOrder-goods-cover {
@@ -313,5 +313,27 @@ page {
   border-bottom: none;
 }
 .key-underline{
-  border-top:1px solid #dcdcdc;
+  border-top:1px solid #f1f1f1;
+}
+
+#myOrder .suspension{
+  color: #fff;
+  font-size: 20px;
+  position: fixed !important;
+  right: 0;
+  bottom: 163.8rpx;
+  z-index: 20;
+}
+#myOrder .element {
+  display: block;
+	width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 1;
+  border-color: #222222;
+  border-width: 0;
 }

@@ -26,19 +26,12 @@ Page({
       method: 'post',
       data: {
         goods_id: that.data.goodsId,
-        idx_arr: {
-          idx: 'level',
-          idx_value: commnetType
-        },
+        level: commnetType,
         page: page,
-        page_size: 20,
-        sub_shop_app_id: this.data.franchiseeId
+        page_size: 20
       },
       success: function(res){
         var commentArr = res.data;
-        // for (var i = commentArr.length - 1; i >= 0; i--) {
-        //   commentArr[i].add_time = util.formatTime(new Date(commentArr[i].add_time*1000));
-        // }
         if(append){
           commentArr = that.data.comments.concat(commentArr);
         }
@@ -52,7 +45,7 @@ Page({
     });
   },
   clickCommentLabel: function(e){
-    var commentType = e.target.dataset.type,
+    var commentType = e.currentTarget.dataset.type,
         data = {};
 
     data.loadPage = 1;
@@ -62,6 +55,7 @@ Page({
     this.getAssessList(commentType, 1);
   },
   scrollLoadComment: function(){
+    console.log('getmore');
     this.getAssessList(this.data.commentType, this.data.loadPage, 1);
   },
   clickPlusImages:function(e){
@@ -69,5 +63,8 @@ Page({
       current: e.currentTarget.dataset.src,
       urls: e.currentTarget.dataset.srcarr
     })
-  }
+  },
+  onReachBottom: function (e) {
+    this.getAssessList(this.data.commentType, this.data.loadPage, 1);
+  },
 })

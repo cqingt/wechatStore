@@ -9,13 +9,15 @@
     </view>
   </view>
   <view class="comPage-bottom-section">
-    <scroll-view class="comPage-comment-list" scroll-y="true" bindscrolltolower="scrollLoadComment">
+    <scroll-view class="comPage-comment-list" scroll-y="{{true}}" bindscrolltolower="scrollLoadComment" style='height:100%'>
       <view wx:for="{{ comments }}" class="comPage-comment-item" wx:key="">
-        <view>
+        <view class="comment-header">
           <image class="comPage-comment-photo" src="{{ item.buyer_headimgurl }}"></image>
           <text class="comPage-comment-name">{{ item.buyer_nickname }}</text>
+
+          <text class="comPage-comment-date">{{ item.add_time }}</text>
         </view>
-        <text class="comPage-comment-date">{{ item.add_time }}</text>
+        
         <view class="comPage-comment-content">{{ item.assess_info.content }}</view>
         <view wx:if="{{ item.assess_info.has_img }}" class="comPage-comment-pics">
           <image wx:for="{{ item.assess_info.img_arr }}" wx:key="" wx:for-item="imgSrc" src="{{ imgSrc }}" data-src="{{ imgSrc }}" data-srcarr="{{ item.assess_info.img_arr }}" catchtap="clickPlusImages"></image>

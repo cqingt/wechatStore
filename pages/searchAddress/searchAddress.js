@@ -275,14 +275,6 @@ Page({
       }
     })
   },
-  selectTakeoutRelocate:function(e){
-    let info = e.currentTarget.dataset.info
-    app.globalData.takeoutLocate = {
-      lat: info.latitude,
-      lng: info.longitude
-    }
-    app.turnBack();
-  },
   turnBackPageByLoacl: function (e) {
     app.globalData.takeoutAddressSelected = '';
     let pages = getCurrentPages(),

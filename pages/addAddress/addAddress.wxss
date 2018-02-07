@@ -38,8 +38,8 @@ page{
   border-radius: 2px;
 }
 .newAddressBox .adressLabel.active {
-  border: 1px solid #ff7100;
-  color: #ff7100;
+  border: 1px solid #f53530;
+  color: #f53530;
 }
 .newAddressBox .specialInput {
   display: inline-block;
@@ -52,7 +52,7 @@ page{
   font-size: 30rpx;
 }
 .newAddressBottom .sureAddAddress {
-  background: #ff7100;
+  background: #f53530;
   color: #fff;
   line-height: 80rpx;
   border-radius: 4px;

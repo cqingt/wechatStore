@@ -3,7 +3,7 @@ var app = getApp()
 
 Page({
   data: {
-    selectAddressId: '',
+    selectAddressId: '114603',
     orderId: '',
     addressList: [],
     afterInitial: false,
@@ -116,6 +116,9 @@ Page({
   },
   addNewAddress:function(){
     let _this = this;
+    app.turnToPage('/pages/addAddress/addAddress');
+    return false;
+
     app.showModal({
       content:'是否导入微信收货地址',
       showCancel: true,

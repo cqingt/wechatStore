@@ -9,7 +9,7 @@
     </view>
   </view>
   <view class="logistics-info-container">
-    <view style="color:#333; padding-bottom:10px; margin-bottom:11px; border-bottom:1px solid #ccc;">物流跟踪</view>
+    <view style="color:#333; padding-bottom:10px; margin-bottom:11px; border-bottom:1px solid #f1f1f1;">物流跟踪</view>
     <view class="logistics-info-list">
       <view wx:for="{{ info.traces }}" wx:key="" class="logistics-info-item">
         <view>{{ item.accept_station }}</view>

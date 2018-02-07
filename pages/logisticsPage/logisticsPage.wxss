@@ -3,10 +3,10 @@
   background-color: #f6f6f6;
 }
 .logistics-top-section {
-  margin: 12px 0;
+  margin: 0 0 12px 0;
 }
 .logistics-top-section, .logistics-info-container {
-  padding: 15px 15px 0 15px;
+  padding: 15px;
   background-color: #fff;
 }
 .logistics-order-status.success, .logistics-info-item:first-child {
@@ -17,7 +17,8 @@
 }
 .logistics-info-list {
   margin-left: 7px;
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #f1f1f1;
+  padding-bottom: 8rpx;
 }
 .logistics-info-item {
   position: relative;

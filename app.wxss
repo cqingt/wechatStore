@@ -253,7 +253,7 @@ a {
 .btn {
   display: inline-block;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #f3f3f3;
   border-radius: 3px;
   padding: 7px;
   margin: 0;
@@ -1983,11 +1983,11 @@ a {
   padding-left: 10px;
   margin-bottom: 1px;
   text-decoration: inherit;
-  border-bottom:1px solid #dfdfdf;
+  border-bottom:1px solid #f3f3f3;
   
 }
 .app .goods-list .goods-list-item:nth-child(odd){
-  border-right:1px solid #dfdfdf;
+  border-right:1px solid #f3f3f3;
 }
 .goods-list-mode-1 .goods-list-item:nth-child(odd){
   width:49%;
@@ -4806,7 +4806,7 @@ a {
   height:80rpx;
   width:100%;
   text-align:left;
-  background:#dfdfdf;
+  background:#f3f3f3;
   line-height:80rpx;
 }
 .ele-container .shop-recommend{

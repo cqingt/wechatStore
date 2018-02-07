@@ -255,6 +255,11 @@ contact-button {
   font-size: 24rpx;
   margin-top: 20rpx;
 }
+.comment-header{
+  border-bottom: 1px solid #f3f3f3;
+  padding-bottom:14rpx;
+}
+.comment-date{float:right;}
 .goods-other-info {
   font-size: 24rpx;
   color: #666;
@@ -264,7 +269,7 @@ contact-button {
   display: inline-block;
   line-height: 46rpx;
   color: #666;
-  margin-right: 20px;
+  /* margin-right: 20px; */
 }
 
 

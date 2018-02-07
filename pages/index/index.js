@@ -2,6 +2,12 @@ var app      = getApp();
 
 var pageData = {
   data: {
+    "suspension": { // 侧边栏
+      "type": "suspension",
+      "style": "opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;",
+      "list_style": "margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;",
+      "suspension_bottom": 60
+    },
     "search1":{"type":"search","style":"margin-top:0;margin-left:auto;","content":{"placeholder":"\u641c\u7d22\u60a8\u7684\u7f8e\u5473"},"customFeature":{"hasQuickTags":true,"quickTags":["\u9e21","\u9c7c","\u8089","\u82f9\u679c"],"searchObject":{"subPageResponse":"inner-link","subFuntionResponse":"call","animations":[],"type":"goods-list","name":"\u5546\u54c1\u5217\u8868","content":"","customFeature":{"lineBackgroundColor":"rgb(255, 255, 255)","lineBackgroundImage":"","margin":0,"lineHeight":212,"imgWidth":"150","imgHeight":"150","vesselAutoheight":1,"height":"300px","form":"goods","mode":1,"name":"\u5546\u54c1\u5217\u8868","ifUseContact":true,"id":"list-37220340"},"style":{"background-color":"rgb(243, 243, 243)","background-image":"","margin-top":"0px","opacity":1,"color":"rgb(102, 102, 102)","font-size":"14px"},"id":"zhichi_4876600202"}},"animations":[],"page_form":"","compId":"search1","parentCompid":"search1"},
     "picture2":{"type":"picture","style":"opacity:1;background-color:transparent;border-color:rgb(34, 34, 34);border-style:none;height:405.46875rpx;width:750rpx;margin-left:auto;margin-right:auto;","content":"http:\/\/img.weiye.me\/zcimgdir\/album\/file_58c6400de9737.png","customFeature":{"boxShadow":"5","boxColor":"#000","boxX":"0","boxY":"0","boxR":"5"},"animations":[],"page_form":"","compId":"picture2","parentCompid":"picture2"},
     "goods_list3":{"type":"goods-list","style":"background-color:rgb(243, 243, 243);opacity:1;color:rgb(102, 102, 102);font-size:32.8125rpx;height:auto;margin-left:auto;","content":"","customFeature":{"lineBackgroundColor":"rgb(255, 255, 255)","lineBackgroundImage":"","margin":0,"lineHeight":212,"imgWidth":"150","imgHeight":"150","vesselAutoheight":1,"height":"300px","form":"goods","mode":1,"name":"\u5546\u54c1\u5217\u8868","ifUseContact":true,"id":"list-37220340"},"animations":[],"page_form":"","compId":"goods_list3","parentCompid":"goods_list3","list_style":"background-color:rgb(255, 255, 255);height:496.875rpx;margin-left:auto;","img_style":"width:351.5625rpx;height:351.5625rpx;margin-left:auto;","title_width":{"width":"375rpx"},"param":"{\"id\":\"list-37220340\",\"form\":\"goods\",\"goods_type\":0,\"page\":1,\"app_id\":\"RFF1h2JIfF\",\"is_count\":0,\"is_integral\":0}"},
@@ -109,7 +115,11 @@ var pageData = {
     app.dynamicVesselScrollFunc(e);
   },
   goodsScrollFunc: function (e) {
+    console.log('more');
     app.goodsScrollFunc(e);
+  },
+  onReachBottom: function(e) {
+    app.goodsScrollFunc({type:'tap'});
   },
   takeoutStyleScrollFunc: function(e){
     app.takeoutStyleScrollFunc(e);

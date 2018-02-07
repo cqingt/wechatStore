@@ -4,6 +4,12 @@ var WxParse = require('../../components/wxParse/wxParse.js');
 
 Page({
   data: {
+    "suspension": { // 侧边栏
+      "type": "suspension",
+      "style": "opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;",
+      "list_style": "margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;",
+      "suspension_bottom": 60
+    },
     goodsId: '',
     goodsInfo: {},
     modelStrs: {},
@@ -41,44 +47,32 @@ Page({
     priceDiscountStr: '',
     page_hidden: true,
     appointmentPhone:'',
-    cart_num:0
+    cart_num:0,
+    contact: '',
   },
   onLoad: function(options){
     var goodsId = options.detail,
-        contact = options.contact,
-        franchiseeId = options.franchisee || '',
         cartGoodsNum = options.cart_num || 0,
-        defaultPhoto = app.getDefaultPhoto(),
-        goodsType = options.goodsType || 0,
-        userToken = options.user_token || '',
-        hidestock = options.hidestock || false,
-        isShowVirtualPrice = options.isShowVirtualPrice;
+        defaultPhoto = app.getDefaultPhoto();
+
     this.setData({
       goodsId: goodsId,
-      contact: contact,
+      contact: true,
       defaultPhoto: defaultPhoto,
-      franchiseeId: franchiseeId,
       cartGoodsNum: cartGoodsNum,
-      goodsType : goodsType,
-      isSeckill : goodsType == 'seckill' ? true : false,
-      hidestock : hidestock == 'true' ? true : false,
-      isShowVirtualPrice: isShowVirtualPrice == 'true' ? true : false,
+      goodsType : 0,
+      isSeckill : false,
+      hidestock : false,
+      isShowVirtualPrice: true,
     })
     this.dataInitial();
-    if (userToken) {
-      app._getPromotionUserToken({
-        user_token: userToken
-      });
-    }
   },
   dataInitial: function () {
     var that = this;
     app.sendRequest({
       url: '/index.php?r=AppShop/getGoods',
       data: {
-        data_id: this.data.goodsId,
-        sub_shop_app_id: this.data.franchiseeId ,
-        is_seckill: this.data.isSeckill ? 1 : ''
+        data_id: this.data.goodsId
       },
       success: that.modifyGoodsDetail,
       complete: function(){
@@ -97,7 +91,6 @@ Page({
     })
     let goodsId = this.data.goodsId,
         contact = this.data.contact,
-        franchiseeId = this.data.franchiseeId,
         cartGoodsNum = this.data.cart_num,
         isSeckill = this.data.isSeckill,
         urlSeckill = isSeckill ? '&goodsType=seckill' : '',
@@ -111,40 +104,19 @@ Page({
     }
   },
   goToMyOrder: function(){
-    var franchiseeId = this.data.franchiseeId,
-        pagePath = '/pages/myOrder/myOrder'+(franchiseeId ? '?franchisee='+franchiseeId : '');
+    var pagePath = '/pages/myOrder/myOrder';
     app.turnToPage(pagePath, true);
   },
   goToShoppingCart: function(){
-
-    var franchiseeId = this.data.franchiseeId,
-        pagePath = '/pages/shoppingCart/shoppingCart'+(franchiseeId ? '?franchisee='+franchiseeId : '');
-        console.log(pagePath);
+    var pagePath = '/pages/shoppingCart/shoppingCart';
     app.turnToPage(pagePath, true);
   },
   goToHomepage: function(){
-    let that = this;
-    if (that.data.franchiseeId){
-      let pages = getCurrentPages();
-      let url = 'pages/franchiseeDetail/franchiseeDetail';
-      let delta = 1;
-      for (let i = pages.length - 1; i >= 0; i--){
-        let page = pages[i];
-        if (page.route == url && page.options.detail == that.data.franchiseeId){
-          delta = pages.length - 1 - i;
-          app.turnBack({delta: delta});
-          return;
-        }
-      }
-      app.turnToPage('/pages/franchiseeDetail/franchiseeDetail?detail=' + that.data.franchiseeId, true);
-    }else{
-      var router = app.getHomepageRouter();
-      app.reLaunch({url: '/pages/'+router+'/'+router});
-    }
+    var router = app.getHomepageRouter();
+    app.reLaunch({url: '/pages/'+router+'/'+router});
   },
   goToCommentPage: function(){
-    var franchiseeId = this.data.franchiseeId,
-        pagePath = '/pages/goodsComment/goodsComment?detail='+this.data.goodsId+(franchiseeId ? '&franchisee='+franchiseeId : '');
+    var pagePath = '/pages/goodsComment/goodsComment?detail='+this.data.goodsId;
     app.turnToPage(pagePath);
   },
   goodsCoverOnload: function(e){
@@ -271,9 +243,6 @@ Page({
       },
       success: function(res){
         var commentExample = res.data[0];
-        // if(commentExample){
-        //   commentExample.add_time = util.formatTime(new Date(commentExample.add_time * 1000));
-        // }
         if (res.data.length < 1) {
           return false;
         }
@@ -394,9 +363,7 @@ Page({
         param = {
                   goods_id: this.data.goodsId,
                   model_id: this.data.selectModelInfo.modelId || '',
-                  num: this.data.selectModelInfo.buyCount,
-                  sub_shop_app_id: this.data.franchiseeId || '',
-                  is_seckill : this.data.isSeckill ? 1 : ''
+                  num: this.data.selectModelInfo.buyCount
                 };
 
     app.sendRequest({
@@ -437,15 +404,12 @@ Page({
     //     app.turnToPage(pagePath);
     //   }
     // })
-    var franchiseeId = this.data.franchiseeId,
-        that = this,
+    var that = this,
         param = {
-                  goods_id: this.data.goodsId,
-                  model_id: this.data.selectModelInfo.modelId || '',
-                  num: this.data.selectModelInfo.buyCount,
-                  sub_shop_app_id: franchiseeId || '',
-                  is_seckill : this.data.isSeckill ? 1 : ''
-                };
+          goods_id: this.data.goodsId,
+          model_id: this.data.selectModelInfo.modelId || '',
+          num: this.data.selectModelInfo.buyCount
+        };
 
     app.sendRequest({
       url: '/index.php?r=AppShop/addCart',
@@ -453,18 +417,15 @@ Page({
       success: function(res){
         var cart_arr = [res.data],
             pagePath = '/pages/previewGoodsOrder/previewGoodsOrder?cart_arr='+ encodeURIComponent(cart_arr);
-
-        franchiseeId && (pagePath += '&franchisee='+franchiseeId);
         that.hiddeAddToShoppingCart();
         app.turnToPage(pagePath);
       }
     })
   },
   makeAppointment: function(){
-    var franchiseeId = this.data.franchiseeId,
-        unitTime = this.data.modelStrs[0] && this.data.modelStrs[0].substring(this.data.modelStrs[0].length-1),
+    var unitTime = this.data.modelStrs[0] && this.data.modelStrs[0].substring(this.data.modelStrs[0].length-1),
         unitType = unitTime == '分' ? 1:(unitTime == '时'? 2 : 3),
-        pagePath = '/pages/makeAppointment/makeAppointment?detail='+this.data.goodsId+(franchiseeId ? '&franchisee='+franchiseeId : '') +('&param=' + unitType)
+        pagePath = '/pages/makeAppointment/makeAppointment?detail='+this.data.goodsId +('&param=' + unitType)
     app.turnToPage(pagePath);
   },
   inputBuyCount: function(e){
@@ -496,7 +457,7 @@ Page({
       url: '/index.php?r=AppShop/ShareQRCode',
       data: {
         obj_id: that.data.goodsId,
-        type: this.data.isSeckill ? 5 : 1,
+        type: 1,
         text: goodsInfo.title,
         price: (goodsInfo.highPrice > goodsInfo.lowPrice && goodsInfo.lowPrice != 0 ? (goodsInfo.lowPrice + ' ~ ' + goodsInfo.highPrice) : goodsInfo.price),
         goods_img: goodsInfo.img_urls ? goodsInfo.img_urls[0] : goodsInfo.cover

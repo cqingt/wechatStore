@@ -53,6 +53,11 @@
   margin-top: 20rpx;
   display: block;
 }
+.comment-header{
+  border-bottom: 1px solid #f1f1f1;
+  padding-bottom:14rpx;
+}
+.comPage-comment-date{float:right;}
 .comPage-comment-pics image {
   width:223rpx;
   height:223rpx;

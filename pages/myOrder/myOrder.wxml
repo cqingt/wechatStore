@@ -53,7 +53,7 @@
                 <text class="btn myOrder-check-logistics" bindtap="checkLogistics" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}" wx:if="{{item.is_self_delivery == 0}}">查看物流</text>
               </block>
               <text class="btn myOrder-apply-drawback" bindtap="applyDrawback" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">申请退款</text>
-              <text class="btn btn-orange myOrder-sure-receipt" bindtap="sureReceipt" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">确认消费</text>
+              <text class="btn btn-orange myOrder-sure-receipt" bindtap="sureReceipt" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">确认收货</text>
             </view>
             <view class="myOrder-list-bottom" wx:elif="{{ item.status == 3 }}">
               <block>
@@ -67,6 +67,7 @@
           </view>
           <view hidden="{{ !noMore }}" class="noMoreNewDataTip">我是有底线的</view>
         </scroll-view>
+        
       </view>
       <view class="scrollContainer" hidden="{{ currentTabIndex != 1 }}">
         <scroll-view class="myOrder-toPay myOrder-content-container myOrder-ebusiness" lower-threshold="10" scroll-y="true" bindscrolltolower="scrollToListBottom">
@@ -162,7 +163,7 @@
                 <block>
                   <text class="btn myOrder-check-logistics" bindtap="checkLogistics" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}" wx:if="{{item.is_self_delivery == 0}}">查看物流</text>
                 </block>
-                <text class="btn myOrder-apply-drawback" bindtap="applyDrawback" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">申请退款</text> <text class="btn btn-orange myOrder-sure-receipt" bindtap="sureReceipt" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">确认消费</text>
+                <text class="btn myOrder-apply-drawback" bindtap="applyDrawback" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">申请退款</text> <text class="btn btn-orange myOrder-sure-receipt" bindtap="sureReceipt" data-franchisee="{{ item.app_id }}" data-id="{{ item.order_id }}">确认收货</text>
               </label>
             </view>
           </view>
@@ -206,5 +207,23 @@
           <view hidden="{{ !noMore }}" class="noMoreNewDataTip">我是有底线的</view>
         </scroll-view>
       </view>
+
+      <template name="zcSuspension">
+        <view class="element suspension" data-compid="suspension1" style="{{data.style}}bottom: {{data.suspension_bottom}}rpx;" >
+            <view class="suspension-item" data-type="service" style="{{data.list_style}}">
+              <icon class="ico-moon icon-service2 suspension-service">
+                <contact-button type="default-dark" size="20" session-from="suspension"></contact-button>
+              </icon>
+            </view>
+            <view class="suspension-item" data-type="top" catchtap="scrollPageTop" style="{{data.list_style}}">
+              <icon class="ico-moon icon-top"></icon>
+            </view>
+        </view>
+      </template>
+      <template is="zcSuspension" data="{{data:suspension}}"></template>
   </view>
+      
 </view>
+
+
+

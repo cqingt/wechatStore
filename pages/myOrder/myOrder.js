@@ -3,6 +3,12 @@ var app = getApp()
 
 Page({
   data: {
+    "suspension": { // 侧边栏
+      "type": "suspension",
+      "style": "opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;",
+      "list_style": "margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;",
+      "suspension_bottom": 60
+    },
     orderLists: [],
     pages: 1,
     types: {
@@ -17,7 +23,6 @@ Page({
   onLoad: function(options){
     if (options.goodsType && options.currentIndex){
       this.setData({
-        currentGoodsType: options.goodsType,
         currentTabIndex: options.currentIndex
       })
     }
@@ -37,6 +42,9 @@ Page({
       })
     }
   },
+  scrollPageTop: function () {
+    app.pageScrollTo(0);
+  },
   dataInitial: function(){
     var that = this;
     this.getOrderList({
@@ -53,7 +61,7 @@ Page({
         type;
 
     if (this.data.currentGoodsType != undefined){
-      status = this.data.types[this.data.currentGoodsType][param.tabIndex];
+      var status = this.data.types[this.data.currentGoodsType][param.tabIndex];
 
       if (status != undefined){
         data.status = status;
@@ -77,7 +85,6 @@ Page({
         }
 
         data['orderLists'] = orders;
-        //data['takeoutInfo'] = res.take_out_info;
         data['pages'] = that.data.pages + 1;
         data['noMore'] = res.is_more == 0 ? true : false;
         data['currentGoodsType'] = 0;

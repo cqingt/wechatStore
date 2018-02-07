@@ -5,12 +5,13 @@ page {
 }
 .address-list-title {
   width: 100%;
-  height: 66rpx;
+  height: 80rpx;
   background-color: #f3f3f3;
   color: #666;
-  font-size: 26rpx;
+  font-size: 32rpx;
   text-indent: 30rpx;
-  line-height: 66rpx;
+  line-height: 80rpx;
+  display: none;
 }
 .myAddress-bottom-nav {
   position: fixed;
@@ -39,7 +40,7 @@ page {
   position: relative;
   padding: 15px 0;
   line-height: 20px;
-  border-bottom:1px solid #eee;
+  border-bottom:1px solid #f3f3f3;
 }
 .address-label {
   font-size: 22rpx;
@@ -75,7 +76,7 @@ page {
   right:0;
   top:0;
   padding: 15px 10px;
-  color: #999;
+  color: #f53530;
 }
 .myAddress-address-top {
   padding: 0 30rpx;
@@ -83,7 +84,7 @@ page {
 .myAddress-address-top .address-detail {
   font-size: 26rpx;
   color: #333;
-  font-weight: 600;
+  font-weight: 500;
   display:inline-block;
   width: 550rpx;
   vertical-align:top;
@@ -100,7 +101,7 @@ page {
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  border: 1px solid #ff7100;
+  border: 1px solid #f53530;
   position: relative;
   vertical-align:middle;
 }
@@ -123,3 +124,29 @@ page {
   left: 6px;
   top: 3px;
 } 
+.check-box-container {
+  position: relative;
+  padding: 10px;
+  margin: 0 5px;
+  z-index:1;
+  float: left;
+}
+.check-box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  padding: 4px 3px;
+  margin-right: 6px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  vertical-align: middle;
+  line-height: 13px;
+  background-color: #eaeaea;
+}
+.check-box.checked {
+  background-color: #f53530;
+}
+.check-box image {
+  width: 100%;
+  height: 100%;
+}

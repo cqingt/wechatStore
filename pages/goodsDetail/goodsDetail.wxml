@@ -55,11 +55,12 @@
       <view class="block-item">
         <view wx:if="{{ commentExample }}">
           <view class="comment-item">
-            <view>
+            <view class="comment-header">
               <image class="comment-user-photo" src="{{ commentExample.buyer_headimgurl || defaultPhoto }}"></image>
               <text class="commentPersonName">{{ commentExample.buyer_nickname }}</text>
+              <view class="comment-date">{{ commentExample.add_time }}</view>
             </view>
-            <view class="comment-date">{{ commentExample.add_time }}</view>
+
             <view class="comment-content">{{ commentExample.assess_info.content }}</view>
             <view wx:if="{{ commentExample.assess_info.has_img }}" class="comPage-comment-pics">
               <image wx:for="{{ commentExample.assess_info.img_arr }}" wx:for-item="imgSrc" src="{{ imgSrc }}" wx:key="" data-src="{{ imgSrc }}" data-srcarr="{{ commentExample.assess_info.img_arr }}" catchtap="clickPlusImages"></image>
@@ -169,3 +170,17 @@
     </view>
   </view>
 </view>
+
+<template name="zcSuspension">
+  <view class="element suspension" data-compid="suspension1" style="{{data.style}}bottom: {{data.suspension_bottom}}rpx;" >
+      <view class="suspension-item" data-type="service" style="{{data.list_style}}">
+        <icon class="ico-moon icon-service2 suspension-service">
+          <contact-button type="default-dark" size="20" session-from="suspension"></contact-button>
+        </icon>
+      </view>
+      <view class="suspension-item" data-type="top" catchtap="scrollPageTop" style="{{data.list_style}}">
+        <icon class="ico-moon icon-top"></icon>
+      </view>
+  </view>
+</template>
+<template is="zcSuspension" data="{{data:suspension}}"></template>

@@ -68,6 +68,10 @@ Page({
       }
     })
   },
+  gotoGoodsDetail: function(e) {
+    var pagePath = '/pages/goodsDetail/goodsDetail?detail=' + e.currentTarget.dataset.goodsid;
+    app.turnToPage(pagePath);
+  },
   switchToEdit: function(){
     this.setData({
       editing: true

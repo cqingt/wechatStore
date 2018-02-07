@@ -43,12 +43,12 @@
           </label>
         </label>
         <view class="shoppingCart-goods-content">
-          <image class="shoppingCart-goods-cover" src="{{ goods.cover }}"></image>
+          <image class="shoppingCart-goods-cover" src="{{ goods.cover }}" bindtap="gotoGoodsDetail" data-goodsid="{{goods.goods_id}}"></image>
           <view class="ellipsis shoppingCart-goods-title">{{ goods.title }}</view>
           <view class="ellipsis shoppingCart-goods-model" wx:if="{{ goods.model_value_str }}">{{ goods.model_value_str }}</view>
-          <block wx:if="{{goods.is_seckill == 1}}">
+          <block wx:if="{{goods.original_price}}">
             <view class="shoppingCart-goods-original-price">原价 <text>¥{{ goods.original_price }}</text></view>
-            <view class="shoppingCart-goods-price">秒杀特价 <text>¥{{ goods.price }}</text></view>
+            <view class="shoppingCart-goods-price">现价 <text>¥{{ goods.price }}</text></view>
           </block>
           <block wx:else>
             <view class="shoppingCart-goods-price">价格 <text>¥{{ goods.price }}</text></view>

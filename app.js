@@ -408,11 +408,11 @@ App({
   shareAppMessage: function (options) {
     var that = this;
     return {
-      title: options.title || this.getAppTitle() || '即速应用',
-      desc: options.desc || this.getAppDescription() || '即速应用，拖拽生成app，无需编辑代码，一键打包微信小程序',
+      title: options.title || this.getAppTitle() || '小程序应用',
+      desc: options.desc || this.getAppDescription() || '小程序应用',
       path: options.path,
       success: function () {
-        that.countUserShareApp();
+        //分享成功，后续 that.countUserShareApp();
       }
     }
   },
@@ -542,6 +542,7 @@ App({
   },
   pageScrollTo: function (scrollTop) {
     if (wx.pageScrollTo) {
+      console.log(scrollTop);
       wx.pageScrollTo({
         scrollTop: scrollTop
       });
@@ -890,28 +891,6 @@ App({
             param :  component,
             triggerFuc : function(param) {
               that.goodsScrollFunc(param.compId);
-            }
-          }];
-        }
-      }
-      if(/^seckill[\d]+$/.test(i)){
-        let component = pageInstance.data[i];
-        if(component.customFeature.vesselAutoheight == 1 && component.customFeature.loadingMethod == 0){
-          pageInstance.reachBottomFuc = [{
-            param :  component,
-            triggerFuc : function(param) {
-              that.seckillScrollFunc(param.compId);
-            }
-          }];
-        }
-      }
-      if(/^video_list[\d]+$/.test(i)){
-        let component = pageInstance.data[i];
-        if(component.customFeature.vesselAutoheight == 1 && component.customFeature.loadingMethod == 0){
-          pageInstance.reachBottomFuc = [{
-            param :  component,
-            triggerFuc : function(param) {
-              that.videoScrollFunc(param.compId);
             }
           }];
         }
@@ -1552,57 +1531,6 @@ App({
       }
     }
 
-    if (!!pageInstance.seckillOnLoadCompidParam) {
-      for (let i in pageInstance.seckillOnLoadCompidParam) {
-        let compid = pageInstance.seckillOnLoadCompidParam[i].compid;
-        let param = pageInstance.seckillOnLoadCompidParam[i].param;
-        let compData = pageInstance.data[compid];
-        let customFeature = compData.customFeature;
-
-        param.page_size = 10;
-        if(customFeature.vesselAutoheight == 1 && customFeature.loadingMethod == 1){
-          param.page_size = customFeature.loadingNum || 10;
-        }
-
-        param.is_seckill = 1;
-        pageInstance.requestNum = pageRequestNum + 1;
-        _this.sendRequest({
-          hideLoading: pageRequestNum++ == 1 ? false : true,
-          url: '/index.php?r=AppShop/GetGoodsList',
-          data: param,
-          method: 'post',
-          success: function (res) {
-            if (res.status == 0) {
-              let rdata = res.data,
-                  newdata = {},
-                  downcountArr = pageInstance.data.downcountArr || [];
-
-              for (let i = 0; i < rdata.length; i++) {
-                let f = rdata[i].form_data,
-                    dc ;
-
-                f.downCount = {
-                  hours : '00' ,
-                  minutes : '00' ,
-                  seconds : '00'
-                };
-                if(f.seckill_start_state == 0){
-                  dc = _this.beforeSeckillDownCount(f , pageInstance , compid + '.goods_data[' + i + '].form_data');
-                }else if(f.seckill_start_state == 1){
-                  dc = _this.duringSeckillDownCount(f , pageInstance , compid + '.goods_data[' + i + '].form_data');
-                }
-                downcountArr.push(dc);
-              }
-              newdata[compid + '.goods_data'] = res.data;
-              newdata[compid + '.is_more'] = res.is_more;
-              newdata[compid + '.curpage'] = 1;
-              newdata.downcountArr = downcountArr;
-              pageInstance.setData(newdata);
-            }
-          }
-        });
-      }
-    }
     if (!!pageInstance.dynamicClassifyGroupidsParams) {
       let params = pageInstance.dynamicClassifyGroupidsParams;
       for(let i = 0; i < params.length; i++){
@@ -1697,44 +1625,6 @@ App({
               }
             });
 
-          }
-        });
-      }
-    }
-
-    if (!!pageInstance.videoListComps.length) {
-      for (let i in pageInstance.videoListComps) {
-        let compid = pageInstance.videoListComps[i].compid;
-        let param = pageInstance.videoListComps[i].param;
-        let compData = pageInstance.data[compid];
-        let customFeature = compData.customFeature;
-
-        if (customFeature.vesselAutoheight == 1 && customFeature.loadingMethod == 1) {
-          param.page_size = customFeature.loadingNum || 10;
-        }
-
-        pageInstance.requestNum = pageRequestNum + 1;
-        _this.sendRequest({
-          hideLoading: pageRequestNum++ == 1 ? false : true,   // 页面第一个请求才展示loading
-          url: '/index.php?r=AppVideo/GetVideoList',
-          data: param,
-          method: 'post',
-          success: function (res) {
-            if (res.status == 0) {
-              let rdata = res.data,
-                  newdata = {};
-
-              for (var i = 0; i < rdata.length; i++) {
-                rdata[i].video_view = _this.handlingNumber(rdata[i].video_view);
-              }
-
-              newdata[compid + '.video_data'] = rdata;
-
-              newdata[compid + '.is_more'] = res.is_more;
-              newdata[compid + '.curpage'] = 1;
-
-              pageInstance.setData(newdata);
-            }
           }
         });
       }
@@ -1836,109 +1726,6 @@ App({
       }, delay * 2500)
     }
   },
-  _getTakeoutStyleGoodsList:function(param, pageInstance, compid, isOnShow){
-    let _this = this;
-    this.sendRequest({
-      hideLoading: true,   // 页面第一个请求才展示loading
-      url: '/index.php?r=AppShop/GetGoodsList',
-      data: param,
-      method: 'post',
-      success: function (res) {
-        if (res.status == 0) {
-          pageInstance.requesting = false;
-          let categoryId = param.idx_arr.idx_value == '' ? 'all' : param.idx_arr.idx_value;
-          var data = pageInstance.data,
-              newdata = {},
-              isRequireing = {},
-              categoryList = {},
-              takeoutGoodsModelData = {};
-          isRequireing[compid + '.pagination.category' + param.idx_arr.idx_value+ '.requesting'] = false;
-          pageInstance.setData(isRequireing);
-          if (!data[compid].show_goods_data || (data[compid].show_goods_data && !data[compid].show_goods_data['category' + categoryId]) || isOnShow) {
-            categoryList['category'+categoryId] = []
-          }else {
-            categoryList['category'+categoryId] = data[compid].show_goods_data['category'+categoryId]
-          }
-          for(let i in res.data){
-            let form_data = res.data[i].form_data
-            categoryList['category'+categoryId].push({
-              app_id: form_data.app_id,
-              cover: form_data.cover,
-              description: form_data.description,
-              goods_model: form_data.goods_model,
-              id : form_data.id,
-              model: form_data.model,
-              price: form_data.price,
-              sales: form_data.sales,
-              title: form_data.title,
-              business_time: form_data.business_time,
-              is_in_business_time: form_data.goods_in_business_time
-            });
-            newdata[compid + '.goods_model_list.goods'+form_data.id] = {};
-            newdata[compid + '.goods_data_list.goods'+form_data.id] = {
-              totalNum : 0,
-              stock: form_data.stock,
-              goods_model:{},
-              name: form_data.title,
-              price: form_data.price
-            }
-            if (form_data.goods_model) {
-              let new_goods_model = {}
-              for(let i in form_data.goods_model){
-                new_goods_model[form_data.goods_model[i].id] = {
-                  model: form_data.goods_model[i].model,
-                  stock: form_data.goods_model[i].stock,
-                  price: form_data.goods_model[i].price,
-                  goods_id: form_data.goods_model[i].goods_id,
-                  totalNum: 0
-                }
-              }
-              newdata[compid + '.goods_model_list.goods'+form_data.id] = {
-                modelData: [],
-                name: form_data.title,
-                goods_model : new_goods_model
-              }
-              for(let k in form_data.model){
-                newdata[compid + '.goods_model_list.goods'+form_data.id]['modelData'].push({
-                  name: form_data.model[k].name,
-                  subModelName: form_data.model[k].subModelName,
-                  subModelId : form_data.model[k].subModelId
-                })
-              }
-            } else {
-              newdata[compid + '.goods_model_list.goods'+form_data.id][0] = {
-                price: form_data.price,
-                num: 0,
-                stock: form_data.stock,
-                price: form_data.price
-              }
-            }
-          }
-          newdata[compid + '.show_goods_data.category' + categoryId] = categoryList['category'+categoryId];
-          newdata[compid + '.in_distance'] = res.in_distance;
-          newdata[compid + '.in_business_time'] = res.in_business_time;
-          if (data[compid].TotalNum == undefined) {
-            newdata[compid + '.TotalNum'] = 0;
-            newdata[compid + '.TotalPrice'] = 0.00;
-          }
-          newdata[compid + '.selected'] = 1;
-          newdata[compid + '.cartList'] = {};
-          newdata[compid + '.pagination.category' + categoryId] = data[compid].pagination['category' + categoryId];
-          newdata[compid + '.pagination.category' + categoryId].param = param;
-          newdata[compid + '.pagination.category' + categoryId].is_more= res.is_more;
-          newdata[compid + '.pagination.category' + categoryId].current_page = res.current_page;
-          newdata[compid + '.modelChoose'] = [];
-          newdata[compid + '.modelChooseId'] = [];
-          pageInstance.setData(newdata);
-          if (pageInstance.data[compid].cartTakeoutStyleList) {
-            _this._parseTakeoutCartListData(pageInstance.data[compid].cartlistData, pageInstance, compid)
-          }else{
-            _this._getTakeoutStyleCartList(pageInstance, compid)
-          }
-        }
-      }
-    });
-  },
   _getTakeoutShopInfo:function(successFun){
     this.sendRequest({
       hideLoading: true,   // 页面第一个请求才展示loading
@@ -1967,7 +1754,7 @@ App({
     this.sendRequest({
       hideLoading: true,   // 页面第一个请求才展示loading
       url: '/index.php?r=AppShop/cartList',
-      data: { page: -1, sub_shop_app_id: '', parent_shop_app_id: '' },
+      data: { page: -1},
       success: function (cartlist) {
         if (cartlist.status == 0) {
           _this._parseTakeoutCartListData(cartlist, pageInstance, compid)
@@ -2109,75 +1896,6 @@ App({
             }
           }
         });
-      }
-    }
-    if (!!pageInstance.tostoreComps && pageInstance.returnToVersionFlag) {
-      pageInstance.returnToVersionFlag = false;
-      for (let i in pageInstance.tostoreComps) {
-        let compid = pageInstance.tostoreComps[i].compid;
-        let param = pageInstance.tostoreComps[i].param;
-        let data = pageInstance.data;
-        let newTostoreData = {};
-        newTostoreData[compid + '.goodsDetailShow'] = false;
-        newTostoreData[compid + '.goodsModelShow'] = false;
-        newTostoreData[compid + '.heightPx'] = that._returnListHeight(data[compid].customFeature.showShopInfo)
-        newTostoreData[compid + '.selected'] = 1;
-        pageInstance.setData(newTostoreData);
-        param.page = 1;
-        param.page_size = 50;
-        param.take_out_style = 1;
-        let newWaimaiData = {};
-        for (let j in data[compid].content) {
-          newWaimaiData[compid + '.pagination.category' + data[compid].content[j].source] = {};
-          newWaimaiData[compid + '.pagination.category' + data[compid].content[j].source].param = {},
-            Object.assign(newWaimaiData[compid + '.pagination.category' + data[compid].content[j].source].param, param)
-          newWaimaiData[compid + '.pagination.category' + data[compid].content[j].source].param.idx_arr = {
-            idx: 'category',
-            idx_value: data[compid].content[j].source == 'all' ? '' : data[compid].content[j].source
-          };
-        }
-        pageInstance.setData(newWaimaiData);
-        param.idx_arr = {
-          idx: 'category',
-          idx_value: data[compid].content[0].source == 'all' ? '' : data[compid].content[0].source
-        }
-        that._getTakeoutStyleGoodsList(param, pageInstance, compid, 1);
-        that.sendRequest({
-          url: '/index.php?r=AppShop/GetTostoreWaitingRule',
-          method: 'get',
-          success: function (res) {
-            var newdata = {};
-            newdata[compid + '.shopInfo'] = res.data;
-            pageInstance.setData(newdata);
-          }
-        });
-        that.sendRequest({
-          url: '/index.php?r=AppShop/getAssessList&idx_arr[idx]=goods_type&idx_arr[idx_value]=3',
-          method: 'get',
-          data: { page: 1, page_size: 10, obj_name: 'app_id' },
-          success: function (res) {
-            let newdata = {},
-              showAssess = [],
-              hasImgAssessList = 0,
-              goodAssess = 0,
-              normalAssess = 0,
-              badAssess = 0;
-            for (var i = 0; i < res.data.length; i++) {
-              res.data[i].assess_info.has_img == 1 ? (hasImgAssessList++ , showAssess.push(res.data[i])) : null;
-              res.data[i].assess_info.level == 3 ? goodAssess++ : (res.data[i].assess_info.level == 1 ? badAssess++ : normalAssess++)
-            }
-            for (let j = 0; j < res.num.length; j++) {
-              res.num[j] = parseInt(res.num[j])
-            }
-            newdata[compid + '.assessActive'] = 0;
-            newdata[compid + '.assessList'] = res.data;
-            newdata[compid + '.showAssess'] = showAssess;
-            newdata[compid + '.assessNum'] = res.num;
-            newdata[compid + '.moreAssess'] = res.is_more;
-            newdata[compid + '.assessCurrentPage'] = res.current_page;
-            pageInstance.setData(newdata);
-          }
-        })
       }
     }
   },
@@ -2447,7 +2165,7 @@ App({
   },
   goodsScrollFunc : function(event) {
     let pageInstance = this.getAppCurrentPage();
-    let compid       = typeof event == 'object' ? event.currentTarget.dataset.compid : event;
+    let compid = 'goods_list3';// typeof event == 'object' ? event.currentTarget.dataset.compid : event;
     let compData     = pageInstance.data[compid];
     let that         = this;
 
@@ -2459,7 +2177,7 @@ App({
   },
   _goodsScrollFunc: function (event) {
     let pageInstance = this.getAppCurrentPage();
-    let compid       = typeof event == 'object' ? event.currentTarget.dataset.compid : event;
+    let compid = 'goods_list3';// typeof event == 'object' ? event.currentTarget.dataset.compid : event;
     let compData     = pageInstance.data[compid];
     let curpage      = compData.curpage + 1;
     let customFeature = compData.customFeature;
@@ -2507,215 +2225,7 @@ App({
       }
     })
   },
-  takeoutStyleScrollFunc:function(event){
-    let pageInstance = this.getAppCurrentPage();
-    let dataset      = event.currentTarget.dataset;
-    let compid       = dataset.compid;
-    let curpage      = parseInt(dataset.curpage) + 1;
-    let param        = dataset.param;
-    let newdata      = {};
-    param.page++
-    if (pageInstance.data[compid].pagination['category'+param.idx_arr.idx_value].requesting || pageInstance.data[compid].pagination['category'+param.idx_arr.idx_value].is_more != 1) {
-      return;
-    }
-    newdata[compid + '.pagination.category'+param.idx_arr.idx_value + '.requesting'] = true;
-    pageInstance.setData(newdata)
-    this._getTakeoutStyleGoodsList(param, pageInstance, compid, 0);
-  },
-  franchiseeScrollFunc: function (event) {
-    let pageInstance = this.getAppCurrentPage();
-    let compid       = event.target.dataset.compid;
-    let curpage      = parseInt(event.target.dataset.curpage) + 1;
-    let newdata      = {};
-    let param        = {};
 
-    if (pageInstance.requesting || !pageInstance.data[compid].is_more) {
-      return;
-    }
-    pageInstance.requesting = true;
-
-    if (pageInstance.franchiseeComps) {
-      for (let index in pageInstance.franchiseeComps) {
-        if (pageInstance.franchiseeComps[index].compid === compid) {
-          param = pageInstance.franchiseeComps[index].param;
-          break;
-        }
-      }
-    }
-    param.page = curpage;
-    this.sendRequest({
-      url: '/index.php?r=AppShop/GetAppShopByPage',
-      data: param,
-      method: 'post',
-      success: function (res) {
-        for(let index in res.data){
-          let distance = res.data[index].distance;
-          res.data[index].distance = util.formatDistance(distance);
-        }
-        newdata = {};
-        newdata[compid + '.franchisee_data'] = pageInstance.data[compid].franchisee_data.concat(res.data);
-        newdata[compid + '.is_more'] = res.is_more;
-        newdata[compid + '.curpage'] = res.current_page;
-
-        pageInstance.setData(newdata);
-      },
-      complete: function () {
-        setTimeout(function () {
-          pageInstance.requesting = false;
-        }, 300);
-      }
-    })
-  },
-  seckillScrollFunc: function (event) {
-    let pageInstance = this.getAppCurrentPage();
-    let compid       = typeof event == 'object' ? event.currentTarget.dataset.compid : event;
-    let compData     = pageInstance.data[compid];
-    let curpage      = compData.curpage + 1;
-    let customFeature = compData.customFeature;
-    let _this        = this;
-    let newdata      = {};
-    let param        = {};
-
-    if(!compData.is_more && typeof event == 'object' && event.type == 'tap'){
-      _this.showModal({
-        content: '已经加载到最后了'
-      });
-    }
-    if (pageInstance.requesting || !compData.is_more) {
-      return;
-    }
-    pageInstance.requesting = true;
-
-    if (pageInstance.seckillOnLoadCompidParam) {
-      for (let index in pageInstance.seckillOnLoadCompidParam) {
-        if (pageInstance.seckillOnLoadCompidParam[index].compid === compid) {
-          param = pageInstance.seckillOnLoadCompidParam[index].param;
-          break;
-        }
-      }
-    }
-    param.page_size = 10;
-    if(customFeature.vesselAutoheight == 1 && customFeature.loadingMethod == 1){
-      param.page_size = +customFeature.loadingNum || 10;
-    }
-    param.page = curpage;
-    _this.sendRequest({
-      url: '/index.php?r=AppShop/GetGoodsList',
-      data: param,
-      method: 'post',
-      success: function (res) {
-        newdata = {};
-        let rdata = res.data,
-            downcountArr = pageInstance.data.downcountArr || [];
-
-        for (let i = 0; i < rdata.length; i++) {
-          let f = rdata[i].form_data,
-              dc ,
-              idx = (curpage-1) * param.page_size + i;
-
-          f.downCount = {
-            hours : '00' ,
-            minutes : '00' ,
-            seconds : '00'
-          };
-          if(f.seckill_start_state == 0){
-            dc = _this.beforeSeckillDownCount(f , pageInstance , compid + '.goods_data[' + idx + '].form_data');
-          }else if(f.seckill_start_state == 1){
-            dc = _this.duringSeckillDownCount(f , pageInstance , compid + '.goods_data[' + idx + '].form_data');
-          }
-          downcountArr.push(dc);
-        }
-        newdata[compid + '.goods_data'] = compData.goods_data.concat(res.data);
-        newdata[compid + '.is_more']    = res.is_more;
-        newdata[compid + '.curpage']    = res.current_page;
-        newdata.downcountArr = downcountArr;
-
-        pageInstance.setData(newdata);
-      },
-      complete: function () {
-        setTimeout(function () {
-          pageInstance.requesting = false;
-        }, 300);
-      }
-    })
-  },
-  videoScrollFunc: function (event) {
-    let pageInstance = this.getAppCurrentPage();
-    let compid       = typeof event == 'object' ? event.currentTarget.dataset.compid : event;
-    let compData     = pageInstance.data[compid];
-    let that         = this;
-
-    if(compData.is_search){
-      this.searchList( compData.searchEle ,compData.compId);
-    }else{
-      this._videoScrollFunc(event);
-    }
-  },
-  _videoScrollFunc: function (event) {
-    let pageInstance = this.getAppCurrentPage();
-    let compid       = typeof event == 'object' ? event.currentTarget.dataset.compid : event;
-    let compData     = pageInstance.data[compid];
-    let curpage      = compData.curpage + 1;
-    let customFeature = compData.customFeature;
-    let newdata      = {};
-    let param        = {};
-    let that         = this;
-
-    if(!compData.is_more && typeof event == 'object' && event.type == 'tap'){
-      this.showModal({
-        content: '已经加载到最后了'
-      });
-    }
-    if (pageInstance.requesting || !compData.is_more) {
-      return;
-    }
-    pageInstance.requesting = true;
-
-    if (pageInstance.videoListComps) {
-      for (let index in pageInstance.videoListComps) {
-        if (pageInstance.videoListComps[index].compid === compid) {
-          param = pageInstance.videoListComps[index].param;
-          break;
-        }
-      }
-    }
-    if(customFeature.vesselAutoheight == 1 && customFeature.loadingMethod == 1){
-      param.page_size = customFeature.loadingNum || 20;
-    }
-    param.page = curpage;
-    this.sendRequest({
-      url: '/index.php?r=AppVideo/GetVideoList',
-      data: param,
-      method: 'post',
-      success: function (res) {
-        let rdata = res.data;
-
-        for (var i = 0; i < rdata.length; i++) {
-          rdata[i].video_view = that.handlingNumber(rdata[i].video_view);
-        }
-
-        newdata = {};
-        newdata[compid + '.video_data'] = compData.video_data.concat(rdata);
-        newdata[compid + '.is_more'] = res.is_more;
-        newdata[compid + '.curpage'] = res.current_page;
-
-        pageInstance.setData(newdata);
-      },
-      complete: function () {
-        setTimeout(function () {
-          pageInstance.requesting = false;
-        }, 300);
-      }
-    })
-  },
-  carouselVideoClose:function(event){
-    let pageInstance = this.getAppCurrentPage(),
-        compid = event.currentTarget.dataset.compid ;
-    let newdata = {};
-
-    newdata[compid + '.videoUrl'] = '';
-    pageInstance.setData(newdata);
-  },
   // 点赞 取消点赞
   changeCountRequert : {},
   changeCount: function (event) {
@@ -2997,17 +2507,6 @@ App({
       });
     }
   },
-  udpateVideoSrc: function (event) {
-    let dataset      = event.currentTarget.dataset;
-    let pageInstance = this.getAppCurrentPage();
-    let compid       = dataset.compid;
-
-    this.chooseVideo(function(filePath){
-      var newdata = {};
-      newdata[compid + '.src'] = filePath;
-      pageInstance.setData(newdata);
-    });
-  },
   tapMapDetail: function (event) {
     let dataset = event.currentTarget.dataset;
     let params  = dataset.eventParams;
@@ -3196,15 +2695,6 @@ App({
         break;
     }
   },
-  turnToFranchiseeDetail: function (event) {
-    let id = event.currentTarget.dataset.id;
-    this.turnToPage('/pages/franchiseeDetail/franchiseeDetail?detail=' + id);
-  },
-  turnToSeckillDetail: function (event) {
-    let id      = event.currentTarget.dataset.id;
-    let contact = event.currentTarget.dataset.contact;
-    this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + id +'&goodsType=seckill&contact=' + contact);
-  },
   sortListFunc: function (event) {
     let dataset       = event.currentTarget.dataset;
     let pageInstance  = this.getAppCurrentPage();
@@ -3213,8 +2703,6 @@ App({
     let listParams    = {
       'list-vessel': pageInstance.list_compids_params,
       'goods-list': pageInstance.goods_compids_params,
-      'franchisee-list': pageInstance.franchiseeComps,
-      'video-list' : pageInstance.videoListComps
     };
     let component_params, listType;
 
@@ -3245,8 +2733,6 @@ App({
     switch (listType) {
       case 'list-vessel': this._sortListVessel(component_params, dataset); break;
       case 'goods-list': this._sortGoodsList(component_params, dataset); break;
-      case 'franchisee-list': this._sortFranchiseeList(component_params, dataset); break;
-      case 'video-list': this._sortVideoList(component_params, dataset); break;
     }
   },
   _sortListVessel: function (component_params, dataset) {
@@ -3305,64 +2791,6 @@ App({
 
           that._updateSortStatus(dataset);
           pageInstance.setData(newdata);
-        }
-      }
-    });
-  },
-  _sortFranchiseeList: function (component_params, dataset) {
-    var that = this;
-    let pageInstance  = this.getAppCurrentPage();
-
-    component_params.param.page = -1;
-
-    this.sendRequest({
-      url: '/index.php?r=AppShop/GetAppShopByPage',
-      data: component_params.param,
-      method: 'post',
-      success: function (res) {
-        if (res.status == 0) {
-          let newdata = {};
-          let compid  = component_params['compid'];
-
-          for(let index in res.data){
-            let distance = res.data[index].distance;
-            res.data[index].distance = util.formatDistance(distance);
-          }
-          newdata[compid + '.franchisee_data'] = res.data;
-          newdata[compid + '.is_more'] = res.is_more;
-          newdata[compid + '.curpage'] = 1;
-
-          that._updateSortStatus(dataset);
-          pageInstance.setData(newdata);
-        }
-      }
-    });
-  },
-  _sortVideoList : function(component_params, dataset) {
-    var that = this;
-    let pageInstance  = this.getAppCurrentPage();
-    this.sendRequest({
-      url: '/index.php?r=AppVideo/GetVideoList',
-      data: component_params.param,
-      method: 'post',
-      success: function (res) {
-        if (res.status == 0) {
-          
-          let rdata = res.data;
-          let newdata = {};
-          let compid  = component_params['compid'];
-
-          for (var i = 0; i < rdata.length; i++) {
-            rdata[i].video_view = that.handlingNumber(rdata[i].video_view);
-          }
-
-          newdata[compid + '.video_data'] = rdata;
-          newdata[compid + '.is_more'] = res.is_more;
-          newdata[compid + '.curpage'] = res.current_page;
-
-          that._updateSortStatus(dataset);
-          pageInstance.setData(newdata);
-
         }
       }
     });
@@ -4108,20 +3536,6 @@ App({
       }
     });
   },
-  clickCategory: function (event) {
-    let pageInstance = this.getAppCurrentPage();
-    let dataset      = event.currentTarget.dataset;
-    let compid       = dataset.compid;
-    let index        = dataset.index;
-    let id           = dataset.id;
-    let newdata      = {};
-    let param        = dataset.param;
-    if (!pageInstance.data[compid].show_goods_data['category'+id]) {
-      this._getTakeoutStyleGoodsList(param, pageInstance, compid, 0);
-    }
-    newdata[compid +'.customFeature.selected'] = index;
-    pageInstance.setData(newdata);
-  },
   goodsListPlus: function (event) {
     
     let pageInstance = this.getAppCurrentPage();
@@ -4650,29 +4064,6 @@ App({
       }
     }
   },
-  tapVideoHandler: function (event) {
-    if (event.currentTarget.dataset.eventParams) {
-      let video = JSON.parse(event.currentTarget.dataset.eventParams),
-        video_id = video['video_id'];
-      this.turnToPage('/pages/videoDetail/videoDetail?detail=' + video_id);
-    }
-  },
-  tapVideoPlayHandler:function(event){
-    let pageInstance  = this.getAppCurrentPage(),
-        video = JSON.parse(event.currentTarget.dataset.eventParams),
-        compid = video.compid,
-        video_id = video['video_id'];
-    this.sendRequest({
-      url: '/index.php?r=AppVideo/GetVideoLibURL',
-      method: 'get',
-      data: {id:video_id},
-      success: function (res) {
-        var newdata ={}
-        newdata[compid +'.videoUrl'] = res.data;
-        pageInstance.setData(newdata);
-      }
-    })
-  },
   tapInnerLinkHandler: function (event) {
     var param = event.currentTarget.dataset.eventParams;
     if (param) {
@@ -4745,7 +4136,6 @@ App({
     switch (eleType) {
       case 'goods-list': this._refreshGoodsList(compids_params['compid'], requestData, pageInstance); break;
       case 'list-vessel': this._refreshListVessel(compids_params['compid'], requestData, pageInstance); break;
-      case 'franchisee-list': this._refreshFranchiseeList(compids_params['compid'], requestData, pageInstance); break;
     }
   },
   _refreshGoodsList: function (targetCompId, requestData, pageInstance) {
@@ -4806,35 +4196,6 @@ App({
         pageInstance.setData(newData);
       }
     })
-  },
-  _refreshFranchiseeList: function (targetCompId, requestData, pageInstance) {
-    let _this = this;
-
-    requestData.page = -1;
-    this.sendRequest({
-      url: '/index.php?r=AppShop/GetAppShopByPage',
-      method: 'post',
-      data: requestData,
-      success: function (res) {
-        var newData = {};
-
-        for(let index in res.data){
-          let distance = res.data[index].distance;
-          res.data[index].distance = util.formatDistance(distance);
-        }
-        newData[targetCompId + '.franchisee_data'] = res.data;
-        newData[targetCompId + '.is_more'] = res.is_more;
-        newData[targetCompId + '.curpage'] = 1;
-        newData[targetCompId + '.scrollTop'] = 0;
-        pageInstance.setData(newData);
-      }
-    })
-  },
-  tapGetCouponHandler: function (event) {
-    if (event.currentTarget.dataset.eventParams) {
-      var coupon_id = JSON.parse(event.currentTarget.dataset.eventParams)['coupon_id'];
-      this.turnToPage('/pages/couponDetail/couponDetail?detail=' + coupon_id);
-    }
   },
   tapCommunityHandler: function (event) {
     if (event.currentTarget.dataset.eventParams) {
@@ -4945,54 +4306,6 @@ App({
         path: params['xcx_page_url']
       });
     }
-  },
-  tapFranchiseeLocation: function (event) {
-    let _this        = this;
-    let compid       = event.currentTarget.dataset.compid;
-    let pageInstance = this.getAppCurrentPage();
-
-    function success(res) {
-      let name    = res.name;
-      let lat     = res.latitude;
-      let lng     = res.longitude;
-      let newdata = {};
-      let param, requestData;
-
-      newdata[compid +'.location_address'] = name;
-      pageInstance.setData(newdata);
-
-      for (var index in pageInstance.franchiseeComps) {
-        if (pageInstance.franchiseeComps[index].compid == compid) {
-          param = pageInstance.franchiseeComps[index].param;
-          param.latitude = lat;
-          param.longitude = lng;
-        }
-      }
-      requestData = {
-        id: compid,
-        form: 'app_shop',
-        page: 1,
-        sort_key: param.sort_key,
-        sort_direction: param.sort_direction,
-        latitude: param.latitude,
-        longitude: param.longitude,
-        idx_arr: param.idx_arr
-      }
-      _this._refreshFranchiseeList(compid, requestData, pageInstance);
-    }
-
-    function cancel() {
-      console.log('cancel');
-    }
-
-    function fail() {
-      console.log('fail');
-    }
-    this.chooseLocation({
-      success: success,
-      fail: fail,
-      cancel: cancel
-    });
   },
   showAddShoppingcart: function (event) {
     let pageInstance = this.getAppCurrentPage();
@@ -5163,7 +4476,6 @@ App({
       goods_id: pageInstance.data.goodsInfo.id,
       model_id: pageInstance.data.selectGoodsModelInfo.modelId || '',
       num: pageInstance.data.selectGoodsModelInfo.buyCount,
-      sub_shop_app_id : '',
       is_seckill : ''
     };
 
@@ -5187,7 +4499,6 @@ App({
       goods_id: pageInstance.data.goodsInfo.id,
       model_id: pageInstance.data.selectGoodsModelInfo.modelId || '',
       num: pageInstance.data.selectGoodsModelInfo.buyCount,
-      sub_shop_app_id: '',
       is_seckill : ''
     };
     let that = this;
@@ -5214,8 +4525,7 @@ App({
         url: '/index.php?r=AppShop/deleteCart',
         method: 'post',
         data: {
-          cart_id_arr: [pageInstance.data.selectGoodsModelInfo.cart_id],
-          sub_shop_app_id: pageInstance.franchiseeId || ''
+          cart_id_arr: [pageInstance.data.selectGoodsModelInfo.cart_id]
         },
         fail: function (res) {
           pageInstance.setData({
@@ -5265,8 +4575,7 @@ App({
     var param = {
       goods_id: pageInstance.data.goodsInfo.id,
       model_id: pageInstance.data.selectGoodsModelInfo.modelId || '',
-      num: goodsNum,
-      sub_shop_app_id: ''
+      num: goodsNum
     };
 
     that.sendRequest({
@@ -5306,7 +4615,6 @@ App({
     this.sendRequest({
       url: '/index.php?r=AppShop/precheckShoppingCart',
       data: {
-        sub_shop_app_id: pageInstance.franchiseeId || '',
         parent_shop_app_id: pageInstance.franchiseeId ? that.getAppId() : ''
       },
       success: function (res) {
@@ -5335,8 +4643,7 @@ App({
       url: '/index.php?r=AppShop/cartList',
       data: {
         page: 1,
-        page_size: 100,
-        sub_shop_app_id: pageInstance.franchiseeId || ''
+        page_size: 100
       },
       success: function (res) {
         var price = 0,

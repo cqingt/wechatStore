@@ -33,6 +33,7 @@ Page({
       sex: 1,
       label: 3,
     },
+    region: ['选择省', '选择市', '选择区'],
     selectRegion: [0, 0, 0],
     selectRegionId: [0, 0, 0]
   },
@@ -52,6 +53,12 @@ Page({
       this.getAddressDetail(id);
     }
   },
+  bindRegionChange: function (e) {
+    //console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      region: e.detail.value
+    })
+  },
   getAddressDetail: function(id){
     var that = this;
     app.sendRequest({
@@ -61,13 +68,14 @@ Page({
         var data = res.data;
         that.setData({
           'address_info.name': data.address_info.name,
-          'address_info.contact': data.address_info.contact || data.telphone,
-          'address_info.province': data.address_info.province || { 'text': '', 'id': '' },
-          'address_info.city': data.address_info.city || {'text':'','id':''},
-          'address_info.district': data.address_info.district || { 'text': '', 'id': '' },
+          'address_info.contact': data.address_info.telphone || data.telphone,
+          'address_info.province': data.address_info.province || '选择省',
+          'address_info.city': data.address_info.city || '选择市',
+          'address_info.district': data.address_info.district || '选择区',
           'address_info.detailAddress': data.address_info.detailAddress || data.detail_address,
           'address_info.sex': data.address_info.sex || 2,
-          'address_info.label': data.address_info.label || 3
+          'address_info.label': data.address_info.label || 3,
+          'region': [data.address_info.province, data.address_info.city, data.address_info.district]
         })
       }
     });

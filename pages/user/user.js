@@ -35,8 +35,7 @@ var pageData = {
             "margin-top":"-1px","openVerifyPhone":false
           },
         },
-        "appendComponent":[
-          "myAddress", "myOrder","myIntegral","myMessage","vipCard"]
+        "appendComponent": ["myAddress", "myOrder", "myIntegral", "myMessage"]//,"vipCard"
         },
         "animations":[],
         "page_form":"",

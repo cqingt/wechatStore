@@ -36,6 +36,7 @@
   
 </scroll-view>
 <view class="nomore {{pageData.is_more == 0 ? '' : 'hide'}}">我是有底线的^_^</view>
+
 <view class="history {{showResult?'hide':''}}">
   <view class="title">
     <text class="left">历史搜索</text>

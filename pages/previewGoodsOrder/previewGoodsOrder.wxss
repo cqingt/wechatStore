@@ -9,7 +9,7 @@ page {
   margin: 0;
 }
 .preview-goods-order-section {
-  padding: 34rpx 36rpx;
+  padding: 24rpx 36rpx;
   margin-bottom: 11rpx;
   background: #fdfdfd;
   overflow: hidden;
@@ -81,7 +81,7 @@ page {
 
 textarea {
   width: auto;
-  height: 50px;
+  height: 38px;
   padding: 10px;
   border: 1px solid #eee;
   border-radius: 4px;
@@ -192,8 +192,8 @@ textarea {
   background-color: #ff7100;
   line-height: inherit;
 }
-.icon-location, .icon-phone {
-  font-size: 42rpx;
+.icon-location, .icon-phone, .icon-business-time {
+  font-size: 36rpx;
   vertical-align: sub;
   margin-right: 8px;
 }

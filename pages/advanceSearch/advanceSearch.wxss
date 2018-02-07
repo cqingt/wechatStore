@@ -296,10 +296,10 @@ page {
   float: left;
   background: #fff;
   /* margin-bottom: 2%; */
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1px solid #f1f1f1;
 }
 .colume-2 .item:nth-child(odd) {
-  border-right: 1px solid #dcdcdc;
+  border-right: 1px solid #f1f1f1;
 }
 
 .colume-2 .item:nth-child(odd) {
