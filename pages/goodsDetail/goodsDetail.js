@@ -8,7 +8,7 @@ Page({
       "type": "suspension",
       "style": "opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;",
       "list_style": "margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;",
-      "suspension_bottom": 60
+      "suspension_bottom": 100
     },
     goodsId: '',
     goodsInfo: {},
@@ -81,6 +81,9 @@ Page({
         })
       }
     })
+  },
+  scrollPageTop: function () {
+    app.pageScrollTo(0);
   },
   onShareAppMessage: function(){
     this.setData({

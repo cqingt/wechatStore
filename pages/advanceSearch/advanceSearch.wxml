@@ -1,12 +1,13 @@
-<view class="comp-search">
-  <view class="ico-moon icon-location locate hide" bindtap="filterByLocation">全国</view>
-  <view class="search-wrap">
-    <icon size="14" type="search" bindtap="searchList" />
-    <input id="search" value="{{inputContent}}" bindinput="bindChange" bindconfirm="searchList" focus="true" name="input" placeholder="请输入搜索关键词" confirm-type="search" />
-    <view class="cross {{inputContent == '' ? 'hide' : ''}}" bindtap="clearSearch">×</view>
+<view class="app" style='height:700px'>
+  <view class="comp-search">
+    <view class="ico-moon icon-location locate hide" bindtap="filterByLocation">全国</view>
+    <view class="search-wrap">
+      <icon size="14" type="search" bindtap="searchList" />
+      <input id="search" value="{{inputContent}}" bindinput="bindChange" bindconfirm="searchList" focus="true" name="input" placeholder="请输入搜索关键词" confirm-type="search" />
+      <view class="cross {{inputContent == '' ? 'hide' : ''}}" bindtap="clearSearch">×</view>
+    </view>
+    <button class="cancel" bindtap="navigateBack">取消</button>
   </view>
-  <button class="cancel" bindtap="navigateBack">取消</button>
-</view>
 
 <view class="filter {{showResult?'':'hide'}}">
   <view class="tab {{tab == 0 ? 'active' : ''}}" bindtap="sortByDefault">综合</view>
@@ -21,21 +22,23 @@
   </view>
 </view>
 
-<scroll-view data-curpage="{{pageData.current_page}}" class="{{itemStyle == 1 ? 'container' : 'colume-2'}} {{showResult?'':'hide'}}" scroll-y="true" bindscrolltolower="getMoreItems" enable-back-to-top="true" lower-threshold="50">
-  <view class="item" catchtap="turnToDetail" wx:for="{{itemsList}}" wx:key="" data-id="{{item.form_data.id}}" data-goods-type="{{item.form_data.goods_type}}" data-contact="{{item.customFeature.ifUseContact}}">
-    <image class="item-pic" src="{{item.form_data.cover}}"></image>
-    <view class="item-detail">
-      <view class="item-title">{{item.form_data.title}}</view>
-      <view class="item-price">￥
-        <text>{{item.form_data.price}}</text>
+<view class="search-list">
+  <scroll-view data-curpage="{{pageData.current_page}}" class="{{itemStyle == 1 ? 'container' : 'colume-2'}} {{showResult?'':'hide'}}" scroll-y="true" bindscrolltolower="getMoreItems" enable-back-to-top="true" lower-threshold="80" style="max-height:660px">
+    <view class="item" catchtap="turnToDetail" wx:for="{{itemsList}}" wx:key="" data-id="{{item.form_data.id}}" data-goods-type="{{item.form_data.goods_type}}" data-contact="{{item.customFeature.ifUseContact}}">
+      <image class="item-pic" src="{{item.form_data.cover}}"></image>
+      <view class="item-detail">
+        <view class="item-title">{{item.form_data.title}}</view>
+        <view class="item-price">￥
+          <text>{{item.form_data.price}}</text>
+        </view>
+        <text class="item-sales">销量：{{item.form_data.sales}}</text>
+        <!-- <view class="ico-moon icon-shoppingcart item-buy" catchtap="addToCart" data-id="{{item.form_data.id}}"></view> -->
       </view>
-      <text class="item-sales">销量：{{item.form_data.sales}}</text>
-      <!-- <view class="ico-moon icon-shoppingcart item-buy" catchtap="addToCart" data-id="{{item.form_data.id}}"></view> -->
     </view>
-  </view>
-  
-</scroll-view>
-<view class="nomore {{pageData.is_more == 0 ? '' : 'hide'}}">我是有底线的^_^</view>
+
+  </scroll-view>
+  <view class="nomore {{pageData.is_more == 0 ? '' : 'hide'}}">我是有底线的^_^</view>
+</view>
 
 <view class="history {{showResult?'hide':''}}">
   <view class="title">
@@ -72,3 +75,19 @@
   </view>
 </view>
 <view class="mask {{filter ? '' : 'hide'}}" catchtap="hideFilter"></view>
+
+  <template name="zcSuspension">
+    <view class="element suspension" data-compid="suspension1" style="{{data.style}}bottom: {{data.suspension_bottom}}rpx;" >
+        <view class="suspension-item" data-type="service" style="{{data.list_style}}">
+          <icon class="ico-moon icon-service2 suspension-service">
+            <contact-button type="default-dark" size="20" session-from="suspension"></contact-button>
+          </icon>
+        </view>
+        <view class="suspension-item" data-type="top" bindtap="quickSearch2" style="{{data.list_style}}">
+          <icon class="ico-moon icon-top"></icon>
+        </view>
+    </view>
+  </template>
+  <template is="zcSuspension" data="{{data:suspension}}"></template>
+</view>
+

@@ -6,6 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    "suspension": { // 侧边栏
+      "type": "suspension",
+      "style": "opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;",
+      "list_style": "margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;",
+      "suspension_bottom": 60
+    },
     showResult: false, //搜索结果展示
     itemStyle: 2, //商品列表显示方式 单列显示 1  双列显示 2
     tab: 0,
@@ -18,7 +24,7 @@ Page({
     filterParam: {
       form: 'goods',
       page: 1,
-      page_size: 10,
+      page_size: 20,
       sort_key: '',
       sort_direction: '',
       is_integral: '',
@@ -114,6 +120,13 @@ Page({
     this.setData({ inputContent: e.target.dataset.tag })
     this.initialData();
   },
+  quickSearch2:function(e) {
+    this.initFilter();
+    this.data.filterParam.search_value = this.data.inputContent;
+    this.data.filterParam.page = 1;
+    this.setData({ inputContent: e.target.dataset.tag })
+    this.initialData();
+  },
 
   /**
    * 添加到购物车
@@ -172,9 +185,11 @@ Page({
         method: 'post',
         data: this.data.filterParam,
         success: function (res) {
+          res.current_page = _this.data.filterParam.page + 1;
           _this.setData({ pageData: res });
           let itemsList = _this.data.itemsList.concat(res.data);
           _this.setData({ itemsList: itemsList });
+        
         }
       })
     };
@@ -338,7 +353,9 @@ Page({
       }
     });
   },
-
+  scrollPageTop: function (e) {
+    appInstance.pageScrollTo(-100);
+  },
   /**
    * 返回前一页
    */

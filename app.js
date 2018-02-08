@@ -542,7 +542,6 @@ App({
   },
   pageScrollTo: function (scrollTop) {
     if (wx.pageScrollTo) {
-      console.log(scrollTop);
       wx.pageScrollTo({
         scrollTop: scrollTop
       });

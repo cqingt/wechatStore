@@ -1,4 +1,6 @@
-<view class="app" hidden="{{page_hidden}}"><component-share pageQRCodeData="{{pageQRCodeData}}"></component-share><component-backhome backToHomePage="{{backToHomePage}}"></component-backhome>
+<view class="app" hidden="{{page_hidden}}">
+<component-share pageQRCodeData="{{pageQRCodeData}}"></component-share>
+<component-backhome backToHomePage="{{backToHomePage}}"></component-backhome>
 <wxs module="pictureWxsModule">
 var isArray = function(array) {
   return array.join instanceof Function;

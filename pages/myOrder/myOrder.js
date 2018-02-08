@@ -3,7 +3,7 @@ var app = getApp()
 
 Page({
   data: {
-    "suspension": { // 侧边栏
+    suspension: { // 侧边栏
       "type": "suspension",
       "style": "opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;",
       "list_style": "margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;",
@@ -91,9 +91,9 @@ Page({
         // 判断goods_type_list里面是否存在当前需要展示的列表
         if (param.firstLoad) {
           data['goodsTypeList'] = ["0"];
-           if (data['goodsTypeList'].indexOf(data['currentGoodsType'].toString()) < 0){
-             data['goodsTypeList'].push(data['currentGoodsType']);
-           }
+          if (data['goodsTypeList'].indexOf(data['currentGoodsType'].toString()) < 0){
+            data['goodsTypeList'].push(data['currentGoodsType']);
+          }
         }
         that.setData(data);
       }
@@ -103,7 +103,7 @@ Page({
     var dataset = e.target.dataset,
         index = dataset.index,
         data = {};
-
+        
     data.currentTabIndex = index;
     data['pages'] = 1;
     data['orderLists'] = [];
@@ -111,6 +111,14 @@ Page({
 
     this.setData(data);
     this.getOrderList({tabIndex : index});
+  },
+  clickOrderTab2: function(e) {
+    var index = this.data.currentTabIndex;
+    var data = {};
+
+    data['pages'] = 1;
+    this.setData(data);
+    this.getOrderList({ tabIndex: index, scrollLoad: false, firstLoad: true});
   },
   clickMeanTab: function(e){
     var dataset = e.target.dataset,

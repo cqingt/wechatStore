@@ -1,4 +1,4 @@
-<view class="myOrder-wrap page" id="myOrder">
+<view class="myOrder-wrap page" id="myOrder" style="height:700px;">
   <view class="flex-box myOrder-tab-list">
     <view class="flex-sub-box-5 {{ currentTabIndex == 0 ? 'active' : '' }}" bindtap="clickOrderTab" data-index="0" >全部</view>
     <view class="flex-sub-box-5 {{ currentTabIndex == 1 ? 'active' : '' }}" bindtap="clickOrderTab" data-index="1" >待付款</view>
@@ -207,7 +207,7 @@
           <view hidden="{{ !noMore }}" class="noMoreNewDataTip">我是有底线的</view>
         </scroll-view>
       </view>
-
+  </view>
       <template name="zcSuspension">
         <view class="element suspension" data-compid="suspension1" style="{{data.style}}bottom: {{data.suspension_bottom}}rpx;" >
             <view class="suspension-item" data-type="service" style="{{data.list_style}}">
@@ -215,14 +215,12 @@
                 <contact-button type="default-dark" size="20" session-from="suspension"></contact-button>
               </icon>
             </view>
-            <view class="suspension-item" data-type="top" catchtap="scrollPageTop" style="{{data.list_style}}">
+            <view class="suspension-item" data-type="top" bindtap="clickOrderTab" data-index="{{currentTab}}" style="{{data.list_style}}">
               <icon class="ico-moon icon-top"></icon>
             </view>
         </view>
       </template>
-      <template is="zcSuspension" data="{{data:suspension}}"></template>
-  </view>
-      
+      <template is="zcSuspension" data="{{data:suspension, currentTab: currentTabIndex}}"></template>
 </view>
 
 

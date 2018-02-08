@@ -29,7 +29,7 @@
              data-listid="{{data.customFeature.searchObject.customFeature.id}}"
              data-listtype="{{data.customFeature.searchObject.type}}"
              data-form="{{data.customFeature.searchObject.customFeature.form}}"
-            class="search-btn" bindtap="searchList">搜索</view>
+            class="search-btn" bindtap="turnToSearchPage">搜索</view>
     </view>
   </view>
 </template>

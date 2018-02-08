@@ -25,4 +25,18 @@
       </view>
     </scroll-view>
   </view>
+
+  <template name="zcSuspension">
+        <view class="element suspension" data-compid="suspension1" style="{{data.style}}bottom: {{data.suspension_bottom}}rpx;" >
+            <view class="suspension-item" data-type="service" style="{{data.list_style}}">
+              <icon class="ico-moon icon-service2 suspension-service">
+                <contact-button type="default-dark" size="20" session-from="suspension"></contact-button>
+              </icon>
+            </view>
+            <view class="suspension-item" data-type="top" catchtap="scrollPageTop" style="{{data.list_style}}">
+              <icon class="ico-moon icon-top"></icon>
+            </view>
+        </view>
+      </template>
+      <template is="zcSuspension" data="{{data:suspension}}"></template>
 </view>

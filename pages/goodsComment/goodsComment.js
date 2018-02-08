@@ -8,7 +8,13 @@ Page({
     commnetType: 0,
     comments: [],
     commentNums: [],
-    loadPage: 1
+    loadPage: 1,
+    "suspension": { // 侧边栏
+      "type": "suspension",
+      "style": "opacity:1;color:#fff;font-size:46.875rpx;margin-left:auto;",
+      "list_style": "margin-bottom:2.34375rpx;background-color:rgba(0,0,0,0.5);margin-left:auto;",
+      "suspension_bottom": 60
+    },
   },
   onLoad: function(options){
     var goodsId = options.detail,
@@ -43,6 +49,9 @@ Page({
       }
 
     });
+  },
+  scrollPageTop: function () {
+    app.pageScrollTo(0);
   },
   clickCommentLabel: function(e){
     var commentType = e.currentTarget.dataset.type,

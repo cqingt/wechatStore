@@ -623,3 +623,25 @@ contact-button {
 .goods-other-info .goods-stock{
   float: right;
 }
+
+.suspension{
+  color: #fff;
+  font-size: 20px;
+  position: fixed !important;
+  right: 0;
+  bottom: 163.8rpx;
+  z-index: 20;
+}
+.suspension {
+  display: block;
+	width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 1;
+  border-color: #222222;
+  border-width: 0;
+}
