@@ -21,7 +21,7 @@ App({
     });
 
     wx.request({
-      url: this.globalData.siteBaseUrl +'/index.php?r=AppUser/MarkWxXcxStatus',
+      url: this.globalData.siteBaseUrl +'/AppUser/MarkWxXcxStatus',
       data: {
         app_id: this.getAppId()
       },
@@ -68,7 +68,7 @@ App({
         }
         that.sendRequest({
           hideLoading: true,
-          url: '/index.php?r=AppShop/AddQRCodeStat',
+          url: '/App/AddQRCodeStat',
           method: 'POST',
           data: params
         })
@@ -350,7 +350,7 @@ App({
         });
         for (var i = 0; i < tempFilePaths.length; i++) {
           wx.uploadFile({
-            url : that.globalData.siteBaseUrl+ '/index.php?r=AppData/uploadImg',
+            url : that.globalData.siteBaseUrl+ '/AppData/uploadImg',
             filePath: tempFilePaths[i],
             name: 'img_data',
             success: function (res) {
@@ -402,7 +402,7 @@ App({
   },
   countUserShareApp: function () {
     this.sendRequest({
-      url: '/index.php?r=AppShop/UserShareApp'
+      url: '/App/UserShareApp'
     });
   },
   shareAppMessage: function (options) {
@@ -453,7 +453,7 @@ App({
 
     this.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppShop/SendXcxOrderCompleteMsg',
+      url: '/App/SendXcxOrderCompleteMsg',
       data: {
         formId: formId,
         t_num: t_num,
@@ -467,7 +467,7 @@ App({
 
     this.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppShop/SendXcxOrderCompleteMsg',
+      url: '/App/SendXcxOrderCompleteMsg',
       data: {
         formId: formId,
         t_num: 'AT0010',
@@ -682,7 +682,7 @@ App({
       this.globalData.sessionKey = key;
       this.sendRequest({
         hideLoading: true,
-        url: '/index.php?r=AppUser/onLogin',
+        url: '/AppUser/onLogin',
         success: function (res) {
           if (!res.is_login) {
             that._login(options);
@@ -719,7 +719,7 @@ App({
     var that = this;
     this.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppUser/onLogin',
+      url: '/AppUser/onLogin',
       data: {
         code: code
       },
@@ -746,7 +746,7 @@ App({
     var that = this;
     this.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppData/getXcxUserInfo',
+      url: '/AppData/getXcxUserInfo',
       success: function (res) {
         if (res.data) {
           that.setUserInfoStorage(res.data);
@@ -795,7 +795,7 @@ App({
     var that = this;
     this.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppUser/LoginUser',
+      url: '/AppUser/LoginUser',
       method: 'post',
       data: {
         nickname: userInfo['nickName'],
@@ -924,11 +924,11 @@ App({
       pageInstance.requestNum = pageRequestNum + 1;
       _this.sendRequest({
         hideLoading: pageRequestNum++ == 1 ? false : true,   
-        url: '/index.php?r=AppData/getFormData',
+        url: '/AppData/getFormData',
         data: param,
         method: 'post',
         success: function (res) {
-          if (res.status == 0) {
+          if (res.code == 200) {
             let newdata = {};
             let formdata = res.data[0].form_data;
 
@@ -964,7 +964,7 @@ App({
                 pageInstance.requestNum = pageRequestNum + 1;
                 _this.sendRequest({
                   hideLoading: pageRequestNum++ == 1 ? false : true,
-                  url: '/index.php?r=AppData/getFormDataList',
+                  url: '/AppData/getFormDataList',
                   data: {
                     app_id: vessel_param.app_id,
                     form: vessel_param.form,
@@ -1030,7 +1030,7 @@ App({
       for (let i in pageInstance.carouselGroupidsParams) {
         let compid = pageInstance.carouselGroupidsParams[i].compid;
         let carouselgroupId = pageInstance.carouselGroupidsParams[i].carouselgroupId;
-        let url = '/index.php?r=AppExtensionInfo/carouselPhotoProjiect';
+        let url = '/AppExtensionInfo/carouselPhotoProjiect';
         pageInstance.requestNum = pageRequestNum + 1;
         _this.sendRequest({
           hideLoading: pageRequestNum++ == 1 ? false : true,
@@ -1149,7 +1149,7 @@ App({
         let compid = pageInstance.list_compids_params[i].compid;
         let param = pageInstance.list_compids_params[i].param;
         let compData = pageInstance.data[compid];
-        let url = '/index.php?r=AppData/getFormDataList';
+        let url = '/AppData/getFormDataList';
         let customFeature = compData.customFeature;
 
         pageInstance.requestNum = pageRequestNum + 1;
@@ -1162,7 +1162,7 @@ App({
           data: param,
           method: 'post',
           success: function (res) {
-            if (res.status == 0) {
+            if (res.code == 200) {
               newdata = {};
 
               if (param.form !== 'form') {
@@ -1212,21 +1212,11 @@ App({
         pageInstance.requestNum = pageRequestNum + 1;
         _this.sendRequest({
           hideLoading: pageRequestNum++ == 1 ? false : true,
-          url: '/index.php?r=AppShop/GetGoodsList',
+          url: '/App/GetGoodsList',
           data: param,
           method: 'post',
           success: function (res) {
-            if (res.status == 0) {
-              for(let i in res.data){
-                if (res.data[i].form_data.goods_model) {
-                  let modelVP = [];
-                  for (let j in res.data[i].form_data.goods_model){
-                    modelVP.push(res.data[i].form_data.goods_model[j].virtual_price == '' ? 0 : Number(res.data[i].form_data.goods_model[j].virtual_price))
-                  }
-                  Math.min(...modelVP) == Math.max(...modelVP) ? res.data[i].form_data.virtual_price = Math.min(...modelVP).toFixed(2) : 
-                  res.data[i].form_data.virtual_price = Math.min(...modelVP).toFixed(2) + '~' + Math.max(...modelVP).toFixed(2);
-                }
-              }
+            if (res.code == 200) {
               newdata = {};
               newdata[compid + '.goods_data'] = res.data;
               newdata[compid + '.is_more'] = res.is_more;
@@ -1250,7 +1240,7 @@ App({
             pageInstance.requestNum = pageRequestNum + 1;
             _this.sendRequest({
               hideLoading: pageRequestNum++ == 1 ? false : true,
-              url: '/index.php?r=Region/GetAreaInfoByLatAndLng',
+              url: '/Region/GetAreaInfoByLatAndLng',
               data: {
                 latitude: latitude,
                 longitude: longitude
@@ -1271,7 +1261,7 @@ App({
                 pageInstance.requestNum = pageRequestNum + 1;
                 _this.sendRequest({
                   hideLoading: pageRequestNum++ == 1 ? false : true,
-                  url: '/index.php?r=AppShop/GetAppShopByPage',
+                  url: '/App/GetAppShopByPage',
                   data: param,
                   method: 'post',
                   success: function (res) {
@@ -1323,18 +1313,18 @@ App({
         pageInstance.requestNum = pageRequestNum + 1;
         _this.sendRequest({
           hideLoading: pageRequestNum++ == 1 ? false : true,
-          url: '/index.php?r=AppData/getCount',
+          url: '/AppData/getCount',
           data: {
             obj_rel: objrel
           },
           success: function (res) {
-            if (res.status == 0) {
+            if (res.code == 200) {
               if (AutoAddCount == 1) {
                 if (hasCounted == 0) {
                   pageInstance.requestNum = pageRequestNum + 1;
                   _this.sendRequest({
                     hideLoading: pageRequestNum++ == 1 ? false : true,
-                    url: '/index.php?r=AppData/addCount',
+                    url: '/AppData/addCount',
                     data: {
                       obj_rel: objrel
                     },
@@ -1380,7 +1370,7 @@ App({
         pageInstance.requestNum = pageRequestNum + 1;
         _this.sendRequest({
           hideLoading: pageRequestNum++ == 1 ? false : true,
-          url: '/index.php?r=AppData/getFormDataList',
+          url: '/AppData/getFormDataList',
           method: 'post',
           data: {
             form: 'bbs',
@@ -1403,81 +1393,6 @@ App({
         });
       }
     }
-    if (!!pageInstance.communityComps) {
-      for (let i in pageInstance.communityComps) {
-        let compid = pageInstance.communityComps[i].compid,
-            dataId = [],
-            content = pageInstance.data[compid].content,
-            customFeature = pageInstance.data[compid].customFeature,
-            styleData = {},
-            imgStyle = [],
-            liStyle = [],
-            secStyle = [];
-
-        secStyle = [
-              'color:'+ customFeature.secColor ,
-              'text-decoration:' + (customFeature.secTextDecoration || 'none'),
-              'text-align:' + (customFeature.secTextAlign || 'left'),
-              'font-size:' + customFeature.secFontSize,
-              'font-style:' + (customFeature.secFontStyle || 'normal'),
-              'font-weight:' + (customFeature.secFontWeight || 'normal')
-          ].join(";");
-
-        imgStyle = [
-                'width :'+ (customFeature.imgWidth * 2.34) + 'rpx',
-                'height :'+ (customFeature.imgHeight * 2.34) + 'rpx'
-          ].join(";");
-        liStyle = [
-              'height :'+ (customFeature.lineHeight * 2.34) + 'rpx',
-              'margin-bottom :'+ (customFeature.margin * 2.34) +'rpx'
-          ];
-        customFeature['lineBackgroundColor'] && (liStyle.push('background-color:' + customFeature['lineBackgroundColor']));
-        customFeature['lineBackgroundImage'] && (liStyle.push('background-image:' + customFeature['lineBackgroundImage']));
-        liStyle = liStyle.join(";");
-
-        styleData[compid + '.secStyle'] = secStyle;
-        styleData[compid + '.imgStyle'] = imgStyle;
-        styleData[compid + '.liStyle']  = liStyle;
-        pageInstance.setData(styleData);
-
-        for (let j in content) {
-          dataId.push(content[j]['community-id']);
-        }
-
-        pageInstance.requestNum = pageRequestNum + 1;
-        _this.sendRequest({
-          hideLoading: pageRequestNum++ == 1 ? false : true,
-          url: '/index.php?r=AppSNS/GetSectionByPage',
-          data: {
-            section_ids : dataId ,
-            page: 1 ,
-            page_size: 100
-          },
-          method: 'post',
-          success: function (res) {
-            if (res.status == 0) {
-              var ddata = {},
-                  lastdata = [],
-                  newdata = {};
-
-              for (let x = 0; x < res.data.length; x++) {
-                let val = res.data[x];
-                ddata[val.id] =val;
-              }
-              for (let y = 0; y < dataId.length; y++) {
-                let val = ddata[dataId[y]];
-                if(val){
-                  lastdata.push(val);
-                }
-              }
-              newdata[compid + '.community_data'] = lastdata;
-
-              pageInstance.setData(newdata);
-            }
-          }
-        });
-      }
-    }
 
     if (pageInstance.cityLocationComps.length){
       for (let i in pageInstance.cityLocationComps){
@@ -1491,7 +1406,7 @@ App({
             pageInstance.requestNum = pageRequestNum + 1;
             _this.sendRequest({
               hideLoading: pageRequestNum++ == 1 ? false : true,
-              url: '/index.php?r=Region/GetAreaInfoByLatAndLng',
+              url: '/Region/GetAreaInfoByLatAndLng',
               data: {
                 latitude: latitude,
                 longitude: longitude
@@ -1519,7 +1434,7 @@ App({
         pageInstance.requestNum = pageRequestNum + 1;
         _this.sendRequest({
           hideLoading: pageRequestNum++ == 1 ? false : true,   // 页面第一个请求才展示loading
-          url: '/index.php?r=AppRegion/getAllExistedDataRegionList&is_xcx=1&form=' + form,
+          url: '/AppRegion/getAllExistedDataRegionList&is_xcx=1&form=' + form,
           success: function (data) {
             var newdata = pageInstance.data,
                 id =  pageInstance.cityLocationComps[i];
@@ -1540,7 +1455,7 @@ App({
         let customFeature = compData.customFeature;
         _this.sendRequest({
           hideLoading: true,
-          url: '/index.php?r=appData/getCategoryByGroup',
+          url: '/appData/getCategoryByGroup',
           data: {
             group_id: groupId
           },
@@ -1592,11 +1507,11 @@ App({
             }
             _this.sendRequest({
               hideLoading: true,
-              url: '/index.php?r=AppData/getFormDataList',
+              url: '/AppData/getFormDataList',
               data: param,
               method: 'post',
               success: function (res) {
-                if (res.status == 0) {
+                if (res.code == 200) {
                   newdata = {};
                   if (param.form !== 'form') {
                     for (let j in res.data) {
@@ -1624,40 +1539,6 @@ App({
               }
             });
 
-          }
-        });
-      }
-    }
-    if (!!pageInstance.videoProjectComps.length) {
-      for (let i in pageInstance.videoProjectComps) {
-        let compid = pageInstance.videoProjectComps[i].compid;
-        let videoProjectId = pageInstance.videoProjectComps[i].videoProjectId;
-
-        pageInstance.requestNum = pageRequestNum + 1;
-        _this.sendRequest({
-          hideLoading: pageRequestNum++ == 1 ? false : true, 
-          url: '/index.php?r=AppVideo/GetProjectInfo',
-          data: {
-            id : videoProjectId
-          },
-          method: 'post',
-          success: function (res) {
-            if (res.status == 0) {
-              let rdata = res.data,
-                  newdata = {};
-
-              newdata[compid + '.videoInfo'] = rdata;
-              newdata[compid + '.videoPoster'] = true;
-
-              pageInstance.setData(newdata);
-              
-              // setTimeout(function(){
-              //   let timeoutData = {};
-              //   timeoutData[compid + '.videoPoster'] = true;
-
-              //   pageInstance.setData(timeoutData);
-              // }, 2000);
-            }
           }
         });
       }
@@ -1728,7 +1609,7 @@ App({
   _getTakeoutShopInfo:function(successFun){
     this.sendRequest({
       hideLoading: true,   // 页面第一个请求才展示loading
-      url: '/index.php?r=AppShop/getTakeOutInfo',
+      url: '/App/getTakeOutInfo',
       data: {},
       success: function (data) {
         successFun(data)
@@ -1738,7 +1619,7 @@ App({
   _getAddressByLatLng: function (params, callback) {
     this.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=Map/getAreaInfoByLatAndLng',
+      url: '/Map/getAreaInfoByLatAndLng',
       data: {
         latitude: params.lat,
         longitude: params.lng
@@ -1752,7 +1633,7 @@ App({
     let _this = this;
     this.sendRequest({
       hideLoading: true,   // 页面第一个请求才展示loading
-      url: '/index.php?r=AppShop/cartList',
+      url: '/App/cartList',
       data: { page: -1},
       success: function (cartlist) {
         if (cartlist.status == 0) {
@@ -1880,13 +1761,13 @@ App({
 
         this.sendRequest({
           hideLoading: true,
-          url: '/index.php?r=AppShop/countStatusOrder',
+          url: '/App/countStatusOrder',
           data: {
             goods_type: goodsType
           },
           method: 'post',
           success: function (res) {
-            if (res.status == 0) {
+            if (res.code == 200) {
               let rdata = res.data,
                 newdata = {};
 
@@ -1942,7 +1823,7 @@ App({
       bbs_idx_value = _this.getAppId();
     }
     _this.sendRequest({
-      url: '/index.php?r=AppData/getFormDataList',
+      url: '/AppData/getFormDataList',
       method: 'post',
       data: {
         form: 'bbs',
@@ -2054,7 +1935,7 @@ App({
     }
     param.page = curpage;
     _this.sendRequest({
-      url: '/index.php?r=AppData/getFormDataList',
+      url: '/AppData/getFormDataList',
       data: param,
       method: 'post',
       success: function (res) {
@@ -2121,7 +2002,7 @@ App({
     }
       
     _this.sendRequest({
-      url: '/index.php?r=AppData/getFormDataList',
+      url: '/AppData/getFormDataList',
       data: {
         form: param.form,
         page: curpage,
@@ -2206,7 +2087,7 @@ App({
     }
     param.page = curpage;
     this.sendRequest({
-      url: '/index.php?r=AppShop/GetGoodsList',
+      url: '/App/GetGoodsList',
       data: param,
       method: 'post',
       success: function (res) {
@@ -2243,9 +2124,9 @@ App({
     let objIndex     = compid + '_' + objrel;
 
     if(counted == 1){
-      url = '/index.php?r=AppData/delCount';
+      url = '/AppData/delCount';
     } else {
-      url = '/index.php?r=AppData/addCount';
+      url = '/AppData/addCount';
     }
 
     if(that.changeCountRequert[objIndex]){
@@ -2482,7 +2363,7 @@ App({
 
       _this.sendRequest({
         hideLoading: true,
-        url: '/index.php?r=AppData/addData',
+        url: '/AppData/addData',
         data: {
           form: form,
           form_data: form_data
@@ -2738,11 +2619,11 @@ App({
     var that = this;
     let pageInstance  = this.getAppCurrentPage();
     this.sendRequest({
-      url: '/index.php?r=AppData/getFormDataList',
+      url: '/AppData/getFormDataList',
       data: component_params.param,
       method: 'post',
       success: function (res) {
-        if (res.status == 0) {
+        if (res.code == 200) {
           let newdata = {};
           let compid  = component_params['compid'];
 
@@ -2776,11 +2657,11 @@ App({
     var that = this;
     let pageInstance  = this.getAppCurrentPage();
     this.sendRequest({
-      url: '/index.php?r=AppShop/GetGoodsList',
+      url: '/App/GetGoodsList',
       data: component_params.param,
       method: 'post',
       success: function (res) {
-        if (res.status == 0) {
+        if (res.code == 200) {
           let newdata = {};
           let compid  = component_params['compid'];
 
@@ -2913,7 +2794,7 @@ App({
     }
 
     this.sendRequest({
-      url: '/index.php?r=AppData/addData',
+      url: '/AppData/addData',
       method: 'post',
       data: {
         form: 'bbs',
@@ -2995,7 +2876,7 @@ App({
     }
 
     this.sendRequest({
-      url: '/index.php?r=AppData/addData',
+      url: '/AppData/addData',
       method: 'post',
       data: {
         form: 'bbs',
@@ -3101,7 +2982,7 @@ App({
     }
     
 
-    let url = '/index.php?r=appData/search';
+    let url = '/appData/search';
     let param = {
       "search":{
           "data":[{"_allkey":keyword,"form": form}], 
@@ -3132,7 +3013,7 @@ App({
           },0)
           return;
         }
-        if (res.status == 0) {
+        if (res.code == 200) {
           let newdata = {};
           if (listType === "goods-list") {
             newdata[search_compid + '.goods_data'] = page == 1 ? res.data : search_compData.goods_data.concat(res.data);
@@ -3281,103 +3162,6 @@ App({
     }
     pageInstance.setData(newdata);
   },
-  _citylocationList: function (dataset, region_id) {
-    let compid       = dataset.id;
-    let listid       = dataset.listid;
-    let listType     = dataset.listtype;
-    let form         = dataset.form;
-    let index        = '';
-    let targetList   = '';
-    let that         = this;
-    let pageInstance = this.getAppCurrentPage();
-
-    if (listType === 'list-vessel') {
-      for (index in pageInstance.list_compids_params) {
-        if (pageInstance.list_compids_params[index].param.id === listid) {
-          pageInstance.list_compids_params[index].param.page = 1;
-          targetList = pageInstance.list_compids_params[index];
-          break;
-        }
-      }
-    }
-
-    if (listType === 'goods-list') {
-      for (index in pageInstance.goods_compids_params) {
-        if (pageInstance.goods_compids_params[index].param.id === listid) {
-          pageInstance.goods_compids_params[index].param.page = 1;
-          targetList = pageInstance.goods_compids_params[index];
-          break;
-        }
-      }
-    }
-
-    if (listType === 'franchisee-list') {
-      for (index in pageInstance.franchiseeComps) {
-        if (pageInstance.franchiseeComps[index].param.id === listid) {
-          pageInstance.franchiseeComps[index].param.page = 1;
-          targetList = pageInstance.franchiseeComps[index];
-          break;
-        }
-      }
-    }
-    let url = '/index.php?r=AppData/GetFormDataList&idx_arr[idx]=region_id&idx_arr[idx_value]='+region_id+'&extra_cond_arr[latitude]='+this.globalData.locationInfo.latitude+'&extra_cond_arr[longitude]='+this.globalData.locationInfo.longitude + '&extra_cond_arr[county_id]='+region_id,
-        param = {'form':form};
-    this.sendRequest({
-      url: url,
-      data: param,
-      success: function (res) {
-        if(res.data.length == 0){
-          setTimeout(function () {
-            that.showModal({
-              content: '没有找到与所选区域的相关的内容'
-            });
-          },0)
-          return;
-        }
-        if (res.status == 0) {
-          let newdata = {};
-
-          if (listType === "goods-list") {
-            newdata[targetList.compid + '.goods_data'] = res.data;
-          } else if (listType === 'list-vessel') {
-            if(param.form !== 'form'){
-              for (let j in res.data) {
-                for (let k in res.data[j].form_data) {
-                  if (k == 'category') {
-                    continue;
-                  }
-                  if(/region/.test(k)){
-                    continue;
-                  }
-
-                  let description = res.data[j].form_data[k];
-
-                  if (that.needParseRichText(description)) {
-                    res.data[j].form_data[k] = that.getWxParseResult(description);
-                  }
-                }
-              }
-            }
-            newdata[targetList.compid + '.list_data'] = res.data;
-          } else if (listType === 'franchisee-list') {
-            for(let index in res.data){
-              let distance = res.data[index].distance;
-              res.data[index].distance = util.formatDistance(distance);
-            }
-            newdata[targetList.compid + '.franchisee_data'] = res.data;
-          }
-
-          newdata[targetList.compid + '.is_more']   = res.is_more;
-          newdata[targetList.compid + '.curpage']   = 1;
-
-          pageInstance.setData(newdata);
-        }
-      },
-      fail: function (res) {
-        console.log(res);
-      }
-    })
-  },
   openTakeoutLocation: function (event) {
     var dataset = event.currentTarget.dataset;
     this.openLocation({
@@ -3400,7 +3184,7 @@ App({
     let assessIndex  = newdata[compid].assessActive;
     this.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppShop/getAssessList',
+      url: '/App/getAssessList',
       method: 'post',
       data: {
         idx_arr: {
@@ -3458,7 +3242,7 @@ App({
   _getAssessList: function(pageInstance, compid){
     this.sendRequest({
       hideLoading: true,   // 页面第一个请求才展示loading
-      url: '/index.php?r=AppShop/getAssessList&idx_arr[idx]=goods_type&idx_arr[idx_value]=3',
+      url: '/App/getAssessList&idx_arr[idx]=goods_type&idx_arr[idx_value]=3',
       data: { page: 1, page_size: 10, obj_name: 'app_id' },
       success: function (res) {
         let newdata = {},
@@ -3506,7 +3290,7 @@ App({
       return;
     }
     this.sendRequest({
-      url: '/index.php?r=AppShop/deleteCart',
+      url: '/App/deleteCart',
       method: 'post',
       data: {
         cart_id_arr: cartIds
@@ -3810,7 +3594,7 @@ App({
   _removeFromCart: function (cart_id, callback, failCallback) {
     let that = this;
     this.sendRequest({
-      url: '/index.php?r=AppShop/deleteCart',
+      url: '/App/deleteCart',
       method: 'post',
       data: {
         cart_id_arr: [cart_id],
@@ -3830,7 +3614,7 @@ App({
   _changeOrderCount: function (id, num, modelid, callback, failCallback) {
     let that = this;
     this.sendRequest({
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: {
         goods_id: id.toString().replace('goods', ''),
         num: num,
@@ -4141,7 +3925,7 @@ App({
     let _this = this;
 
     this.sendRequest({
-      url: '/index.php?r=AppShop/GetGoodsList',
+      url: '/App/GetGoodsList',
       method: 'post',
       data: requestData,
       success: function(res){
@@ -4168,7 +3952,7 @@ App({
     let _this = this;
 
     this.sendRequest({
-      url: '/index.php?r=AppData/getFormDataList',
+      url: '/AppData/getFormDataList',
       method: 'post',
       data: requestData,
       success: function (res) {
@@ -4214,7 +3998,7 @@ App({
       params += '&' + i + '=' + pageInstance.sharePageParams[i]
     }
     this.sendRequest({
-      url: '/index.php?r=AppShop/ShareQRCode',
+      url: '/App/ShareQRCode',
       data: {
         obj_id: pageInstance.route.split('/')[2],
         type: 11,
@@ -4263,7 +4047,7 @@ App({
   _isOpenPromotion: function () {
     let that = this;
     this.sendRequest({
-      url: '/index.php?r=AppDistribution/getDistributionInfo',
+      url: '/AppDistribution/getDistributionInfo',
       success: function (res) {
         if(res.data){
           that._isPromotionPerson();
@@ -4280,7 +4064,7 @@ App({
     var that = this;
     this.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppDistribution/getDistributorInfo',
+      url: '/AppDistribution/getDistributorInfo',
       success: function (res) {
         if (res.data){
           that.turnToPage('/pages/promotionUserCenter/promotionUserCenter');
@@ -4313,13 +4097,13 @@ App({
     let buynow       = dataset.buynow;
     let ShowVirtualPrice = dataset.isshowvirtualprice;
     this.sendRequest({
-      url: '/index.php?r=AppShop/getGoods',
+      url: '/App/getGoods',
       data: {
         data_id: goods_id
       },
       method: 'post',
       success: function (res) {
-        if (res.status == 0) {
+        if (res.code == 200) {
           let goods         = res.data[0].form_data;
           let defaultSelect = goods.model_items[0];
           let goodsModel    = [];
@@ -4479,7 +4263,7 @@ App({
     };
 
     this.sendRequest({
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: param,
       success: function (res) {
         setTimeout(function () {
@@ -4502,7 +4286,7 @@ App({
     };
     let that = this;
     this.sendRequest({
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: param,
       success: function (res) {
         var cart_arr = [res.data],
@@ -4521,7 +4305,7 @@ App({
     if (count <= 1) {
       this.sendRequest({
         hideLoading: true,
-        url: '/index.php?r=AppShop/deleteCart',
+        url: '/App/deleteCart',
         method: 'post',
         data: {
           cart_id_arr: [pageInstance.data.selectGoodsModelInfo.cart_id]
@@ -4578,7 +4362,7 @@ App({
     };
 
     that.sendRequest({
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: param,
       success: function (res) {
         var data = res.data;
@@ -4612,7 +4396,7 @@ App({
     let pageInstance = this.getAppCurrentPage();
     let that         = this;
     this.sendRequest({
-      url: '/index.php?r=AppShop/precheckShoppingCart',
+      url: '/App/precheckShoppingCart',
       data: {
         parent_shop_app_id: pageInstance.franchiseeId ? that.getAppId() : ''
       },
@@ -4623,7 +4407,7 @@ App({
         that.showModal({
           content: res.data,
           confirm: function () {
-            res.status === 1 && that.goToShoppingCart();
+            res.code === 1 && that.goToShoppingCart();
           }
         })
       }
@@ -4639,7 +4423,7 @@ App({
   getTostoreCartList: function () {
     let pageInstance = this.getAppCurrentPage(); 
     this.sendRequest({
-      url: '/index.php?r=AppShop/cartList',
+      url: '/App/cartList',
       data: {
         page: 1,
         page_size: 100
@@ -4683,213 +4467,12 @@ App({
     let router = event.currentTarget.dataset.router;
     this.turnToPage('/pages/' + router + '/' + router +'?from=suspension');
   },
-  // 跳转大转盘
-  tapToLuckyWheel: function (event) {
-    this.turnToPage('/pages/luckyWheelDetail/luckyWheelDetail');
-  },
-  // 跳转大转盘
-  tapToGoldenEggs: function (event) {
-    this.turnToPage('/pages/goldenEggs/goldenEggs');
-  },
-  // 跳转刮刮乐
-  tapToScratchCard: function (event) {
-    this.turnToPage('/pages/scratch/scratch');
-  },
-  // 动态分类: 点击不同分类对应的数据
-  tapDynamicClassifyFunc: function (event) {
-    let _this = this;
-    let pageInstance = this.getAppCurrentPage();
-    let compId = event.currentTarget.dataset.compid;
-    let level = event.currentTarget.dataset.level;
-    let categoryId = event.currentTarget.dataset.categoryId;
-    let hideSubclass = event.currentTarget.dataset.hideSubclass;
-    let compData = pageInstance.data[compId];
-    let currentClassifyLevel = compData.classifyType.charAt(5);
-    let newData = {};
-    if (hideSubclass == 1) {
-      newData[compId + '.classifyAreaLevel2Show'] = false;
-      pageInstance.setData(newData);
-      return;
-    }
-    if (currentClassifyLevel == 2) {
-      if (categoryId == '') {
-        compData.currentCategory[0] = categoryId;
-        newData[compId + '.classifyAreaLevel2Show'] = false;
-      } else if (compData.currentCategory[level - 1] == categoryId) {
-        newData[compId + '.classifyAreaLevel2Show'] = !compData['classifyAreaLevel2Show'];
-      } else if(level == 1) {
-        newData[compId + '.classifyAreaLevel2Show'] = true;
-      } else if (level == 2) {
-        newData[compId + '.classifyAreaLevel2Show'] = false;
-      }
-    }
-    compData.currentCategory[level - 1] = categoryId;
-    newData[compId + '.currentCategory'] = compData.currentCategory;
-    pageInstance.setData(newData);
-    if(compData.classifyType == 'level2-vertical-withpic'){
-      if(level == 2){
-        _this.turnToPage('/pages/classifyGoodsListPage/classifyGoodsListPage?form=' + compData.classifyGroupForm + '&category_id=' + categoryId, false);      
-      }
-      return;
-    }
-    if (currentClassifyLevel != level) { // 点击非最后一级的分类不请求新数据
-      return;
-    }
-    // 根据groupId请求第一个分类绑定的数据
-    let param = {
-      page: 1,
-      form: compData.classifyGroupForm,
-      idx_arr: {
-        idx: 'category',
-        idx_value: categoryId
-      }
-    };
-    if (compData.customFeature.vesselAutoheight == 1 && compData.customFeature.loadingMethod == 1) {
-      param.page_size = compData.customFeature.loadingNum || 20;
-    }
-    _this.sendRequest({
-      hideLoading: true,
-      url: '/index.php?r=AppData/getFormDataList',
-      data: param,
-      method: 'post',
-      success: function (res) {
-        if (res.status == 0) {
-          let newdata = {};
-          if (param.form !== 'form') { // 动态列表绑定表单则不调用富文本解析
-            for (let j in res.data) {
-              for (let k in res.data[j].form_data) {
-                if (k == 'category') {
-                  continue;
-                }
-                if(/region/.test(k)){
-                  continue;
-                }
-                
-                let description = res.data[j].form_data[k];
-
-                if (_this.needParseRichText(description)) {
-                  res.data[j].form_data[k] = _this.getWxParseResult(description);
-                }
-              }
-            }
-          }
-          newdata[compId + '.list_data'] = res.data;
-          newdata[compId + '.is_more'] = res.is_more;
-          newdata[compId + '.curpage'] = 1;
-          pageInstance.setData(newdata);
-        }
-      }
-    });
-  },
-  beforeSeckillDownCount: function (formData, page, path) {
-    let _this = this,
-        downcount ;
-    downcount = _this.seckillDownCount({
-      startTime : formData.server_time,
-      endTime : formData.seckill_start_time,
-      callback : function () {
-        let newData = {};
-        newData[path+'.seckill_start_state'] = 1;
-        newData[path+'.server_time'] = formData.seckill_start_time;
-        page.setData(newData);
-        formData.server_time = formData.seckill_start_time;
-        _this.duringSeckillDownCount(formData , page ,path);
-      }
-    } , page , path + '.downCount');
-
-    return downcount;
-  },
-  duringSeckillDownCount: function (formData, page, path) {
-    let _this = this,
-        downcount;
-    downcount = _this.seckillDownCount({
-      startTime : formData.server_time,
-      endTime : formData.seckill_end_time ,
-      callback : function () {
-        let newData = {};
-        newData[path+'.seckill_start_state'] = 2;
-        page.setData(newData);
-      }
-    } , page , path + '.downCount');
-
-    return downcount;
-  },
-  seckillDownCount: function (opts, page, path) {
-    let opt = {
-      startTime : opts.startTime || null,
-      endTime : opts.endTime || null,
-      callback : opts.callback
-    };
-    let systemInfo = this.getSystemInfoData().system;
-    let isiphone = systemInfo.indexOf('iOS') != -1;
-
-    if(isiphone && /\-/g.test(opt.endTime)){
-      opt.endTime = opt.endTime.replace(/\-/g , '/');
-    }
-    if(isiphone && /\-/g.test(opt.startTime)){
-      opt.startTime = opt.startTime.replace(/\-/g , '/');
-    }
-    if(/^\d+$/.test(opt.endTime)){
-      opt.endTime = opt.endTime * 1000;
-    }
-    if(/^\d+$/.test(opt.startTime)){
-      opt.startTime = opt.startTime * 1000;
-    }
-
-    let target_date = new Date(opt.endTime),
-        current_date = new Date(opt.startTime),
-        interval ,
-        isfirst = true,
-        difference = target_date - current_date;
-
-    function countdown () {
-      if (difference < 0) {
-        clearInterval(interval);
-        if (opt.callback && typeof opt.callback === 'function'){opt.callback();};
-        return;
-      }
-
-      let _second = 1000,
-          _minute = _second * 60,
-          _hour = _minute * 60,
-          time = {};
-
-      let hours = Math.floor(difference / _hour),
-          minutes = Math.floor((difference % _hour) / _minute),
-          seconds = Math.floor((difference % _minute) / _second);
-
-          hours = (String(hours).length >= 2) ? hours : '0' + hours;
-          minutes = (String(minutes).length >= 2) ? minutes : '0' + minutes;
-          seconds = (String(seconds).length >= 2) ? seconds : '0' + seconds;
-      if(isfirst){
-        time[path+'.hours'] = hours;
-        time[path + '.minutes'] = minutes;
-      }else{
-        (minutes == '59' && seconds == '59') && (time[path+'.hours'] = hours);
-        (seconds == '59') && (time[path + '.minutes'] = minutes);
-      }
-      time[path + '.seconds'] = seconds;
-
-      page.setData(time);
-
-      isfirst = false;
-      difference -= 1000;
-    }
-    interval = setInterval(countdown, 1000);
-
-    return {
-      interval : interval ,
-      clear : function () {
-        clearInterval(interval);
-      }
-    };
-  },
   getAssessList: function (param) {
-    param.url = '/index.php?r=AppShop/GetAssessList';
+    param.url = '/App/GetAssessList';
     this.sendRequest(param);
   },
   getOrderDetail: function (param) {
-    param.url = '/index.php?r=AppShop/getOrder';
+    param.url = '/App/getOrder';
     this.sendRequest(param);
   },
   showUpdateTip: function () {
@@ -5106,10 +4689,9 @@ App({
     wxParseOldPattern: '_listVesselRichText_',
     cdnUrl: 'http://cdn.jisuapp.cn',
     defaultPhoto: 'http://cdn.jisuapp.cn/zhichi_frontend/static/webapp/images/default_photo.png',
-    siteBaseUrl: 'https://wechat.cidianpu.com',
+    siteBaseUrl: 'https://wechat.cidianpu.com/api',
     appTitle: '购物show',
     appDescription: '我的应用',
     appLogo: 'http://cdn.jisuapp.cn/zhichi_frontend/static/invitation/images/logo.png'
   }
 })
-

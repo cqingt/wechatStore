@@ -85,7 +85,7 @@ Page({
     let that = this;
   
     app.sendRequest({
-      url: '/index.php?r=AppShop/UserIntegralAction',
+      url: '/index.php?r=AppShop/getIntegralList',
       data: {
         'action': type,
         'page': page || 1

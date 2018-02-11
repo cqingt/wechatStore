@@ -94,7 +94,7 @@ Page({
     var _this = this;
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/calculationPrice',
+      url: '/index.php?r=AppShop/prePay',
       method: 'post',
       data: {
         address_id: this.data.selectAddress.id,

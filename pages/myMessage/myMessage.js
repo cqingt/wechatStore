@@ -35,7 +35,7 @@ Page({
   getMessageData: function(type, page){
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/getNotifyMsg',
+      url: '/index.php?r=AppShop/getMessage',
       data: {
         'types': type || '',
         'page': page || ''

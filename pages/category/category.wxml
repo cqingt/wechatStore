@@ -68,35 +68,35 @@ module.exports.isArray = isArray;
                bindscrolltolower="goodsScrollFunc">
     <view class="js-list-container" data-list-index="0">
       <view class="goods-list-item background-ele router js-to-detail"
-            wx:for="{{data.goods_data}}" wx:key="" data-id="{{item.form_data.id}}" style="{{data.list_style}}" data-contact="{{data.customFeature.ifUseContact}}" data-goods-type="{{item.form_data.goods_type}}" data-group="{{item.form_data.is_group_buy}}" data-hidestock="{{data.customFeature.isHideStock || ''}}" data-isShowVirtualPrice="{{data.customFeature.isShowVirtualPrice  || ''}}"
+            wx:for="{{data.goods_data}}" wx:key="" data-id="{{item.id}}" style="{{data.list_style}}" data-contact="{{data.customFeature.ifUseContact}}" data-goods-type="{{item.goods_type}}" data-group="{{0}}" data-hidestock="{{data.customFeature.isHideStock || ''}}" data-isShowVirtualPrice="{{data.customFeature.isShowVirtualPrice  || ''}}"
             catchtap="turnToGoodsDetail"
             >
         <view class="inner-content">
-          <image class="list-img" src="{{item.form_data.cover}}" style="{{data.img_style}}" mode="scaleToFill"></image>
+          <image class="list-img" src="{{item.cover}}" style="{{data.img_style}}" mode="scaleToFill"></image>
           <view class="title-container" style="width: {{data.title_width.width}};">
-            <view class="title">{{item.form_data.title}}</view>
+            <view class="title">{{item.title}}</view>
             <block wx:if="{{!data.customFeature.isShowVirtualPrice}}">
               <view style="width: {{data.title_width.width}}">
-                <text class="price">¥ {{item.form_data.price}}</text>
-                <text wx:if="{{ !data.customFeature.isHideSales }}" class="sales">销量：{{item.form_data.sales}}</text>
-                <label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore')}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.form_data.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label>
+                <text class="price">¥ {{item.price}}</text>
+                <text wx:if="{{ !data.customFeature.isHideSales }}" class="sales">销量：{{item.sales}}</text>
+                <label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore')}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label>
               </view>
             </block>
             <block wx:else>
               <block wx:if="{{data.customFeature.mode == 0}}">
                 <view wx:if="{{!data.customFeature.isHideSales}}" style="width: {{data.title_width.width}};position:absolute;bottom: 0;padding-left: 10px;height:60%;">
-                  <view class="price" style="margin-bottom:10rpx;"><text style="font-size:28.125rpx;margin-right: 10rpx;" wx:if="{{item.form_data.goods_type != 1 && item.form_data.price != '0.00'}}">¥</text><text>{{(item.form_data.goods_type != '1' ? item.form_data.price : (item.form_data.price != '0.00' ? item.form_data.price : '免费'))}}</text><text class="virtual_price" wx:if="{{item.form_data.virtual_price != 0}}">¥{{item.form_data.virtual_price}}</text></view>
-                  <view style="bottom:0;"><text class="sales">销量：{{item.form_data.sales}}</text><label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore')}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.form_data.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label></view>
+                  <view class="price" style="margin-bottom:10rpx;"><text style="font-size:28.125rpx;margin-right: 10rpx;" wx:if="{{item.price != '0.00'}}">¥</text><text>{{item.price}}</text><text class="virtual_price" wx:if="{{item.virtual_price != 0}}">¥{{item.virtual_price}}</text></view>
+                  <view style="bottom:0;"><text class="sales">销量：{{item.sales}}</text><label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore')}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label></view>
                 </view>
                 <view wx:if="{{data.customFeature.isHideSales}}" style="width: {{data.title_width.width}};padding-left: 10px;">
-                  <view class="price"><text style="font-size:28.125rpx;margin-right: 10rpx;" wx:if="{{item.form_data.goods_type != 1 && item.form_data.price != '0.00'}}">¥</text><text>{{(item.form_data.goods_type != '1' ? item.form_data.price : (item.form_data.price != '0.00' ? item.form_data.price : '免费'))}}</text><text class="virtual_price" wx:if="{{item.form_data.virtual_price != 0}}">¥{{item.form_data.virtual_price}}</text><label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore')}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.form_data.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label></view>
+                  <view class="price"><text style="font-size:28.125rpx;margin-right: 10rpx;" wx:if="{{item.price != '0.00'}}">¥</text><text>{{item.price}}</text><text class="virtual_price" wx:if="{{item.virtual_price != 0}}">¥{{item.virtual_price}}</text><label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore')}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label></view>
                 </view>
               </block>
               <block wx:else>
                 <view style="width: {{data.title_width.width}}">
-                  <view style="padding-left:0;"><text class="price">¥ {{item.form_data.price}}</text><text class="virtual_price" style="margin-left: 0;" wx:if="{{item.form_data.virtual_price != 0}}">¥{{item.form_data.virtual_price}}</text><label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore') && data.customFeature.isHideSales}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.form_data.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label></view>
-                  <text wx:if="{{ !data.customFeature.isHideSales }}" class="sales">销量：{{item.form_data.sales}}</text>
-                  <label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore')}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.form_data.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label>
+                  <view style="padding-left:0;"><text class="price">¥ {{item.price}}</text><text class="virtual_price" style="margin-left: 0;" wx:if="{{item.virtual_price != 0}}">¥{{item.virtual_price}}</text><label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore') && data.customFeature.isHideSales}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label></view>
+                  <text wx:if="{{ !data.customFeature.isHideSales }}" class="sales">销量：{{item.sales}}</text>
+                  <label wx:if="{{data.customFeature.isShoppingCart && (data.customFeature.form == 'goods'||data.customFeature.form == 'tostore')}}" class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.id}}" data-buynow="{{data.customFeature.isBuyNow || ''}}" catchtap="showAddShoppingcart"></label>
                 </view>
               </block>
             </block>
