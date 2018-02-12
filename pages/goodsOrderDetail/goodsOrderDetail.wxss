@@ -9,7 +9,7 @@ page {
 }
 .order-detail-section {
   margin-bottom: 18rpx;
-  padding: 16rpx 30rpx;
+  padding: 26rpx 30rpx;
   background: #fff;
   border-bottom: 1px solid #f1f1f1;
   font-size:26rpx;
