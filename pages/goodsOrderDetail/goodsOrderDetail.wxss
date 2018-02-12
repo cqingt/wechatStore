@@ -21,7 +21,7 @@ page {
   font-size: 36rpx;
 }
 .top-section {
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #fff;
   background-color: #333
 }
