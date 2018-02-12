@@ -645,3 +645,6 @@ contact-button {
   border-color: #222222;
   border-width: 0;
 }
+.page-bottom-dialog {
+  font-size:32rpx;
+}

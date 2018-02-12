@@ -133,7 +133,7 @@ Page({
    */
   addToCart: function (e) {
     appInstance.sendRequest({
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: {
         goods_id: e.target.dataset.id,
         num: 1
@@ -158,12 +158,17 @@ Page({
     this.setData({ showResult: true, itemsList: [] });
 
     appInstance.sendRequest({
-      url: '/index.php?r=AppShop/GetGoodsList',
+      url: '/App/getGoodsList',
       method: 'post',
       data: this.data.filterParam,
       success: function (res) {
         _this.setData({ itemsList: res.data });
-        _this.setData({ pageData: res });
+        _this.setData(
+          { 
+            'pageData.is_more': res.is_more, 
+            'pageData.current_page': res.current_page
+          }
+        );
       }
     })
   },
@@ -181,12 +186,17 @@ Page({
       this.setData({ prevPage: curPage });
 
       appInstance.sendRequest({
-        url: '/index.php?r=AppShop/GetGoodsList',
+        url: '/App/GetGoodsList',
         method: 'post',
         data: this.data.filterParam,
         success: function (res) {
           res.current_page = _this.data.filterParam.page + 1;
-          _this.setData({ pageData: res });
+          _this.setData(
+            {
+              'pageData.is_more': res.is_more,
+              'pageData.current_page': res.current_page
+            }
+          );
           let itemsList = _this.data.itemsList.concat(res.data);
           _this.setData({ itemsList: itemsList });
         
@@ -323,7 +333,7 @@ Page({
     return false;
     let _this = this;
     appInstance.sendRequest({
-      url: '/index.php?r=AppRegion/getAllExistedDataRegionList&is_xcx=1',
+      url: '/App/getAllExistedDataRegionList&is_xcx=1',
       success: function (data) {
         _this.setData({ locationList: data.data });
       },
@@ -340,7 +350,7 @@ Page({
         let latitude = res.latitude,
           longitude = res.longitude;
         appInstance.sendRequest({
-          url: '/index.php?r=Region/GetAreaInfoByLatAndLng',
+          url: '/App/GetAreaInfoByLatAndLng',
           data: {
             latitude: latitude,
             longitude: longitude
@@ -369,7 +379,7 @@ Page({
   getCategory: function () {
     let _this = this;
     appInstance.sendRequest({
-      url: '/index.php?r=AppShop/Category',
+      url: '/App/Category',
       method: 'post',
       data: { form: 'goods' },
       success: function (res) {

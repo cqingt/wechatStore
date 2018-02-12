@@ -51,7 +51,7 @@
       <view class="line" ></view>
     </view>
     <view class="goods-detail-section" hidden="{{displayComment}}">
-      <view class="comment-title"><view style="border-bottom: 1px solid #f4f4f4;padding-bottom:20rpx;">评价 ({{ commentNums[0] || 0 }})</view></view>
+      <view class="comment-title"><view style="border-bottom: 1px solid #f4f4f4;padding-bottom:20rpx;">评价 ({{ commentNums || 0 }})</view></view>
       <view class="block-item">
         <view wx:if="{{ commentExample }}">
           <view class="comment-item">

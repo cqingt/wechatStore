@@ -74,6 +74,7 @@
   position: absolute;
   top: 10px;
   left: 12px;
+  font-size:32rpx;
 }
 #myMessage .message-item.type-pay .message-title ,
 #myMessage .message-item.type-form .message-title ,

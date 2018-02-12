@@ -16,7 +16,7 @@
               </label>
             </label>
             <view class="myAddress-address-top" data-info="{{item}}" bindtap="{{ from == 'userCenterEle' ? 'editAddress' :  'selectAddress' }}" data-id="{{ item.id }}">
-                <view><text class="address-detail">{{ item.address_info.province.text + item.address_info.city.text + item.address_info.district.text + item.address_info.detailAddress }}</text></view>
+                <view><text class="address-detail">{{ item.address_info.province + item.address_info.city + item.address_info.district + item.address_info.detailAddress }}</text></view>
                 <text class="address-person">{{ item.address_info.name }} {{ item.address_info.contact }}</text>
             </view>
             <text class="myAddress-delete ico-moon icon-delete" wx:if="{{ from != 'selected' }}" bindtap="deleteAddress" data-id="{{ item.id }}"></text>

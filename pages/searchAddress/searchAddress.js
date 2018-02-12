@@ -66,7 +66,7 @@ Page({
     let addressList = [];
     let hasInDistance = true;
     app.sendRequest({
-      url: '/index.php?r=AppShop/addressList',
+      url: '/App/addressList',
       success: (res) => {
         let address = res.data;
         for (var i = 0, j = address.length - 1; i <= j; i++) {
@@ -147,7 +147,7 @@ Page({
   getArea: function(id, callBack){
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=Region/getRegionList',
+      url: '/App/getRegionList',
       data: {pid: id},
       success: (res) =>{
         res.data = res.data.reverse()
@@ -182,7 +182,7 @@ Page({
       that.oldRegionStr = that.data.regionStr
       if (that.data.searchInput) {
         app.sendRequest({
-          url: '/index.php?r=Map/suggestion&keyword=',
+          url: '/App/suggestion&keyword=',
           data: {
             keyword: that.data.regionStr.join('') + that.data.searchInput,
             region: that.data.regionStr[1]
@@ -231,7 +231,7 @@ Page({
       clearTimeout(this.searchFunc);
       this.searchFunc = setTimeout(() =>{
         app.sendRequest({
-          url: '/index.php?r=Map/suggestion&keyword=',
+          url: '/App/suggestion&keyword=',
           data:{
             keyword: that.data.regionStr.join('')+ e.detail.value,
             region: that.data.regionStr[1]
@@ -324,7 +324,7 @@ Page({
   nearbyAddress: function(option) {
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=Map/searchAreaInfo',
+      url: '/App/searchAreaInfo',
       data: {
         keyword: option.keyword,
         boundary: 'nearby('+option.lat+','+option.lng+',2000)'

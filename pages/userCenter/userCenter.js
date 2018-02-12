@@ -59,7 +59,7 @@ Page({
     var data = this.data.userInfo;
 
     app.sendRequest({
-      url: '/index.php?r=AppData/saveUserInfo',
+      url: '/App/saveUserInfo',
       method: 'post',
       data: data,
       success: function(res){

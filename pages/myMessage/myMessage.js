@@ -35,39 +35,19 @@ Page({
   getMessageData: function(type, page){
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/getMessage',
+      url: '/App/getMessage',
       data: {
         'types': type || '',
         'page': page || ''
       },
       success: function(res){
-        for(var key in res.data){
-          
-          switch(parseInt(key)){
-            // 系统消息分支：站内消息、支付消息、表单消息
-            case 5:
-              console.log(res.data[key].data);
-              console.log(that.parseMessageData(res.data[key].data));
-              that.setData({
-                'systemBranch.data': that.data.systemBranch.data ? that.data.systemBranch.data.concat(that.parseMessageData(res.data[key].data)) : that.parseMessageData(res.data[key].data) ,
-                'systemBranch.isMore': res.data[key].is_more,
-                'systemBranch.currentPage': res.data[key].current_page,
-                'systemBranch.onload': false,
-                'systemBranch.unreadCount': res.data[key].unread_count
-              });
-              break;
-            // 互动消息分支：评论消息
-            case 6:
-              that.setData({
-                'interactBranch.data': that.data.interactBranch.data ? that.data.interactBranch.data.concat(that.parseMessageData(res.data[key].data)) : that.parseMessageData(res.data[key].data) ,
-                'interactBranch.isMore': res.data[key].is_more,
-                'interactBranch.currentPage': res.data[key].current_page,
-                'interactBranch.onload': false,
-                'interactBranch.unreadCount': res.data[key].unread_count
-              })
-              break;
-          }
-        }
+        that.setData({
+          'systemBranch.data': that.data.systemBranch.data ? that.data.systemBranch.data.concat(that.parseMessageData(res.data.messageList)) : that.parseMessageData(res.data.messageList),
+          'systemBranch.isMore': res.data.is_more,
+          'systemBranch.currentPage': res.data.current_page,
+          'systemBranch.onload': false,
+          'systemBranch.unreadCount': res.data.unread_count
+        });
       }
     });
   },
@@ -197,7 +177,7 @@ Page({
     app.setPageTitle('表单消息');
     // 请求数据
     app.sendRequest({
-      url: '/index.php?r=Appshop/webAppMgr',
+      url: '/App/webAppMgr',
       data: {
         'form_id': _formId,
       },
@@ -206,7 +186,7 @@ Page({
         _formData_list.shift(); // 默认去除第一个（非用户创建）
         // 获取该表单的本次提交数据
         app.sendRequest({
-          url: '/index.php?r=Appshop/getFormData',
+          url: '/App/getFormData',
           data: {
             'form': _form,
             'data_id': _formDataId,

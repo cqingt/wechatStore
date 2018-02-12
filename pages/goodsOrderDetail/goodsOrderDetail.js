@@ -52,7 +52,7 @@ Page({
       },
       success: function (res) {
         var data = res.data,
-            form_data = data.form_data,
+            form_data = data,
             hasAdditionalInfo = false,
             additional_info_goods = [],
             additional_goodsid_arr = [],
@@ -105,7 +105,7 @@ Page({
       confirmText: '确定',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/HideOrder',
+          url: '/App/HideOrder',
           data: {
             order_id: orderId,
             sub_shop_app_id: franchiseeId
@@ -128,7 +128,7 @@ Page({
       cancelText: '否',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/cancelOrder',
+          url: '/App/cancelOrder',
           data: {
             order_id: orderId,
             sub_shop_app_id: that.data.franchiseeId
@@ -153,7 +153,7 @@ Page({
 
     if (this.data.orderInfo.total_price == 0) {
       app.sendRequest({
-        url: '/index.php?r=AppShop/paygoods',
+        url: '/App/paygoods',
         data: {
           order_id: orderId,
           total_price: 0
@@ -174,7 +174,7 @@ Page({
     }
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/GetWxWebappPaymentCode',
+      url: '/App/getWxWebappPaymentCode',
       data: {
         order_id: orderId
       },
@@ -202,7 +202,7 @@ Page({
       cancelText: '取消',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/applyRefund',
+          url: '/App/applyRefund',
           data: {
             order_id: orderId,
             sub_shop_app_id: that.data.franchiseeId
@@ -228,7 +228,7 @@ Page({
       cancelText: '取消',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/comfirmRefund',
+          url: '/App/comfirmRefund',
           data: {
             order_id: orderId,
             sub_shop_app_id: that.data.franchiseeId
@@ -258,7 +258,7 @@ Page({
       cancelText: '取消',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/comfirmOrder',
+          url: '/App/comfirmOrder',
           data: {
             order_id: orderId,
             sub_shop_app_id: that.data.franchiseeId
@@ -295,7 +295,7 @@ Page({
   getFreigtAdress:function(){
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/getAppShopLocationInfo',
+      url: '/App/getAppShopLocationInfo',
       data: {
         app_id: app.getAppId()
       },
@@ -311,7 +311,7 @@ Page({
       infor = _this.data.freightAdress.region_string + _this.data.freightAdress.shop_location;
     infor = infor.replace(/\s+/g,'');
     app.sendRequest({
-      url: '/index.php?r=Map/GetLatAndLngByAreaInfo',
+      url: '/App/getLatAndLngByAreaInfo',
       data: {
         location_info: infor
       },
@@ -329,7 +329,7 @@ Page({
   initialAddressId:function(){
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/addressList',
+      url: '/App/addressList',
       data: {
         app_id: app.getAppId()
       },
@@ -356,7 +356,7 @@ Page({
                   + (franchiseeId ? '&franchisee=' + franchiseeId : '');
     if(!franchiseeId){
       app.sendRequest({
-        url: '/index.php?r=AppMarketing/CheckAppCollectmeStatus',
+        url: '/App/checkAppCollectmeStatus',
         data: {
           order_id: orderId
         },

@@ -10,7 +10,7 @@ Page({
         orderId = options.detail;
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/expressFlow',
+      url: '/App/expressFlow',
       data: {
         order_id: orderId
       },

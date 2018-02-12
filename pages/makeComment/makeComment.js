@@ -133,7 +133,7 @@ Page({
       return;
     }
     app.sendRequest({
-      url: '/index.php?r=AppShop/AddAssessList',
+      url: '/App/AddAssessList',
       method: 'post',
       data: submitData,
       success: function(res){

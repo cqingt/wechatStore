@@ -46,7 +46,7 @@ Page({
   getVipInfo: function(){
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/GetVIPInfo',
+      url: '/App/getVIPInfo',
       data: {
         'app_id': app.globalData.appId,
         'is_all': 1

@@ -56,7 +56,7 @@ Page({
     var that = this;
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/cartList',
+      url: '/App/cartList',
       data: {
         page: 1,
         page_size: 100
@@ -94,7 +94,7 @@ Page({
     var _this = this;
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/prePay',
+      url: '/App/prePay',
       method: 'post',
       data: {
         address_id: this.data.selectAddress.id,
@@ -147,7 +147,7 @@ Page({
   getShopAddress:function(){
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/getAppShopLocationInfo',
+      url: '/App/getAppShopLocationInfo',
       success: function (res) {
         that.setData({
           shopAddress: res.data
@@ -213,7 +213,7 @@ Page({
     };
     app.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: param,
       success: function(res){
         that.cart_data_arr[index].num = targetNum;
@@ -236,7 +236,7 @@ Page({
         listExcludeDelete;
 
     app.sendRequest({
-      url : '/index.php?r=AppShop/deleteCart',
+      url: '/App/deleteCart',
       method: 'post',
       data: {
         cart_id_arr: [this.cart_data_arr[index].cart_id]
@@ -306,7 +306,7 @@ Page({
     this.requesting = true;
 
     app.sendRequest({
-      url : '/index.php?r=AppShop/addCartOrder',
+      url: '/App/addCartOrder',
       method: 'post',
       data: {
         cart_arr: this.cart_data_arr,
@@ -337,7 +337,7 @@ Page({
       var pagePath = '/pages/goodsOrderPaySuccess/goodsOrderPaySuccess?detail=' + orderId + '&is_group=' + !!that.is_group;
       if(!that.franchisee_id){
         app.sendRequest({
-          url: '/index.php?r=AppMarketing/CheckAppCollectmeStatus',
+          url: '/App/checkAppCollectmeStatus',
           data: {
             'order_id': orderId
           },
@@ -363,7 +363,7 @@ Page({
 
     if(this.data.totalPayment == 0){
       app.sendRequest({
-        url: '/index.php?r=AppShop/paygoods',
+        url: '/App/paygoods',
         data: {
           order_id: orderId,
           total_price: 0
@@ -381,7 +381,7 @@ Page({
       return;
     }
     app.sendRequest({
-      url: '/index.php?r=AppShop/GetWxWebappPaymentCode',
+      url: '/App/getWxWebappPaymentCode',
       data: {
         order_id: orderId
       },
@@ -450,7 +450,7 @@ Page({
       success: function (res) {
         app.sendRequest({
           method: 'post',
-          url: '/index.php?r=AppShop/AddWxAddress',
+          url: '/App/addWxAddress',
           data: {
             detailInfo: res.detailInfo || '',
             cityName: res.cityName || '',
@@ -475,7 +475,7 @@ Page({
 
     infor = infor.replace(/\s/g,'');
     app.sendRequest({
-      url: '/index.php?r=Map/GetLatAndLngByAreaInfo',
+      url: '/App/getLatAndLngByAreaInfo',
       data: {
         location_info: infor
       },
@@ -508,7 +508,7 @@ Page({
   exchangeCouponInit: function(id){
     var _this = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/getGoods',
+      url: '/App/getGoods',
       data: {
         data_id: id
       },

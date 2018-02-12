@@ -13,6 +13,7 @@ page {
   margin-bottom: 11rpx;
   background: #fdfdfd;
   overflow: hidden;
+  font-size: 28rpx;
 }
 .preview-goods-order-list {
   padding-top: 0;
@@ -51,7 +52,7 @@ page {
 }
 .preview-goods-title {
   margin-top: 18rpx;
-  font-size: 33rpx;
+  font-size: 32rpx;
   color: #535458;
   white-space: nowrap;
   overflow: hidden;
@@ -63,6 +64,7 @@ page {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 28rpx;
 }
 .preview-quantity-section {
   position:absolute;

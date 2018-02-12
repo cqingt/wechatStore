@@ -54,7 +54,7 @@ Page({
     let addressList = [];
     let hasInDistance = true;
     app.sendRequest({
-      url: '/index.php?r=AppShop/addressList',
+      url: '/App/addressList',
       success: function(res){
         let address = res.data;
         for(var i = 0, j = address.length-1 ; i <= j; i++){
@@ -94,7 +94,7 @@ Page({
       cancelText: '取消',
       confirm: function(){
         app.sendRequest({
-          url: '/index.php?r=AppShop/delAddress',
+          url: '/App/delAddress',
           data: {
             address_id: deleteId
           },
@@ -127,7 +127,7 @@ Page({
             success: function (res) {
               app.sendRequest({
                 method: 'post',
-                url: '/index.php?r=AppShop/AddWxAddress',
+                url: '/App/addWxAddress',
                 data: {
                   detailInfo: res.detailInfo || '',
                   cityName: res.cityName || '',
@@ -173,7 +173,7 @@ Page({
   changeFreightWay:function(){
     var _this = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/ChangeOrder',
+      url: '/App/changeOrder',
       data: {
         order_id: _this.data.orderId,
         sub_shop_app_id: _this.subShopId

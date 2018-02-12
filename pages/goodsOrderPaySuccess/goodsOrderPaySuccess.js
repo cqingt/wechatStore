@@ -40,7 +40,7 @@ Page({
     that.scratch = new Scratch(that, {
       canvasWidth: width,
       canvasHeight: height,
-      imageResource: app.getSiteBaseUrl()+'/index.php?r=Download/DownloadResourceFromUrl&url='+app.getCdnUrl()+'/static/webapp/images/scratchMovie.png',
+      imageResource: app.getSiteBaseUrl() +'/App/downloadResourceFromUrl&url='+app.getCdnUrl()+'/static/webapp/images/scratchMovie.png',
       maskColor: "red",
       r: 15,
       callback: () => {
@@ -57,72 +57,6 @@ Page({
       }
     });
   },
-  //砸金蛋
-  getGoldenData: function (id) {
-    let that = this;
-    app.sendRequest({
-      url: "/index.php?r=appLotteryActivity/getTimeAfterConsume",
-      method: "post",
-      data: {
-        app_id: app.globalData.appId,
-        order_id: id
-      },
-      success: function (data) {
-        if(data.data){
-          if(that.data.code){
-            that.setData({
-              isWhole: true,
-            })
-          }else{
-            that.setData({
-              isWhole: false,
-              scratchId: data.data
-            })
-          }
-          
-        }else{
-          that.setData({
-            isWhole: true,
-          })
-        }
-      }
-    })
-  },
-  showAreaClick:function(){
-    //点击刮奖
-    let that=this;
-    that.setData({
-      isShowteam: false
-    })
-    app.sendRequest({
-      url:"/index.php?r=appLotteryActivity/lottery",
-      hideLoading:true,
-      data:{
-        activity_id: that.data.scratchId,
-        app_id: app.globalData.appId
-      },
-      success:function(res){
-        let data=res.data;
-        that.scratch.start();
-        if(data.title=='谢谢参与'){
-          that.setData({
-            isFail:false
-          })
-        }else{
-          if (data.is_comfort){
-            that.setData({
-              isComfort:false
-            })
-          }else{
-            that.setData({
-              isWinning:false,
-              winingTitle:data.title
-            })
-          }
-        }
-      }
-    })
-  },
   onShareAppMessage: function (res) {
     var that = this;
     return {
@@ -131,7 +65,7 @@ Page({
       success: function (res) {
         // 转发成功
         app.sendRequest({
-          url: "/index.php?r=appLotteryActivity/getTime",
+          url: "/App/getTime",
           data: {
             app_id: app.globalData.appId,
             activity_id: that.data.scratchId,
@@ -152,7 +86,7 @@ Page({
   getCollectBenefitData: function(id){
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=AppMarketing/CollectmeSendCoupon',
+      url: '/App/collectmeSendCoupon',
       data: {
         'order_id': id,
       },

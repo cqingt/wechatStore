@@ -24,7 +24,7 @@
   </view>
     <view class="newAddressView" bindtap="addSelectAddress" style="display:none">
       <label>地址</label>
-      <input type="text" placeholder="选择收货地址" disabled="true" value="{{ address_info.province.text +  address_info.city.text + address_info.district.text}}"
+      <input type="text" placeholder="选择收货地址" disabled="true" value="{{ address_info.province +  address_info.city + address_info.district}}"
       />
       <text class="ico-moon icon-rightarrow" style="float: right;font-size: 12px;color: #d5d5d5;"></text>
     </view>

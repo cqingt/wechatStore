@@ -29,6 +29,7 @@ Page({
     this.dataInitial();
   },
   onShow: function(){
+    return false;
     if (this.data.isFromBack) {
       this.setData({
         pages:1,
@@ -69,7 +70,7 @@ Page({
       data.goods_type = this.data.currentGoodsType
     }
     app.sendRequest({
-      url: '/index.php?r=AppShop/orderList',
+      url: '/App/orderList',
       method: 'post',
       data: data,
       success: function(res){
@@ -77,7 +78,7 @@ Page({
             orders = res.data;
             
         for (var i = 0; i < orders.length; i++) {
-          orders[i] = orders[i].form_data;
+          orders[i] = orders[i];
         }
 
         if(param.scrollLoad){
@@ -174,7 +175,7 @@ Page({
       confirmText: '确定',
       confirm: function(){
         app.sendRequest({
-          url: '/index.php?r=AppShop/cancelOrder',
+          url: '/App/cancelOrder',
           data: {
             order_id: orderId
           },
@@ -203,7 +204,7 @@ Page({
       confirmText: '确定',
       confirm: function(){
         app.sendRequest({
-          url: '/index.php?r=AppShop/applyRefund',
+          url: '/App/applyRefund',
           data: {
             order_id: orderId
           },
@@ -237,7 +238,7 @@ Page({
       confirmText: '确定',
       confirm: function(){
         app.sendRequest({
-          url: '/index.php?r=AppShop/comfirmOrder',
+          url: '/App/comfirmOrder',
           data: {
             order_id: orderId,
           },

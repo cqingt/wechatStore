@@ -2563,17 +2563,7 @@ App({
     let hidestock = dataset.hidestock;
     let isShowVirtualPrice = dataset.isshowvirtualprice;
 
-    if (group && group == 1) {
-      this.turnToPage('/pages/groupGoodsDetail/groupGoodsDetail?detail=' + id + '&contact=' + contact);
-      return;
-    }
-    switch (+goodsType) {
-      case 0:
-      case 1: this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + id +'&contact=' + contact +'&hidestock=' + hidestock +'&isShowVirtualPrice='+ isShowVirtualPrice);
-        break;
-      case 3: this.turnToPage('/pages/toStoreDetail/toStoreDetail?detail=' + id);
-        break;
-    }
+    this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + id +'&contact=' + contact +'&hidestock=' + hidestock +'&isShowVirtualPrice='+ isShowVirtualPrice);
   },
   sortListFunc: function (event) {
     let dataset       = event.currentTarget.dataset;

@@ -49,18 +49,6 @@
         </view>
       </block>
     </scroll-view>
-    <scroll-view id="myMessage-interact-message" class="myMessage-content {{ messageType == 6 ? 'active' : '' }}" scroll-y="true" lower-threshold="116" bindscrolltolower="checkMoreMessageData">
-      <block wx:for="{{ interactBranch.data }}" wx:key="">
-        <view class="message-item {{ item.className }}" wx:if="{{ item.messageType == 4 }}" >
-          <view class="message-title">{{ item.messageTitle }}</view>
-          <view class="message-time">{{ item.messageTime }}</view>
-          <view class="message-img" >
-            <view class="ico-moon {{ item.messageImg }}"></view>
-          </view>
-          <view class="message-content">{{ item.messageContent }}</view>
-        </view>
-      </block>
-    </scroll-view>
   </view>
   <view class="myMessage-detail-form" wx:if="{{ messageDetail == 3 }}">
     <view class="myMessage-form-list">

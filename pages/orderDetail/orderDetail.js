@@ -127,7 +127,7 @@ Page({
       confirmText: '确定',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/HideOrder',
+          url: '/App/hideOrder',
           data: {
             order_id: orderId,
             sub_shop_app_id: franchiseeId
@@ -143,7 +143,7 @@ Page({
     var that = this;
 
     app.sendRequest({
-      url: '/index.php?r=pc/AppShop/GetDelivery',
+      url: '/App/getDelivery',
       data: {
         delivery_id: deliveryId
       },
@@ -206,7 +206,7 @@ Page({
       additional_info[goodsInfo[i].goods_id] = this.data.customFields[i];
     }
     app.sendRequest({
-      url: '/index.php?r=AppShop/SetAdditional',
+      url: '/App/setAdditional',
       method: 'POST',
       data: {
         order_id: this.data.orderInfo.order_id,
@@ -228,7 +228,7 @@ Page({
       cancelText: '否',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/cancelOrder',
+          url: '/App/cancelOrder',
           data: {
             order_id: orderId,
             sub_shop_app_id: that.data.franchiseeId
@@ -263,7 +263,7 @@ Page({
 
     if (this.data.orderInfo.totalPay == 0) {
       app.sendRequest({
-        url: '/index.php?r=AppShop/paygoods',
+        url: '/App/paygoods',
         data: {
           order_id: orderId,
           total_price: 0
@@ -281,7 +281,7 @@ Page({
     }
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/GetWxWebappPaymentCode',
+      url: '/App/getWxWebappPaymentCode',
       data: {
         order_id: orderId
       },
@@ -311,7 +311,7 @@ Page({
       cancelText: '取消',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/applyRefund',
+          url: '/App/applyRefund',
           data: {
             order_id: orderId,
             sub_shop_app_id: that.data.franchiseeId
@@ -337,7 +337,7 @@ Page({
       cancelText: '取消',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/comfirmRefund',
+          url: '/App/comfirmRefund',
           data: {
             order_id: orderId,
             sub_shop_app_id: that.data.franchiseeId
@@ -367,7 +367,7 @@ Page({
       cancelText: '取消',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/comfirmOrder',
+          url: '/App/comfirmOrder',
           data: {
             order_id: orderId,
             sub_shop_app_id: that.data.franchiseeId
@@ -398,7 +398,7 @@ Page({
         that = this;
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/setAddress',
+      url: '/App/setAddress',
       data: {
         order_id: orderId,
         address_id: newAddress.id,
@@ -436,7 +436,7 @@ Page({
       success: function (res) {
         app.sendRequest({
           method: 'post',
-          url: '/index.php?r=AppShop/AddWxAddress',
+          url: '/App/addWxAddress',
           data: {
             detailInfo: res.detailInfo || '',
             cityName: res.cityName || '',
@@ -471,7 +471,7 @@ Page({
       cancelText: '取消',
       confirm: function () {
         app.sendRequest({
-          url: '/index.php?r=AppShop/delAddress',
+          url: '/App/delAddress',
           data: {
             address_id: id
           },
@@ -512,7 +512,7 @@ Page({
         coupon_id = _this.data.orderInfo.can_use_benefit.data[value].coupon_id;
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/ChangeOrder',
+      url: '/App/changeOrder',
       data: {
         app_id: app.getAppId(),
         order_id: _this.data.orderInfo.order_id,
@@ -532,7 +532,7 @@ Page({
   customerConfirm: function(){
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/CompleteTostoreOrder',
+      url: '/App/completeTostoreOrder',
       data: {
         order_id: this.data.orderInfo.order_id
       },
@@ -552,7 +552,7 @@ Page({
       isBalance = 0;
     }
     app.sendRequest({
-      url: '/index.php?r=AppShop/ChangeOrder',
+      url: '/App/changeOrder',
       data: {
         app_id: app.getAppId(),
         order_id: _this.data.orderInfo.order_id,
@@ -578,7 +578,7 @@ Page({
       delivery = 0;
     }
     app.sendRequest({
-      url: '/index.php?r=AppShop/setAddress',
+      url: '/App/setAddress',
       data: {
         is_self_delivery: delivery,
         order_id: orderId,
@@ -597,7 +597,7 @@ Page({
   getFreigtAdress:function(){
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/getAppShopLocationInfo',
+      url: '/App/getAppShopLocationInfo',
       data: {
         app_id: app.getAppId()
       },
@@ -613,7 +613,7 @@ Page({
       infor = _this.data.freightAdress.region_string + _this.data.freightAdress.shop_location;
     infor = infor.replace(/\s+/g,'');
     app.sendRequest({
-      url: '/index.php?r=Map/GetLatAndLngByAreaInfo',
+      url: '/App/getLatAndLngByAreaInfo',
       data: {
         location_info: infor
       },
@@ -631,7 +631,7 @@ Page({
   initialAddressId:function(){
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/addressList',
+      url: '/App/addressList',
       data: {
         app_id: app.getAppId()
       },
@@ -648,7 +648,7 @@ Page({
     var _this = this;
     var isBalance = Number(e.detail.value);
     app.sendRequest({
-      url: '/index.php?r=AppShop/ChangeOrder',
+      url: '/App/changeOrder',
       data: {
         app_id: app.getAppId(),
         order_id: _this.data.orderInfo.order_id,

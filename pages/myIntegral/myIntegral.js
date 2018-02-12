@@ -50,7 +50,7 @@ Page({
   getIntegralDetailData: function(){
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/GetIntegralInfo',
+      url: '/App/getIntegralInfo',
       success: function(res){
         that.setData({
           'canUseIntegral': res.data.can_use_integral,
@@ -68,7 +68,7 @@ Page({
   getIntegralRuleData: function(){
     let that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/IntegralRule',
+      url: '/App/integralRule',
       success: function(res){
         that.setData({
           'integralRule.convertNum': res.data.convert_num,
@@ -85,7 +85,7 @@ Page({
     let that = this;
   
     app.sendRequest({
-      url: '/index.php?r=AppShop/getIntegralList',
+      url: '/App/getIntegralList',
       data: {
         'action': type,
         'page': page || 1

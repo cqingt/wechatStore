@@ -25,7 +25,7 @@ Page({
       shareDialogShow: "100%",
       shareMenuShow: false,
     },
-    commentNums: [1],
+    commentNums: 0,
     commentExample: {
       "buyer_headimgurl": "http:\/\/cdn.jisuapp.cn\/zhichi_frontend\/static\/webapp\/images\/default_photo.png", 
       "buyer_nickname": "default", 
@@ -61,7 +61,6 @@ Page({
       defaultPhoto: defaultPhoto,
       cartGoodsNum: cartGoodsNum,
       goodsType : 0,
-      isSeckill : false,
       hidestock : false,
       isShowVirtualPrice: true,
     })
@@ -70,7 +69,7 @@ Page({
   dataInitial: function () {
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/getGoods',
+      url: '/App/getGoods',
       data: {
         data_id: this.data.goodsId
       },
@@ -94,9 +93,6 @@ Page({
     })
     let goodsId = this.data.goodsId,
         contact = this.data.contact,
-        cartGoodsNum = this.data.cart_num,
-        isSeckill = this.data.isSeckill,
-        urlSeckill = isSeckill ? '&goodsType=seckill' : '',
         path = '/pages/goodsDetail/goodsDetail?detail=' + goodsId + '&contact=' + contact;
 
     return app.shareAppMessage({path: path});
@@ -122,30 +118,9 @@ Page({
     var pagePath = '/pages/goodsComment/goodsComment?detail='+this.data.goodsId;
     app.turnToPage(pagePath);
   },
-  goodsCoverOnload: function(e){
-    // var _this = this,
-    //     originalWidth = e.detail.width,
-    //     originalHeight = e.detail.height;
-
-    // //获取图片的原始长宽
-    // var windowWidth = 0;
-    // var imageWidth = 0, imageHeight = 0;
-
-    // wx.getSystemInfo({
-    //   success: function (res) {
-    //     windowWidth = res.windowWidth;
-    //     imageWidth = windowWidth;
-    //     imageHeight = imageWidth * originalHeight / originalWidth;
-    //     _this.setData({
-    //       goodsCoverWidth: imageWidth,
-    //       goodsCoverHeight: imageHeight
-    //     })
-    //   }
-    // })
-  },
   modifyGoodsDetail: function(res){
     var _this = this,
-        goods = res.data[0].form_data,
+        goods = res.data,
         unitType = {},
         description = goods.description,
         goodsModel = [],
@@ -164,8 +139,7 @@ Page({
           appointmentPhone: goods.appointment_info && goods.appointment_info.appointment_phone ? goods.appointment_info.appointment_phone:'',
           displayComment:goods.appointment_info &&  goods.appointment_info.display_comment == '1' ?goods.appointment_info.display_comment : ''
         });
-        makePhone:
-    WxParse.wxParse('wxParseDescription', 'html', description, _this, 10);
+        makePhone:WxParse.wxParse('wxParseDescription', 'html', description, _this, 10);
 
     if(goods.model_items.length){
       var items = goods.model_items;
@@ -175,7 +149,7 @@ Page({
         let virtual_price = Number(items[i].virtual_price);
         goods.highPrice = goods.highPrice > price ? goods.highPrice : price;
         goods.lowPrice = goods.lowPrice < price ? goods.lowPrice : price;
-        if ( virtual_price != 0){
+        if (virtual_price != 0){
           goods.virtual_highPrice = goods.virtual_highPrice ? (goods.virtual_highPrice > virtual_price ? goods.virtual_highPrice : virtual_price) : virtual_price;
         }
         allStock += Number(items[i].stock);
@@ -195,10 +169,10 @@ Page({
       selectImgurl = goods.cover;
     }
     for(var key in goods.model){
-      if (!('1' in goods.model)) {
+      //if (!('1' in goods.model)) {
         //delete goods.model[0];
-      }
-      if(key){
+      //}
+      //if(key){
         var model = goods.model[key];
         goodsModel.push(model);
         if(model && model.subModelName){
@@ -206,12 +180,9 @@ Page({
           selectModels.push(model.subModelId[0]);
           selectText += '“' + model.subModelName[0] + '” ';
         }
-      }
+      //}
     }
     goods.model = goodsModel;
-    if (Number(goods.max_can_use_integral) != 0 ) {
-        discountStr = '（积分可抵扣' + (Number(goods.max_can_use_integral) / 100) + '元）';
-    }
     _this.setData({
       goodsInfo: goods,
       modelStrs: modelStrs,
@@ -224,8 +195,11 @@ Page({
       'selectModelInfo.virtualPrice': selectVirtualPrice,
       allStock: allStock,
       priceDiscountStr: discountStr,
+      commentNums: goods.assess_total,
+      commentExample: goods.assess,
+      displayComment: + goods.assess_total > 0 ? false : true
     });
-    _this.getAssessList();
+    //_this.getAssessList();
   },
   // 评价
   getAssessList: function(){
@@ -258,20 +232,12 @@ Page({
     });
   },
   showBuyDirectly: function(){
-    if(this.data.isSeckill && this.data.goodsInfo.seckill_start_state != 1){
-      app.showModal({content: '当前秒杀商品不在秒杀时间范围内，不能立即购买'});
-      return ;
-    }
     this.setData({
       addToShoppingCartHidden: false,
       ifAddToShoppingCart: false
     })
   },
   showAddToShoppingCart: function(){
-    if(this.data.isSeckill && this.data.goodsInfo.seckill_start_state == 2){
-      app.showModal({content: '当前秒杀已结束，不能加入购物车'});
-      return ;
-    }
     this.setData({
       addToShoppingCartHidden: false,
       ifAddToShoppingCart: true
@@ -304,7 +270,7 @@ Page({
     }
     data['selectModelInfo.models'] = selectModels;
     data['selectModelInfo.models_text'] = text;
-
+    data['selectModelInfo.buyCount'] = 1;
     this.setData(data);
     this.resetSelectCountPrice();
   },
@@ -315,19 +281,12 @@ Page({
         data = {};
 
     for (var i = modelItems.length - 1; i >= 0; i--) {
-      if(modelItems[i].model == selectModelIds){
-        if(_this.data.isSeckill){  //假如是秒杀
-          data['selectModelInfo.stock'] = modelItems[i].seckill_stock;
-          data['selectModelInfo.price'] = modelItems[i].seckill_price;
-          data['selectModelInfo.modelId'] = modelItems[i].id;
-          data['selectModelInfo.imgurl'] = modelItems[i].img_url;
-        }else{
-          data['selectModelInfo.stock'] = modelItems[i].stock;
-          data['selectModelInfo.price'] = modelItems[i].price;
-          data['selectModelInfo.modelId'] = modelItems[i].id;
-          data['selectModelInfo.imgurl'] = modelItems[i].img_url;
-          data['selectModelInfo.virtualPrice'] = modelItems[i].virtual_price;
-        }
+      if(modelItems[i].id == selectModelIds){
+        data['selectModelInfo.stock'] = modelItems[i].stock;
+        data['selectModelInfo.price'] = modelItems[i].price;
+        data['selectModelInfo.modelId'] = modelItems[i].id;
+        data['selectModelInfo.imgurl'] = modelItems[i].img_url;
+        data['selectModelInfo.virtualPrice'] = modelItems[i].virtual_price;
         break;
       }
     }
@@ -353,10 +312,6 @@ Page({
       app.showModal({content: '购买数量不能大于库存'});
       return;
     }
-    if(this.data.isSeckill && count >= goodsInfo.seckill_buy_limit){
-      app.showModal({content: '购买数量不能大于秒杀限购数量'});
-      return ;
-    }
     this.setData({
       'selectModelInfo.buyCount': count + 1
     });
@@ -371,7 +326,7 @@ Page({
 
     app.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: param,
       success: function(res){
         app.showToast({
@@ -386,27 +341,6 @@ Page({
     })
   },
   buyDirectlyNextStep: function(e){
-    // var that = this,
-    //     param = {
-    //               goods_id: this.data.goodsId,
-    //               model_id: this.data.selectModelInfo.modelId,
-    //               num: this.data.selectModelInfo.buyCount,
-    //               formId: e.detail.formId,
-    //               sub_shop_app_id: this.data.franchiseeId,
-    //               is_seckill : this.data.isSeckill ? 1 : ''
-    //             };
-
-    // app.sendRequest({
-    //   url: '/index.php?r=AppShop/addOrder',
-    //   data: param,
-    //   success: function(res){
-    //     var franchiseeId = that.data.franchiseeId,
-    //         pagePath = '/pages/orderDetail/orderDetail?detail='+res.data+(franchiseeId ? '&franchisee='+franchiseeId : '');
-
-    //     that.hiddeAddToShoppingCart();
-    //     app.turnToPage(pagePath);
-    //   }
-    // })
     var that = this,
         param = {
           goods_id: this.data.goodsId,
@@ -415,7 +349,7 @@ Page({
         };
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: param,
       success: function(res){
         var cart_arr = [res.data],
@@ -441,10 +375,6 @@ Page({
       count = stock;
       app.showModal({content: '购买数量不能大于库存'});
     }
-    if(this.data.isSeckill && count >= +goodsInfo.seckill_buy_limit){
-      count = goodsInfo.seckill_buy_limit;
-      app.showModal({content: '购买数量不能大于秒杀限购数量'});
-    }
     this.setData({
       'selectModelInfo.buyCount': +count
     });
@@ -457,7 +387,7 @@ Page({
       duration: 400,
     })
     app.sendRequest({
-      url: '/index.php?r=AppShop/ShareQRCode',
+      url: '/App/shareQRCode',
       data: {
         obj_id: that.data.goodsId,
         type: 1,

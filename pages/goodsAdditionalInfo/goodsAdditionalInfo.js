@@ -53,7 +53,7 @@ Page({
     var that = this;
     app.sendRequest({
       hideLoading: true,
-      url: '/index.php?r=pc/AppShop/GetDelivery',
+      url: '/App/getDelivery',
       method: 'post',
       data: {
         delivery_ids: this.delivery_id_arr

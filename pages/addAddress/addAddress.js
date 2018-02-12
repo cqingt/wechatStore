@@ -17,18 +17,9 @@ Page({
     address_info: {
       name: '',
       contact: '',
-      province: {
-        text: '',
-        id: ''
-      },
-      city: {
-        text: '',
-        id: ''
-      },
-      district: {
-        text: '',
-        id: ''
-      },
+      province: '',
+      city: '',
+      district: '',
       detailAddress: '',
       sex: 1,
       label: 3,
@@ -62,7 +53,7 @@ Page({
   getAddressDetail: function(id){
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/GetAddressById',
+      url: '/App/GetAddressById',
       data: { address_id: id },
       success: function(res){
         var data = res.data;
@@ -99,7 +90,7 @@ Page({
     var orderId = this.data.orderId;
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/setAddress',
+      url: '/App/setAddress',
       data: {
         order_id: orderId,
         address_id: addressId
@@ -169,18 +160,9 @@ Page({
     let address = {
       name: '',
       contact: '',
-      province: {
-        text: '',
-        id: '',
-      },
-      city: {
-        text: '',
-        id: '',
-      },
-      district: {
-        text: '',
-        id: '',
-      },
+      province: '',
+      city: '',
+      district: '',
       detailAddress: '',
       sex: 1,
       label: 3,

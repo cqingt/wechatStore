@@ -32,8 +32,6 @@ Page({
         isFromBack: true
       });
     }
-
-    // app.checkIfBindPhone();
   },
   getShoppingCartData: function(){
     var that = this,
@@ -42,7 +40,7 @@ Page({
 
     // 获取购物车列表时 传sub_shop_app_id获取
     app.sendRequest({
-      url: '/index.php?r=AppShop/cartList',
+      url: '/App/cartList',
       data: {
         page: 1,
         page_size: 100,
@@ -56,14 +54,12 @@ Page({
             res.data[i].model_value_str = '('+modelArr.join('|')+')';
           }
         }
-        console.log(res.data.length);
         that.setData({
-          //takeoutInfo: res.take_out_info,
           goodsCount: res.data.length,
           goodsList: res.data
         });
         that.clickSelectAll();
-        that.getTostoreNotBusinessTime();
+        //that.getTostoreNotBusinessTime();
         that.recalculateCountPrice();
       }
     })
@@ -112,12 +108,10 @@ Page({
   getTostoreNotBusinessTime: function (payIdArr , sucfn){
     var that = this;
     app.sendRequest({
-      url: '/index.php?r=AppShop/precheckShoppingCart',
+      url: '/App/precheckShoppingCart',
       method: 'post',
       data: {
-        sub_shop_app_id: that.franchiseeId,
-        cart_arr: payIdArr || '',
-        parent_shop_app_id: that.franchiseeId ? app.getAppId() : ''
+        cart_arr: payIdArr || ''
       },
       success: function (res) {
         sucfn && sucfn();
@@ -239,7 +233,7 @@ Page({
     if(!deleteIdArr.length) { return; }
 
     app.sendRequest({
-      url : '/index.php?r=AppShop/deleteCart',
+      url: '/App/deleteCart',
       method: 'post',
       data: {
         cart_id_arr: deleteIdArr,
@@ -254,23 +248,14 @@ Page({
     });
   },
   goToPay: function(e){
-    var payIdArr = [],
-        list = this.data.goodsList,
-        franchiseeId = this.franchiseeId,
-        fromUserCenterEle = this.data.isFromUserCenterEle,
-        selectGoodsType = '',
+    var list = this.data.goodsList,
         cartIdArray = [],
-        sameGoodsType = true,
-        that = this,
-        notBusinessTimeFlag = false;
+        payIdArr = [],
+        that = this;
 
     for (var i = list.length - 1; i >= 0; i--) {
       var li = list[i];
       if(li.selected){
-        selectGoodsType = selectGoodsType == '' ? li.goods_type : selectGoodsType;
-        if(sameGoodsType && selectGoodsType != li.goods_type){
-          sameGoodsType = false;
-        }
         cartIdArray.push(li.id);
         payIdArr.push({
           cart_id: li.id,
@@ -280,67 +265,21 @@ Page({
           num: li.num,
           goods_type: li.goods_type
         });
-        // for (let j=0;j< that.data.notBussinessTimeGoodId.length;j++){
-        //   if (li.goods_id == that.data.notBussinessTimeGoodId[j].goods_id){
-        //     notBusinessTimeFlag = true;   
-        //   }
-        // }  
       }
     }
-    // if (notBusinessTimeFlag){
-    //   that.getTostoreNotBusinessTime();
-    //   return;
-    // }
+
     if(!payIdArr.length) {
       app.showModal({
         content: '请选择结算的商品'
       });
       return;
     }
-    if(sameGoodsType){
-      // 当购物车勾选商品种类全部相同时 不生成订单而是跳转到预览订单页面
-      that.getTostoreNotBusinessTime(payIdArr , function() {
-        if(selectGoodsType == 0){
-          //全部为电商
-          var pagePath = '/pages/previewGoodsOrder/previewGoodsOrder?cart_arr='+encodeURIComponent(cartIdArray);
 
-          franchiseeId && (pagePath += '&franchisee=' + franchiseeId);
-          app.turnToPage(pagePath);
-          // return;
-
-        } else if (selectGoodsType == 1) {
-          //全部为预约
-          var pagePath = '/pages/previewAppointmentOrder/previewAppointmentOrder?cart_arr=' + encodeURIComponent(cartIdArray);
-
-          franchiseeId && (pagePath += '&franchisee=' + franchiseeId);
-          app.turnToPage(pagePath);
-          // return;
-        }else if (selectGoodsType == 3){
-          //全部为到店
-          var pagePath = '/pages/previewOrderDetail/previewOrderDetail?cart_arr='+encodeURIComponent(cartIdArray);
-
-          franchiseeId && (pagePath += '&franchisee=' + franchiseeId);
-          app.turnToPage(pagePath);
-          // return;
-        } else if (selectGoodsType == 2){
-          if(+that.data.takeoutInfo.min_deliver_price > +that.data.priceToPay){
-            app.showModal({
-              content: '没有达到起送价('+that.data.takeoutInfo.min_deliver_price+'元)'
-            });
-            return;
-          }
-          var pagePath = '/pages/previewTakeoutOrder/previewTakeoutOrder?cart_arr=' + encodeURIComponent(cartIdArray);
-
-          franchiseeId && (pagePath += '&franchisee=' + franchiseeId);
-          app.turnToPage(pagePath);
-        }
-      });
-    }else{
-       app.showModal({
-        content: '商品混合，不可下单，请重新选择。'
-      });
-    }
-
+    // 当购物车勾选商品种类全部相同时 不生成订单而是跳转到预览订单页面
+    that.getTostoreNotBusinessTime(payIdArr , function() {
+      var pagePath = '/pages/previewGoodsOrder/previewGoodsOrder?cart_arr='+encodeURIComponent(cartIdArray);
+      app.turnToPage(pagePath);
+    });
   },
   clickMinusButton: function(e){
     var index = e.currentTarget.dataset.index,
@@ -355,7 +294,7 @@ Page({
         showCancel: true,
         confirm: function () {
           app.sendRequest({
-            url: '/index.php?r=AppShop/deleteCart',
+            url: '/App/deleteCart',
             method: 'post',
             data: {
               cart_id_arr: [deleteId],
@@ -401,7 +340,7 @@ Page({
     };
 
     app.sendRequest({
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: param,
       success: function (res) {
         data = {};
@@ -440,7 +379,7 @@ Page({
       return;
     }
     app.sendRequest({
-      url: '/index.php?r=AppShop/addCart',
+      url: '/App/addCart',
       data: param,
       success: function (res) {
         data = {};

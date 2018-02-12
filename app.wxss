@@ -243,6 +243,7 @@ a {
   padding: 10px 0;
   position: relative;
   border-bottom: 1px solid #eee;
+  /* font-size:32rpx; */
 }
 .dialog-box-item {
   display: box;

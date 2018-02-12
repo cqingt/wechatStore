@@ -24,15 +24,15 @@
 
 <view class="search-list">
   <scroll-view data-curpage="{{pageData.current_page}}" class="{{itemStyle == 1 ? 'container' : 'colume-2'}} {{showResult?'':'hide'}}" scroll-y="true" bindscrolltolower="getMoreItems" enable-back-to-top="true" lower-threshold="80" style="max-height:660px">
-    <view class="item" catchtap="turnToDetail" wx:for="{{itemsList}}" wx:key="" data-id="{{item.form_data.id}}" data-goods-type="{{item.form_data.goods_type}}" data-contact="{{item.customFeature.ifUseContact}}">
-      <image class="item-pic" src="{{item.form_data.cover}}"></image>
+    <view class="item" catchtap="turnToDetail" wx:for="{{itemsList}}" wx:key="" data-id="{{item.id}}" data-goods-type="{{0}}" data-contact="{{item.customFeature.ifUseContact}}">
+      <image class="item-pic" src="{{item.cover}}"></image>
       <view class="item-detail">
-        <view class="item-title">{{item.form_data.title}}</view>
+        <view class="item-title">{{item.title}}</view>
         <view class="item-price">￥
-          <text>{{item.form_data.price}}</text>
+          <text>{{item.price}}</text>
         </view>
-        <text class="item-sales">销量：{{item.form_data.sales}}</text>
-        <!-- <view class="ico-moon icon-shoppingcart item-buy" catchtap="addToCart" data-id="{{item.form_data.id}}"></view> -->
+        <text class="item-sales">销量：{{item.sales}}</text>
+        <!-- <view class="ico-moon icon-shoppingcart item-buy" catchtap="addToCart" data-id="{{item.id}}"></view> -->
       </view>
     </view>
 
