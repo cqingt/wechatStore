@@ -23,12 +23,11 @@ Page({
     var that = this;
     app.getOrderDetail({
       data: {
-        order_id: that.data.submitData.order_id,
-        sub_shop_app_id: this.data.submitData.sub_shop_app_id
+        order_id: that.data.submitData.order_id
       },
       success: function(res){
         var goodsType = 0,
-            goodsInfo = res.data.form_data.goods_info,
+            goodsInfo = res.data.goods_info,
             goods = [];
 
         for (var i = 0, j = goodsInfo.length - 1; i <= j; i++) {
@@ -112,10 +111,10 @@ Page({
 
     for (var i = submitData.goods.length - 1; i >= 0; i--) {
       var goods = submitData.goods[i];
-      // if(goods.info.content.length < 10){
-      //   modalText = '评价内容少于10个字';
-      //   break;
-      // }
+      if(goods.info.content.length < 6){
+        modalText = '评价内容少于6个字';
+        break;
+      }
       if(!goods.info.level) {
         modalText = '尚未给商品评分';
         break;
@@ -133,7 +132,7 @@ Page({
       return;
     }
     app.sendRequest({
-      url: '/App/AddAssessList',
+      url: '/App/addAssessList',
       method: 'post',
       data: submitData,
       success: function(res){

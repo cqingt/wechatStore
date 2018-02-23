@@ -53,7 +53,7 @@ Page({
   getAddressDetail: function(id){
     var that = this;
     app.sendRequest({
-      url: '/App/GetAddressById',
+      url: '/App/getAddressById',
       data: { address_id: id },
       success: function(res){
         var data = res.data;
@@ -141,7 +141,7 @@ Page({
       return;
     }
     app.sendRequest({
-      url: '/index.php?r=AppShop/addAddress',
+      url: '/App/addAddress',
       method: 'post',
       data: {
         address_info: addressInfo,

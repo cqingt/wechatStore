@@ -164,8 +164,6 @@ Page({
   },
   cancelOrder: function(e){
     var orderId = e.target.dataset.id,
-        franchisee = e.target.dataset.franchisee,
-        subShopId = franchisee == app.getAppId() ? '' : franchisee,
         that = this;
 
     app.showModal({
@@ -193,8 +191,6 @@ Page({
   },
   applyDrawback: function(e){
     var orderId = e.target.dataset.id,
-        franchisee = e.target.dataset.franchisee,
-        subShopId = franchisee == app.getAppId() ? '' : franchisee,
         that = this;
 
     app.showModal({
@@ -225,11 +221,9 @@ Page({
     app.turnToPage('/pages/logisticsPage/logisticsPage?detail='+orderId);
   },
   sureReceipt: function(e){
-    var orderId = e.target.dataset.id,
-        franchisee = e.target.dataset.franchisee,
-        subShopId = franchisee == app.getAppId() ? '' : franchisee,
+    var orderId = e.target.dataset.id,        
         that = this,
-        content = this.data.currentGoodsType == '1'? '确认已消费?':'确认已收到货物?';
+        content = '确认已收到货物?';
 
     app.showModal({
       content: content,
