@@ -28,12 +28,8 @@ Page({
       sort_key: '',
       sort_direction: '',
       is_integral: '',
-      idx_arr: {
-        idx: '',
-        idx_value: ''
-      },
-      search_value: '',
-      region_id: ''
+      category_id: '',
+      search_value: ''
     },
     animationData: {},
     filter: false,
@@ -85,9 +81,7 @@ Page({
     this.data.filterParam.page = 1;
     this.data.filterParam.sort_key = '';
     this.data.filterParam.sort_direction = '';
-    this.data.filterParam.idx_arr.idx = '';
-    this.data.filterParam.idx_arr.idx_value = '';
-    this.data.filterParam.region_id = '';
+    this.data.filterParam.category_id = '';
     this.setData({ currentCategory: '', currentLocation: '' });
   },
 
@@ -409,13 +403,11 @@ Page({
   setCategoryFilter: function (e) {
     let id = e.currentTarget.dataset.id;
     let idx = e.currentTarget.dataset.idx;
-    if (id == this.data.filterParam.idx_arr.idx_value) {
+    if (id == this.data.filterParam.category_id) {
       this.setData({ currentCategory: '' });
-      this.data.filterParam.idx_arr.idx = '';
-      this.data.filterParam.idx_arr.idx_value = '';
+      this.data.filterParam.category_id = '';
     } else {
-      this.data.filterParam.idx_arr.idx = idx;
-      this.data.filterParam.idx_arr.idx_value = id;
+      this.data.filterParam.category_id = id;
       this.setData({ currentCategory: id });
     };
   },

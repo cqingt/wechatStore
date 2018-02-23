@@ -222,22 +222,21 @@ Page({
         franchiseeId = this.franchiseeId,
         fromUserCenterEle = this.data.isFromUserCenterEle,
         that = this;
-
+console.log(list);
     for (var i = list.length - 1; i >= 0; i--) {
       if(list[i].editSelected){
-        deleteIdArr.push(+list[i].id);
+        deleteIdArr.push(+list[i].cart_id);
       } else {
         listExcludeDelete.push(list[i]);
       }
     }
     if(!deleteIdArr.length) { return; }
-
+    console.log(deleteIdArr);
     app.sendRequest({
       url: '/App/deleteCart',
       method: 'post',
       data: {
-        cart_id_arr: deleteIdArr,
-        sub_shop_app_id: fromUserCenterEle ? '' : franchiseeId
+        cart_id_arr: deleteIdArr
       },
       success: function(res){
         that.setData({
@@ -256,11 +255,11 @@ Page({
     for (var i = list.length - 1; i >= 0; i--) {
       var li = list[i];
       if(li.selected){
-        cartIdArray.push(li.id);
+        cartIdArray.push(li.cart_id);
         payIdArr.push({
-          cart_id: li.id,
+          cart_id: li.cart_id,
           goods_id: li.goods_id,
-          model_id: li.model_id,
+          sku_id: li.sku_id,
           model: li.model,
           num: li.num,
           goods_type: li.goods_type
@@ -285,8 +284,8 @@ Page({
     var index = e.currentTarget.dataset.index,
         num = this.data.goodsList[index].num,
         fromUserCenterEle = this.data.isFromUserCenterEle,
-        franchiseeId = this.franchiseeId,
-        deleteId = this.data.goodsList[index].id,
+        deleteId = this.data.goodsList[index].cart_id,
+        cartId = e.currentTarget.dataset.cart,
         that = this;
     if(num-1 <= 0){
       app.showModal({
@@ -297,8 +296,7 @@ Page({
             url: '/App/deleteCart',
             method: 'post',
             data: {
-              cart_id_arr: [deleteId],
-              sub_shop_app_id: fromUserCenterEle ? '' : franchiseeId
+              cart_id_arr: [cartId]
             },
             success: function (res) {
               that.setData({
@@ -333,10 +331,8 @@ Page({
 
     param = {
       goods_id: goods.goods_id,
-      model_id: goods.model_id || '',
+      sku_id: goods.sku_id || '',
       num: targetNum,
-      sub_shop_app_id: this.franchiseeId,
-      is_seckill : goods.is_seckill == 1 ? 1 : ''
     };
 
     app.sendRequest({
@@ -364,10 +360,8 @@ Page({
         goods = this.data.goodsList[index],
         param = {
           goods_id: goods.goods_id,
-          model_id: goods.model_id || '',
-          num: count,
-          sub_shop_app_id: this.franchiseeId,
-          is_seckill: goods.is_seckill == 1 ? 1 : ''
+          sku_id: goods.sku_id || '',
+          num: count
         };
     if (count == '') {
       return;

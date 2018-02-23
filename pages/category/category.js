@@ -13,8 +13,16 @@ var pageData = {
       "type":"classify",
       "style":"font-size:30.46875rpx;height:82.03125rpx;line-height:82.03125rpx;opacity:1;background-color:rgb(255, 255, 255);color:rgb(178, 178, 178);margin-top:0;margin-left:auto;",
       "content":[
-        {"customFeature":{"index_value":"\u65b0\u9c9c\u6c34\u679c","action":"refresh-list","refresh_object":"list-902893529679","index_segment":"category"},"text":"\u65b0\u9c9c\u6c34\u679c","content":"","parentCompid":"classify2","style":"","itemType":null,"itemParentType":"classify","itemIndex":0,"eventParams":"{\"refresh_object\":\"list-902893529679\",\"index_segment\":\"category\",\"index_value\":\"\\u65b0\\u9c9c\\u6c34\\u679c\",\"comp_id\":null,\"parent_comp_id\":\"classify2\",\"item_index\":0,\"type\":null,\"parent_type\":\"classify\"}","eventHandler":"tapRefreshListHandler"},
-        {"customFeature":{"index_value":"\u732a\u725b\u7f8a\u8089","action":"refresh-list","refresh_object":"list-902893529679","index_segment":"category"},"text":"\u732a\u725b\u7f8a\u8089","content":"","parentCompid":"classify2","style":"","itemType":null,"itemParentType":"classify","itemIndex":1,"eventParams":"{\"refresh_object\":\"list-902893529679\",\"index_segment\":\"category\",\"index_value\":\"\\u732a\\u725b\\u7f8a\\u8089\",\"comp_id\":null,\"parent_comp_id\":\"classify2\",\"item_index\":1,\"type\":null,\"parent_type\":\"classify\"}","eventHandler":"tapRefreshListHandler"} 
+        {
+          "text":"\u65b0\u9c9c\u6c34\u679c",
+          "eventParams":"123",
+          "eventHandler":"tapRefreshListHandler"
+        },
+        {
+          "text":"\u732a\u725b\u7f8a\u8089",
+          "eventParams":"{\"refresh_object\":\"list-902893529679\",\"query_key\":\"category_id\",\"query_value\":\"123\"}",
+          "eventHandler":"tapRefreshListHandler"
+        } 
       ],
       "customFeature": { "mode": "1", "selected": "0", "selectedColor":"#f53530"},
       "animations":[],
@@ -40,24 +48,23 @@ var pageData = {
   "page_form":"",
   "top_nav":{"navigationBarBackgroundColor":"#000000","navigationBarTextStyle":"white","navigationBarTitleText":"\u5206\u7c7b"}
 },
-    need_login: false,
-    page_router: 'n7O2T2A7dz_page10001',
-    page_form: 'none',
-    list_compids_params: [],
-    user_center_compids_params: [],
-    goods_compids_params: [
-      {
-        "compid":"goods_list3",
-        "param":{
-          "id":"list-902893529679",
-          "form":"goods",
-          "goods_type":0,
-          "page":1,
-          "is_count":0,
-          "is_integral":0
-        }
+  need_login: false,
+  page_router: 'n7O2T2A7dz_page10001',
+  page_form: 'none',
+  list_compids_params: [],
+  user_center_compids_params: [],
+  goods_compids_params:[
+    {
+      "compid": "goods_list3",
+      "param": {
+        "id": "list-902893529679",
+        "form": "goods",
+        "page": 1,
+        "query_key": "category_id",
+        "query_value": 0
       }
-    ],
+    }
+  ],
   prevPage:0,
       tostoreComps: [],
       carouselGroupidsParams: [],
@@ -81,10 +88,33 @@ var pageData = {
     app.onPageLoad(e);
   },
   dataInitial: function () {
+    this.getCategory();
     app.pageDataInitial();
   },
   onShareAppMessage: function (e) {
     return app.onPageShareAppMessage(e);
+  },
+  getCategory: function(){
+    let _this = this;
+    app.sendRequest({
+      hideLoading: false,
+      url: '/App/category',
+      method: 'post',
+      success: function (res) {
+        if (res.code == 200) {
+          let data = [];
+          var category = res.data;
+          data['classify2.content'] = category;
+          console.log(category[0].id)
+          console.log(category[0]['id'])
+          if (res.data.length) {
+            _this.goods_compids_params[0].param.query_value = 1;
+          }
+          
+          _this.setData(data);
+        }
+      }
+    });
   },
   onShow: function () {
     app.onPageShow();

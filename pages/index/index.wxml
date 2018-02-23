@@ -5,9 +5,8 @@
   <template name="zcCarousel">
     <swiper indicator-dots="true" circular="true" autoplay="{{data.customFeature.autoplay}}" vertical="{{data.customFeature.vertical}}" interval="{{data.customFeature.interval*1000}}" duration="750" style="{{data.style}}">
       <block wx:for="{{data.content}}" wx:key="">
-        <swiper-item data-event-params="{{item.eventParams}}" catchtap="{{item.eventHandler}}">
+        <swiper-item data-event-params="{{item.goods_id}}" catchtap="{{item.eventHandler}}">
           <image class="swiper-item" src="{{item.pic}}"/>
-          <view  wx:if="{{item.eventHandler == 'tapVideoPlayHandler'}}" class="carousel-video-play icon-play ico-moon"></view>
         </swiper-item>
       </block>
     </swiper>
@@ -19,11 +18,10 @@
 <!-- 轮播图 -->
 
 <template name="zcSearch1">
-  <view class="element search {{data.customFeature.ifLocation?'another-style':''}}" style="{{data.style}}">
-    <view class="ico-moon icon-location location {{data.customFeature.ifLocation?'':'hide'}}" data-param="{{data.customFeature.ifLocation}}" catchtap="turnToSearchPage">全国</view>
+  <view class="element search" style="{{data.style}}">
     <view class="search-input">
        <icon size="14" type="search"></icon>
-       <view bindtap="turnToSearchPage" data-form="{{data.customFeature.searchObject.customFeature.form}}" class="fakeSearch {{data.customFeature.searchObject.type=='goods-list' ? '' : 'hide'}}" >{{data.content.placeholder}}</view>
+       <view bindtap="turnToSearchPage" data-form="{{data.customFeature.searchObject.customFeature.form}}" class="fakeSearch" >{{data.content.placeholder}}</view>
        <input data-compid="search1" class="{{ data.customFeature.searchObject.type=='goods-list' ? 'hide' : '' }}" bindinput="bindSearchTextChange" bindconfirm="searchList" name="input" placeholder="{{data.content.placeholder}}" confirm-type="search" />
        <view data-compid="search1"
              data-listid="{{data.customFeature.searchObject.customFeature.id}}"

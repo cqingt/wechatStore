@@ -6,7 +6,7 @@
   <view class="order-detail-section top-section">
     <view style="margin-bottom: 18rpx;">订单状态: {{ orderStatus[orderInfo.status] }}</view>
     <view style="margin-bottom: 18rpx;">下单时间: {{ orderInfo.add_time }}</view>
-    <view style="">订单号: {{ orderInfo.order_id }}</view>
+    <view style="">订单号: {{ orderInfo.order_sn }}</view>
   </view>
   
   <view class="order-detail-section" style="margin-bottom: 0; border-bottom: none; border-top:1px solid #e8e8e8;">

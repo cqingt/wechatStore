@@ -59,8 +59,8 @@
             <label class="minus {{ goods.num <= 0 ? 'disabled' : '' }}"></label>
             <input type="number" class="txt" value="{{ goods.num }}" data-index="{{ index }}" bindinput="inputGoodsCount"/>
             <label class="plus"></label>
-            <view class="response-area response-area-minus" bindtap="clickMinusButton" data-index="{{ index }}"></view>
-            <view class="response-area response-area-plus" bindtap="clickPlusButton" data-index="{{ index }}"></view>
+            <view class="response-area response-area-minus" bindtap="clickMinusButton" data-index="{{ index }}" data-cart="{{goods.cart_id}}"></view>
+            <view class="response-area response-area-plus" bindtap="clickPlusButton" data-index="{{ index }}" data-cart="{{goods.cart_id}}"></view>
           </view>
           <!--<view>× <text class="shoppingCart-goods-count">{{ goods.num }}</text></view>-->
         </view>

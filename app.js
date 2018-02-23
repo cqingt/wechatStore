@@ -1026,124 +1026,6 @@ App({
       });
     }
 
-    if (!!pageInstance.carouselGroupidsParams) {
-      for (let i in pageInstance.carouselGroupidsParams) {
-        let compid = pageInstance.carouselGroupidsParams[i].compid;
-        let carouselgroupId = pageInstance.carouselGroupidsParams[i].carouselgroupId;
-        let url = '/AppExtensionInfo/carouselPhotoProjiect';
-        pageInstance.requestNum = pageRequestNum + 1;
-        _this.sendRequest({
-          hideLoading: pageRequestNum++ == 1 ? false : true,
-          url: url,
-          data: {
-            type: carouselgroupId
-          },
-          method: 'post',
-          success: function (res) {
-            newdata = {};
-            if (res.data.length) {
-              let content = [];
-              for (let j in res.data) {
-                let form_data = JSON.parse(res.data[j].form_data);
-                if (form_data.isShow == 1) {
-                  let eventParams = {};
-                  let eventHandler = "";
-                  switch (form_data.action) {
-                    case "goods-trade":
-                      eventHandler = "tapGoodsTradeHandler";
-                      eventParams = '{"goods_id":"' + form_data['goods-id'] + '","goods_type":"' + form_data['goods-type'] + '"}'
-                      break;
-                    case "to-seckill":
-                      eventHandler = "tapToSeckillHandler";
-                      eventParams = '{"seckill_id":"' + form_data['seckill-id'] + '","seckill_type":"' + form_data['seckill-type'] + '"}'
-                      break;
-                    case "inner-link":
-                      eventHandler = "tapInnerLinkHandler";
-                      let pageLink = form_data['page-link'];
-                      let pageLinkPath = '/pages/'+pageLink+'/'+pageLink;
-                      eventParams = '{"inner_page_link":"'+pageLinkPath+'","is_redirect":0}'
-                      break;
-                    case "call":
-                      eventHandler = "tapPhoneCallHandler";
-                      eventParams = '{"phone_num":"' + form_data['phone-num'] + '"}';
-                      break;
-                    case "get-coupon":
-                      eventHandler = "tapGetCouponHandler";
-                      eventParams = '{"coupon_id":"' + form_data['coupon-id'] + '"}';
-                      break;
-                    case "community":
-                      eventHandler = "tapCommunityHandler";
-                      eventParams = '{"community_id":"' + form_data['community-id'] + '"}';
-                      break;
-                    case "to-franchisee":
-                      eventHandler = "tapToFranchiseeHandler";
-                      eventParams = '{"franchisee_id":"' + form_data['franchisee-id'] + '"}';
-                      break;
-                    case "to-promotion":
-                      eventHandler = "tapToPromotionHandler";
-                      eventParams = "{}";
-                      break;
-                    case "coupon-receive-list":
-                      eventHandler = "tapToCouponReceiveListHandler";
-                      eventParams = "{}";
-                      break;
-                    case "recharge":
-                      eventHandler = "tapToRechargeHandler";
-                      eventParams = "{}";
-                      break;
-                    case 'lucky-wheel':
-                      eventHandler = "tapToLuckyWheel";
-                      eventParams = "{}";
-                      break;
-                    case 'golden-eggs':
-                      eventHandler = "tapToGoldenEggs";
-                      eventParams = "{}";
-                      break;
-                    case 'scratch-card':
-                      eventHandler = "tapToScratchCard";
-                      eventParams = "{}";
-                      break;  
-                    case "video":
-                      eventHandler = "tapVideoHandler";
-                      eventParams = '{"video_id":"' + form_data['video-id'] + '","video_name":"' + form_data['video-name'] + '"}'
-                      break;
-                    case 'video-play':
-                      eventHandler = "tapVideoPlayHandler";
-                      eventParams = '{"video_id":"' + form_data['video-id'] + '","video_name":"' + form_data['video-name'] + '","compid":"' + compid+'"}'
-                      break;
-                    case 'transfer':
-                      eventHandler = "tapToTransferPageHandler";
-                      eventParams = '{}';
-                      break;
-                    case 'transfer':
-                      eventHandler = "tapToTransferPageHandler";
-                      eventParams = '{}';
-                      break;
-                    default:
-                      eventHandler = "";
-                      eventParams = "{}";
-                  }
-                  content.push({
-                    "customFeature": [],
-                    'page-link': form_data['page-link'],
-                    'pic': form_data.pic,
-                    "content": "",
-                    "parentCompid": "carousel1",
-                    "style": "",
-                    eventHandler: eventHandler,
-                    eventParams: eventParams
-                  })
-                }
-              }
-              newdata[compid+'.content'] = content;
-              pageInstance.setData(newdata);
-            }
-          }
-        });
-      }
-    }
-
-
     if (!!pageInstance.list_compids_params) {
       for (let i in pageInstance.list_compids_params) {
         let compid = pageInstance.list_compids_params[i].compid;
@@ -1194,6 +1076,7 @@ App({
         });
       }
     }
+
     // 商品列表
     if (!!pageInstance.goods_compids_params) {
       for (let i in pageInstance.goods_compids_params) {
@@ -1209,7 +1092,7 @@ App({
         if(customFeature.vesselAutoheight == 1 && customFeature.loadingMethod == 1){
           param.page_size = customFeature.loadingNum || 20;
         }
-        pageInstance.requestNum = pageRequestNum + 1;
+        pageInstance.requestNum = pageRequestNum + 1; console.log(param);
         _this.sendRequest({
           hideLoading: pageRequestNum++ == 1 ? false : true,
           url: '/App/GetGoodsList',
@@ -1441,105 +1324,6 @@ App({
             newdata[id].areaList = data.data;
             pageInstance.setData(newdata);
           },
-        });
-      }
-    }
-
-    if (!!pageInstance.dynamicClassifyGroupidsParams) {
-      let params = pageInstance.dynamicClassifyGroupidsParams;
-      for(let i = 0; i < params.length; i++){
-        let compId = params[i]['compid'];
-        let groupId = params[i]['dynamicClassifyGroupId'];
-        let compData = pageInstance.data[compId];
-        let classifyLevel = compData.classifyType.charAt(5);
-        let customFeature = compData.customFeature;
-        _this.sendRequest({
-          hideLoading: true,
-          url: '/appData/getCategoryByGroup',
-          data: {
-            group_id: groupId
-          },
-          success: function(res){
-            let classifyData  = res.data.item;
-            let newData = {};
-            let currentCategory = [];
-            if(classifyLevel == 1 && classifyData[0]){
-              currentCategory.push(classifyData[0]['category_id']);
-            } else if (classifyLevel == 2 && classifyData[0]){
-              if(compData.classifyType == 'level2-vertical-withpic'){
-                 classifyData = classifyData.filter(function(item){
-                  return item.category_id != '';
-                })
-              }
-              if(classifyData[0]) {
-              currentCategory.push(classifyData[0]['category_id']);
-              if(classifyData[0]['subclass'][0]){
-                currentCategory.push(classifyData[0]['subclass'][0]['category_id']);
-                }
-              }
-            }
-            newData[compId + '.classifyData'] = classifyData;
-            newData[compId + '.classifyGroupForm'] = res.data.form;
-            newData[compId + '.currentCategory'] = currentCategory;
-            pageInstance.setData(newData);
-            if (classifyLevel == 1 && currentCategory.length < 1) {
-              return;
-            } else if (classifyLevel == 2 && currentCategory.length < 2) {
-              if (currentCategory.length == 1){
-                currentCategory[1] = currentCategory[0];
-              } else {
-                return;
-              }
-            }
-            if(compData.classifyType == 'level2-vertical-withpic'){
-              return;
-            }
-            let param = {
-              page: 1,
-              form: res.data.form,
-              idx_arr: {
-                idx: 'category',
-                idx_value: currentCategory[classifyLevel-1]
-              }
-            };
-            if (customFeature.vesselAutoheight == 1 && customFeature.loadingMethod == 1) {
-              param.page_size = customFeature.loadingNum || 20;
-            }
-            _this.sendRequest({
-              hideLoading: true,
-              url: '/AppData/getFormDataList',
-              data: param,
-              method: 'post',
-              success: function (res) {
-                if (res.code == 200) {
-                  newdata = {};
-                  if (param.form !== 'form') {
-                    for (let j in res.data) {
-                      for (let k in res.data[j].form_data) {
-                        if (k == 'category') {
-                          continue;
-                        }
-                if(/region/.test(k)){
-                  continue;
-                }
-                
-                        let description = res.data[j].form_data[k];
-
-                        if (_this.needParseRichText(description)) {
-                          res.data[j].form_data[k] = _this.getWxParseResult(description);
-                        }
-                      }
-                    }
-                  }
-                  newdata[compId + '.list_data'] = res.data;
-                  newdata[compId + '.is_more'] = res.is_more;
-                  newdata[compId + '.curpage'] = 1;
-                  pageInstance.setData(newdata);
-                }
-              }
-            });
-
-          }
         });
       }
     }
@@ -1907,6 +1691,7 @@ App({
       _this.showModal({
         content: '已经加载到最后了'
       });
+      // todo 显示加载到最后
     }
     if (pageInstance.requesting || !compData.is_more) {
       return;
@@ -3828,12 +3613,9 @@ App({
   },
   tapGoodsTradeHandler: function (event) {
     if (event.currentTarget.dataset.eventParams) {
-      let goods = JSON.parse(event.currentTarget.dataset.eventParams),
-          goods_id = goods['goods_id'],
-          goods_type = goods['goods_type'];
+      let goods_id = event.currentTarget.dataset.eventParams;
       if (!!goods_id) {
-        goods_type == 3 ? this.turnToPage('/pages/toStoreDetail/toStoreDetail?detail=' + goods_id)
-                        : this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + goods_id);
+        this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + goods_id);
       }
     }
   },
@@ -3890,14 +3672,11 @@ App({
   _refreshPageList: function (eleType, eventParams, compids_params, pageInstance) {
     let requestData = {
       page: 1,
-      form: compids_params.param.form,
-      is_count: compids_params.param.form.is_count ? 1 : 0,
-      idx_arr: {
-        idx: eventParams.index_segment,
-        idx_value: eventParams.index_value
-      }
+      form: 'category',
+      query_key: eventParams.query_key,
+      query_value: eventParams.query_value
     };
-
+console.log(eventParams);
     if (eventParams.parent_type == 'classify') {
       var classify_selected_index = {};
       classify_selected_index[eventParams.parent_comp_id + '.customFeature.selected'] = eventParams.item_index;
@@ -3921,13 +3700,13 @@ App({
       success: function(res){
         var newData = {};
         for (let i in res.data) {
-          if (res.data[i].form_data.goods_model) {
+          if (res.data[i].goods_model) {
             let modelVP = [];
-            for (let j in res.data[i].form_data.goods_model) {
-              modelVP.push(res.data[i].form_data.goods_model[j].virtual_price == '' ? 0 : Number(res.data[i].form_data.goods_model[j].virtual_price))
+            for (let j in res.data[i].goods_model) {
+              modelVP.push(res.data[i].goods_model[j].virtual_price == '' ? 0 : Number(res.data[i].goods_model[j].virtual_price))
             }
-            Math.min(...modelVP) == Math.max(...modelVP) ? res.data[i].form_data.virtual_price = Math.min(...modelVP).toFixed(2) :
-              res.data[i].form_data.virtual_price = Math.min(...modelVP).toFixed(2) + '~' + Math.max(...modelVP).toFixed(2);
+            Math.min(...modelVP) == Math.max(...modelVP) ? res.data[i].virtual_price = Math.min(...modelVP).toFixed(2) :
+              res.data[i].virtual_price = Math.min(...modelVP).toFixed(2) + '~' + Math.max(...modelVP).toFixed(2);
           }
         }
         newData[targetCompId + '.goods_data'] = res.data;
