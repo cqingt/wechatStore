@@ -12,7 +12,14 @@
           <view class="message-title">{{ item.messageTitle }}</view>
           <view class="message-time">{{ item.messageTime }}</view>
           <image class="message-img" src="{{ item.messageImg }}" ></image>
-          <view class="message-content">{{ item.messageContent }}</view>
+          <view class="message-content">
+            <view class="message-price">
+            {{ item.messageContent }}
+            </view>
+            <view class="message-orderNum">
+                <view class="message-orderNum-text">订单号：{{ item.messageOrderId }}</view>
+            </view>
+          </view>
         </view>
         <view class="message-item {{ item.className }}" wx:elif="{{ item.messageType == 2 }}">
           <view class="message-title">{{ item.messageTitle }}</view>
@@ -31,21 +38,31 @@
             </view>
           </view>
         </view>
-        <view class="message-item {{ item.className }}" wx:elif="{{ item.messageType == 3 }}" data-form="{{ item.messageForm }}" data-form-id="{{ item.messageFormId }}" data-form-data-id="{{ item.messageFormDataId }}" catchtap="showMessageDetailForm">
+        <view class="message-item {{ item.className }}" wx:elif="{{ item.messageType == 3 }}">
           <view class="message-title">{{ item.messageTitle }}</view>
           <view class="message-time">{{ item.messageTime }}</view>
           <view class="message-img" >
             <view class="ico-moon {{ item.messageImg }}"></view>
           </view>
-          <view class="message-content">{{ item.messageContent }}</view>
+          <view class="message-content">
+            <view class="message-price">{{ item.messageContent }}</view>
+            <view class="message-orderNum">
+                <view class="message-orderNum-text">订单号：{{ item.messageOrderId }}</view>
+            </view>
+          </view>
         </view>
-        <view class="message-item {{ item.className }}" wx:elif="{{ item.messageType == 8 }}" >
+        <view class="message-item {{ item.className }}" wx:elif="{{ item.messageType == 4 }}" >
           <view class="message-title">{{ item.messageTitle }}</view>
           <view class="message-time">{{ item.messageTime }}</view>
           <view class="message-img" >
             <view class="ico-moon {{ item.messageImg }}"></view>
           </view>
-          <view class="message-content"><text>{{ item.messageContent }}</text></view>
+          <view class="message-content">
+            <view class="message-price">{{ item.messageContent }}</view>
+            <view class="message-orderNum">
+                <view class="message-orderNum-text">订单号：{{ item.messageOrderId }}</view>
+            </view>
+          </view>
         </view>
       </block>
     </scroll-view>

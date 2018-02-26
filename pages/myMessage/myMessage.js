@@ -38,15 +38,15 @@ Page({
       url: '/App/getMessage',
       data: {
         'types': type || '',
-        'page': page || ''
+        'page': page || '1'
       },
       success: function(res){
         that.setData({
-          'systemBranch.data': that.data.systemBranch.data ? that.data.systemBranch.data.concat(that.parseMessageData(res.data.messageList)) : that.parseMessageData(res.data.messageList),
-          'systemBranch.isMore': res.data.is_more,
-          'systemBranch.currentPage': res.data.current_page,
+          'systemBranch.data': that.data.systemBranch.data ? that.data.systemBranch.data.concat(that.parseMessageData(res.data)) : that.parseMessageData(res.data),
+          'systemBranch.isMore': res.is_more,
+          'systemBranch.currentPage': res.current_page,
           'systemBranch.onload': false,
-          'systemBranch.unreadCount': res.data.unread_count
+          'systemBranch.unreadCount': res.unread_count
         });
       }
     });
@@ -63,11 +63,12 @@ Page({
           contentJson = data[i].content && JSON.parse(data[i].content);
           item = {};
           item.messageType = parseInt(data[i].type);
-          item.className = 'type-system';
+          item.className = 'type-pay';
           item.messageTitle = contentJson.title;
           item.messageTime = data[i].add_time;
           item.messageImg = contentJson.pic;
           item.messageContent = contentJson.description;
+          item.messageOrderId = contentJson.order_id;
           item.messagePageUrl = data[i].page_url;
           array.push(item);
           break;
@@ -90,17 +91,17 @@ Page({
           item = {};
           item.messageType = parseInt(data[i].type);
           item.className = 'type-form';
-          item.messageTitle = '表单提交成功';
+          item.messageTitle = '退款处理';
           item.messageTime = data[i].add_time;
           item.messageImg = 'icon-message-form';
-          item.messageContent = contentJson.form_name;
-          item.messageForm = contentJson.form;
-          item.messageFormId = contentJson.form_id;
-          item.messageFormDataId = data[i].sub_id;
+          item.messageTime = data[i].add_time;
+          item.messageImg = 'icon-message-pay';
+          item.messageContent = contentJson.description;
+          item.messageOrderId = contentJson.order_id;
           array.push(item);
           break;
         // 评论消息
-        case 4:
+        case 40:
           item = {};
           item.messageType = parseInt(data[i].type);
           item.className = 'type-comment';
@@ -110,14 +111,16 @@ Page({
           item.messageContent = data[i].content + ' 回复了你的评论';
           array.push(item);
           break;
-        case 8:
+        case 4:
+          contentJson = data[i].content && JSON.parse(data[i].content);
           item = {};
           item.messageType = parseInt(data[i].type);
           item.className = 'type-Administrators';
           item.messageTitle = '系统通知';
           item.messageTime = data[i].add_time;
           item.messageImg = 'icon-notify';
-          item.messageContent = data[i].content.replace(/\\n/g, '\n');
+          item.messageContent = contentJson.content;
+          item.messageOrderId = contentJson.order_id;
           array.push(item);
       }
     }
@@ -127,26 +130,15 @@ Page({
   checkMoreMessageData: function(event){
     let that = this;
     let targetId = event.target.id;
-    switch(targetId) {
-      case 'myMessage-system-message':
-        // 有更多数据 并且 不在加载中时 执行
-        if ((that.data.systemBranch.isMore != 0 ) && ( !that.data.systemBranch.onload)) {
-          that.getMessageData(5, (that.data.systemBranch.currentPage + 1));
-          that.setData({
-            'systemBranch.onload': true
-          });
-        }
-        break;
-      case 'myMessage-interact-message':
-        // 有更多数据 并且 不在加载中时 执行
-        if ((that.data.interactBranch.isMore != 0 ) && ( !that.data.interactBranch.onload)) {
-          that.getMessageData(6, (that.data.interactBranch.currentPage + 1));
-          that.setData({
-            'interactBranch.onload': true
-          });
-        }
-        break;
-    }
+    
+    // 有更多数据 并且 不在加载中时 执行
+    if ((that.data.systemBranch.isMore != 0 ) && ( !that.data.systemBranch.onload)) {
+      console.log(that.data.systemBranch.isMore);
+      that.getMessageData(5, (that.data.systemBranch.currentPage + 1));
+      that.setData({
+        'systemBranch.onload': true
+      });
+    }       
   },
   // 切换显示的消息类型
   changeMessageType: function(event){
