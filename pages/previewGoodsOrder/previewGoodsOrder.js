@@ -19,7 +19,7 @@ Page({
     original_price: '',
     totalPayment: '',
     shopAddress: '',
-    noAdditionalInfo: true,
+    noAdditionalInfo: false,
     is_group:'',
     exchangeCouponData: {
       dialogHidden: true,
@@ -65,25 +65,29 @@ Page({
         var data = [];
         if(that.cart_id_arr.length){
           for (var i = 0; i <= res.data.length - 1; i++) {
-            if(that.cart_id_arr.indexOf(res.data[i].id) >= 0){
+            if(that.cart_id_arr.indexOf(res.data[i].cart_id + "") >= 0){
+              console.log(res.data[i])
               data.push(res.data[i]);
             }
           }
         } else {
           data = res.data;
         }
-
+        console.log(that.cart_id_arr);
+        console.log(res.data);
+        console.log(data);
         for (var i = 0; i <= data.length - 1; i++) {
           var goods = data[i],
               modelArr = goods.model_value;
           goods.model_value_str = modelArr && modelArr.join ? '('+modelArr.join('|')+')' : '';
           that.cart_data_arr.push({
-            cart_id: goods.id,
+            cart_id: goods.cart_id,
             goods_id: goods.goods_id,
-            model_id: goods.model_id,
+            model_id: goods.sku_id,
             num: goods.num
           });
         }
+        console.log(data);
         that.setData({
           goodsList: data
         });
@@ -102,9 +106,10 @@ Page({
         is_balance: 0,
         is_self_delivery: this.data.is_self_delivery,
         selected_benefit: this.data.selectDiscountInfo,
-        voucher_coupon_goods_info: this.data.exchangeCouponData.voucher_coupon_goods_info
+        //voucher_coupon_goods_info: this.data.exchangeCouponData.voucher_coupon_goods_info
       },
       success: function(res){
+
         var info = res.data,
             benefits = [],
             goods_info = info.goods_info,
@@ -129,11 +134,11 @@ Page({
         // }
         _this.setData({
           selectAddress: info.address,
-          discountList: benefits,
-          selectDiscountIndex: selectDiscountIndex,
-          selectDiscountInfo: selectDiscountInfo,
+          // discountList: benefits,
+          // selectDiscountIndex: selectDiscountIndex,
+          // selectDiscountInfo: selectDiscountInfo,
           express_fee: info.express_fee,
-          discount_cut_price: 0,
+          // discount_cut_price: 0,
           balance: '',
           deduction: 0,
           original_price: info.original_price,
@@ -317,7 +322,7 @@ Page({
         remark: this.data.orderRemark,
         address_id: this.data.selectAddress.id,
         additional_info: this.additional_info,
-        voucher_coupon_goods_info: this.data.exchangeCouponData.voucher_coupon_goods_info
+        //voucher_coupon_goods_info: this.data.exchangeCouponData.voucher_coupon_goods_info
       },
       success: function(res){
         that.payOrder(res.data);
@@ -334,31 +339,12 @@ Page({
     var that = this;
 
     function paySuccess() {
-      var pagePath = '/pages/goodsOrderPaySuccess/goodsOrderPaySuccess?detail=' + orderId + '&is_group=' + !!that.is_group;
-      if(!that.franchisee_id){
-        app.sendRequest({
-          url: '/App/checkAppCollectmeStatus',
-          data: {
-            'order_id': orderId
-          },
-          success: function(res){
-            if(res.valid == 0) {
-              pagePath += '&collectBenefit=1';
-            }
-            app.turnToPage(pagePath, 1);
-          }
-        });
-      } else {
-        app.turnToPage(pagePath, 1);
-      }
+      var pagePath = '/pages/goodsOrderPaySuccess/goodsOrderPaySuccess?detail=' + orderId;
+      app.turnToPage(pagePath, 1);
     }
 
     function payFail(){
-      if(that.is_group){
-        app.turnToPage('/pages/groupOrderDetail/groupOrderDetail?id=' + orderId, 1);
-      }else{
-        app.turnToPage('/pages/goodsOrderDetail/goodsOrderDetail?detail=' + orderId, 1);
-      }
+      app.turnToPage('/pages/goodsOrderDetail/goodsOrderDetail?detail=' + orderId, 1);
     }
 
     if(this.data.totalPayment == 0){

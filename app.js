@@ -4153,8 +4153,7 @@ console.log(eventParams);
   },
   readyToTostorePay: function () {
     let pageInstance = this.getAppCurrentPage();
-    let franchiseeId = pageInstance.franchiseeId;
-    let pagePath     = '/pages/previewOrderDetail/previewOrderDetail' + (franchiseeId ? '?franchisee=' + franchiseeId : '');
+    let pagePath     = '/pages/previewOrderDetail/previewOrderDetail';
     if (pageInstance.data.cartGoodsNum <= 0 || !pageInstance.data.tostoreTypeFlag) {
       return;
     }
@@ -4166,9 +4165,6 @@ console.log(eventParams);
     let that         = this;
     this.sendRequest({
       url: '/App/precheckShoppingCart',
-      data: {
-        parent_shop_app_id: pageInstance.franchiseeId ? that.getAppId() : ''
-      },
       success: function (res) {
         that.readyToTostorePay();
       },

@@ -121,7 +121,7 @@ Page({
           content: res.data
         });
         if(res.status == 1){
-          var goodsId = res.expired_goods_arr || [],
+          var goodsId = res.data.expired_goods_arr || [],
               list = that.data.goodsList;
           if (goodsId && goodsId.length){
             for (var i = 0; i < goodsId.length; i++) {

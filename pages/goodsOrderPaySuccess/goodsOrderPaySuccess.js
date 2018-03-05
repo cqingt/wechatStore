@@ -20,19 +20,13 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
-    // 判断是否有集集乐活动
-    if(options.collectBenefit == 1){
-      that.getCollectBenefitData(options.detail);
-      that.setData({
-        'status': 1
-      });
-    }
+
     that.setData({
       'orderId': options.detail,
-      'franchiseeId': options.franchisee,
-      'is_group': options.is_group,
       'code': options.code
     });
+    return false;
+    // dont know what todo
     that.getGoldenData(options.detail);
     let systemInfo = app.globalData.systemInfo;
     let width = 558 * systemInfo.windowWidth / 750;
@@ -114,9 +108,9 @@ Page({
   },
   goToOrderDetail: function(){
     let that = this;
-    let groupPath = '/pages/groupOrderDetail/groupOrderDetail?id=' + that.data.orderId + (that.data.franchiseeId ? '&franchisee=' + that.data.franchiseeId : '');
-    let pagePath = '/pages/goodsOrderDetail/goodsOrderDetail?detail=' + that.data.orderId  + ( that.data.franchiseeId ? '&franchisee=' + that.data.franchiseeId : '');
-    let appointmentPath = '/pages/appointmentOrderDetail/appointmentOrderDetail?detail=' + that.data.orderId + (that.data.franchiseeId ? '&franchisee=' + that.data.franchiseeId : '');
+    let groupPath = '/pages/groupOrderDetail/groupOrderDetail?id=' + that.data.orderId;
+    let pagePath = '/pages/goodsOrderDetail/goodsOrderDetail?detail=' + that.data.orderId;
+    let appointmentPath = '/pages/appointmentOrderDetail/appointmentOrderDetail?detail=' + that.data.orderId;
     if(this.data.is_group == 'true'){
       app.turnToPage(groupPath, true);
     }else if(this.data.code){

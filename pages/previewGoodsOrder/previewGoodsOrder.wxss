@@ -41,14 +41,14 @@ page {
   vertical-align: top;
 }
 .preview-goods-cover {
-  width: 200rpx;
-  height: 200rpx;
+  width: 180rpx;
+  height: 160rpx;
 }
 .preview-goods-content {
   position: relative;
   margin-left: 18rpx;
   width: calc(100% - 218rpx);
-  height: 200rpx;
+  height: 160rpx;
 }
 .preview-goods-title {
   margin-top: 18rpx;
@@ -59,7 +59,7 @@ page {
   text-overflow: ellipsis;
 }
 .preview-goods-model {
-  margin-top: 20rpx;
+  margin-top: 10rpx;
   color: #9b9b9b;
   white-space: nowrap;
   overflow: hidden;
