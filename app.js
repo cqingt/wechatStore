@@ -20,16 +20,16 @@ App({
       }
     });
 
-    wx.request({
-      url: this.globalData.siteBaseUrl +'/AppUser/MarkWxXcxStatus',
-      data: {
-        app_id: this.getAppId()
-      },
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      }
-    });
+    // wx.request({
+    //   url: this.globalData.siteBaseUrl +'/App/wxStatus',
+    //   data: {
+    //     app_id: this.getAppId()
+    //   },
+    //   method: 'GET',
+    //   header: {
+    //     'content-type': 'application/json'
+    //   }
+    // });
   },
   onShow: function (options) {
     this.globalData.appOptions = options
@@ -94,9 +94,9 @@ App({
     let header = param.header;
     let requestUrl;
 
-    if(!this.globalData.notBindXcxAppId){
+    //if(!this.globalData.notBindXcxAppId){
       data.session_key = this.getSessionKey();
-    }
+    //}
 
     if(customSiteUrl) {
       requestUrl = customSiteUrl + param.url;
@@ -682,7 +682,7 @@ App({
       this.globalData.sessionKey = key;
       this.sendRequest({
         hideLoading: true,
-        url: '/AppUser/onLogin',
+        url: '/App/onLogin',
         success: function (res) {
           if (!res.is_login) {
             that._login(options);
@@ -719,16 +719,16 @@ App({
     var that = this;
     this.sendRequest({
       hideLoading: true,
-      url: '/AppUser/onLogin',
+      url: '/App/onLogin',
       data: {
         code: code
       },
       success: function (res) {
-        if (res.is_login == 2) {
-          that.globalData.notBindXcxAppId = true;
-        }
-        that.setSessionKey(res.data);
-        that._requestUserInfo(res.is_login, options);
+        //if (res.is_login == 2) {
+        //  that.globalData.notBindXcxAppId = true;
+        //}
+        that.setSessionKey(res.data.session);
+        that._requestUserInfo(res.data.is_login, options);
       },
       fail: function (res) {
         console.log('_sendCode fail');
@@ -736,17 +736,17 @@ App({
     })
   },
   _requestUserInfo: function (is_login, options) {
-    if (is_login == 1) {
-      this._requestUserXcxInfo(options);
-    } else {
+    //if (is_login == 1) {
+      //this._requestUserXcxInfo(options);
+    //} else {
       this._requestUserWxInfo(options);
-    }
+    //}
   },
   _requestUserXcxInfo: function (options) {
     var that = this;
     this.sendRequest({
       hideLoading: true,
-      url: '/AppData/getXcxUserInfo',
+      url: '/App/getLoginUserInfo',
       success: function (res) {
         if (res.data) {
           that.setUserInfoStorage(res.data);
@@ -795,7 +795,7 @@ App({
     var that = this;
     this.sendRequest({
       hideLoading: true,
-      url: '/AppUser/LoginUser',
+      url: '/App/loginUser',
       method: 'post',
       data: {
         nickname: userInfo['nickName'],
@@ -1095,7 +1095,7 @@ App({
         pageInstance.requestNum = pageRequestNum + 1; console.log(param);
         _this.sendRequest({
           hideLoading: pageRequestNum++ == 1 ? false : true,
-          url: '/App/GetGoodsList',
+          url: '/App/getGoodsList',
           data: param,
           method: 'post',
           success: function (res) {
@@ -1527,7 +1527,7 @@ App({
         that.setPageUserInfo();
       });
     }
-
+    that._login();
     if (pageInstance.need_login && !this.getUserInfo().phone) {
       this.isLogin() 
       ? this.turnToPage('/pages/bindCellphone/bindCellphone')
@@ -1872,7 +1872,7 @@ App({
     }
     param.page = curpage;
     this.sendRequest({
-      url: '/App/GetGoodsList',
+      url: '/App/getGoodsList',
       data: param,
       method: 'post',
       success: function (res) {
@@ -2432,7 +2432,7 @@ App({
     var that = this;
     let pageInstance  = this.getAppCurrentPage();
     this.sendRequest({
-      url: '/App/GetGoodsList',
+      url: '/App/getGoodsList',
       data: component_params.param,
       method: 'post',
       success: function (res) {
@@ -3694,7 +3694,7 @@ console.log(eventParams);
     let _this = this;
 
     this.sendRequest({
-      url: '/App/GetGoodsList',
+      url: '/App/getGoodsList',
       method: 'post',
       data: requestData,
       success: function(res){
