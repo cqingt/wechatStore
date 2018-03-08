@@ -319,10 +319,10 @@ Page({
   sureAddToShoppingCart: function(){
     var that = this,
         param = {
-                  goods_id: this.data.goodsId,
-                  model_id: this.data.selectModelInfo.modelId || '',
-                  num: this.data.selectModelInfo.buyCount
-                };
+          goods_id: this.data.goodsId,
+          sku_id: this.data.selectModelInfo.modelId || '',
+          num: this.data.selectModelInfo.buyCount
+        };
 
     app.sendRequest({
       hideLoading: true,
@@ -344,7 +344,7 @@ Page({
     var that = this,
         param = {
           goods_id: this.data.goodsId,
-          model_id: this.data.selectModelInfo.modelId || '',
+          sku_id: this.data.selectModelInfo.modelId || '',
           num: this.data.selectModelInfo.buyCount
         };
 

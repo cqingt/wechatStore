@@ -9,7 +9,7 @@ Page({
       cover_thumb: 'http://img.zhichiwangluo.com/zc_app_default_photo.png',
       phone: ''
     },
-    genderArr: ['男', '女'],
+    genderArr: ['女', '男'],
     isFromBack: false
   },
   onLoad: function(){
@@ -55,6 +55,11 @@ Page({
       'userInfo.nickname': e.detail.value
     })
   },
+  inputPhone: function (e) {
+    this.setData({
+      'userInfo.phone': e.detail.value
+    })
+  },
   saveUserInfo: function(){
     var data = this.data.userInfo;
 
@@ -63,7 +68,7 @@ Page({
       method: 'post',
       data: data,
       success: function(res){
-        if(res.status === 0){
+        if(res.code == 200){
           app.setUserInfoStorage(data);
           app.turnBack();
         }

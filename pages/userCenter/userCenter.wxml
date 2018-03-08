@@ -18,10 +18,11 @@
         <view class="picker">{{ genderArr[userInfo.sex] }}</view>
       </picker>
     </view>
-    <view class="centerPage-info-item" bindtap="bindCellphonePage">
+    <view class="centerPage-info-item" >
       <label>手机号</label>
       <label class="ico-moon icon-rightarrow"></label>
-      <view class="userCenter-tel">{{ userInfo.phone }}</view>
+      <input class="nickname" placeholder="请输入您的手机号" value="{{ userInfo.phone }}" bindinput="inputPhone" />
+      <!-- <view class="userCenter-tel">{{ userInfo.phone }}</view> bindtap="bindCellphonePage"-->
     </view>
   </view>
 </view>

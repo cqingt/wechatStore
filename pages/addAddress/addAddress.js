@@ -45,8 +45,12 @@ Page({
     }
   },
   bindRegionChange: function (e) {
-    //console.log('picker发送选择改变，携带值为', e.detail.value)
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var region = e.detail.value;
     this.setData({
+      'address_info.province': region[0],
+      'address_info.city': region[1],
+      'address_info.district': region[2],
       region: e.detail.value
     })
   },
@@ -59,7 +63,7 @@ Page({
         var data = res.data;
         that.setData({
           'address_info.name': data.address_info.name,
-          'address_info.contact': data.address_info.telphone || data.telphone,
+          'address_info.contact': data.address_info.contact || data.telphone,
           'address_info.province': data.address_info.province || '选择省',
           'address_info.city': data.address_info.city || '选择市',
           'address_info.district': data.address_info.district || '选择区',
@@ -125,6 +129,12 @@ Page({
     if (!addressInfo.contact) {
       app.showModal({
         content: '电话不能为空',
+      })
+      return;
+    }
+    if (!addressInfo.province || !addressInfo.city || !addressInfo.district) {
+      app.showModal({
+        content: '省市区不能为空',
       })
       return;
     }

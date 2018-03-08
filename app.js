@@ -20,6 +20,17 @@ App({
       }
     });
 
+    // 检测session_key 是否有效
+    wx.checkSession({
+      success: function () {
+        console.log('check session success');
+        //session 未过期，并且在本生命周期一直有效
+      },
+      fail: function () { // 登录态过期
+        console.log('check session fail');
+        that._login(); // 重新登录
+      }
+    })
     // wx.request({
     //   url: this.globalData.siteBaseUrl +'/App/wxStatus',
     //   data: {
@@ -108,7 +119,8 @@ App({
       if(param.method.toLowerCase() == 'post'){
         data = this._modifyPostParam(data);
         header = header || {
-          'content-type': 'application/x-www-form-urlencoded;'
+          'content-type': 'application/x-www-form-urlencoded;',
+          'Cookie': 'PHPSESSID=' + that.getSessionId()
         }
       }
       param.method = param.method.toUpperCase();
@@ -120,14 +132,21 @@ App({
         icon: 'loading'
       });
     }
+
     wx.request({
       url: requestUrl,
       data: data,
       method: param.method || 'GET',
       header: header || {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Cookie': 'PHPSESSID=' + that.getSessionId()
       },
       success: function (res) {
+        if (res.code == 408) {
+          that._login(); // session 过期 失效 需要重新登录
+          return false;
+        }
+
         if (res.statusCode && res.statusCode != 200) {
           that.hideToast();
           that.showModal({
@@ -320,16 +339,6 @@ App({
       },
       complete: function (res) {
         typeof param.complete == 'function' && param.complete(res);
-      }
-    })
-  },
-  chooseVideo: function (callback, maxDuration) {
-    wx.chooseVideo({
-      sourceType: ['album', 'camera'],
-      maxDuration: maxDuration || 60,
-      camera: ['front', 'back'],
-      success: function (res) {
-        typeof callback == 'function' && callback(res.tempFilePaths[0]);
       }
     })
   },
@@ -684,13 +693,11 @@ App({
         hideLoading: true,
         url: '/App/onLogin',
         success: function (res) {
-          if (!res.is_login) {
+          if (!res.data.is_login) {
             that._login(options);
             return;
-          } else if (res.is_login == 2) {
-            that.globalData.notBindXcxAppId = true;
-          }
-          that._requestUserInfo(res.is_login, options);
+          } 
+          that._requestUserInfo(res.data.is_login, options);
         },
         fail: function (res) {
           console.log('_sendSessionKey fail');
@@ -724,11 +731,11 @@ App({
         code: code
       },
       success: function (res) {
-        //if (res.is_login == 2) {
-        //  that.globalData.notBindXcxAppId = true;
-        //}
-        that.setSessionKey(res.data.session);
-        that._requestUserInfo(res.data.is_login, options);
+        that.setSessionKey(res.data.session); // 服务器 生成的session，api请求凭证，识别独立的用户，可以获取 openid 和 session_key
+        that.setSessionId(res.data.session_id); // 每个用户请求的session_id 微信服务每个请求会生成独立的session_id,服务端获取session对应的数据为空，故需要使用cookie在header头中设置统一的session_id，这样上一个api设置的session数据，在下一个api请求时可以获取session对应的数据
+        if (res.data.is_login < 1) {
+          that._requestUserInfo(res.data.is_login, options);
+        }
       },
       fail: function (res) {
         console.log('_sendCode fail');
@@ -807,7 +814,7 @@ App({
       },
       success: function (res) {
         that.setUserInfoStorage(res.data.user_info);
-        typeof options.success === 'function' && options.success();
+        options !== undefined && typeof options.success === 'function' && options.success();
         that.setIsLogin(true);
       },
       fail: function (res) {
@@ -1092,7 +1099,7 @@ App({
         if(customFeature.vesselAutoheight == 1 && customFeature.loadingMethod == 1){
           param.page_size = customFeature.loadingNum || 20;
         }
-        pageInstance.requestNum = pageRequestNum + 1; console.log(param);
+        pageInstance.requestNum = pageRequestNum + 1; //console.log(param);
         _this.sendRequest({
           hideLoading: pageRequestNum++ == 1 ? false : true,
           url: '/App/getGoodsList',
@@ -1527,7 +1534,7 @@ App({
         that.setPageUserInfo();
       });
     }
-    that._login();
+    
     if (pageInstance.need_login && !this.getUserInfo().phone) {
       this.isLogin() 
       ? this.turnToPage('/pages/bindCellphone/bindCellphone')
@@ -2237,7 +2244,6 @@ App({
     let data_id      = dataset.dataid;
     let router       = dataset.router;
     let page_form    = pageInstance.page_form;
-    let isseckill    = dataset.isseckill; // 是否是商品秒杀
 
     if (router == '') {
       this.showModal({
@@ -2251,8 +2257,6 @@ App({
     if (page_form != '') {
       if(router == 'tostoreDetail'){
         this.turnToPage('/pages/toStoreDetail/toStoreDetail?detail=' + data_id);
-      }else if(router == 'goodsDetail' && isseckill == 1){
-        this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + data_id + '&goodsType=seckill');
       }else{
         this.turnToPage('/pages/' + router + '/' + router + '?detail=' + data_id);
       }
@@ -2265,7 +2269,7 @@ App({
     let router       = dataset.router;
     let page_form    = pageInstance.page_form;
     let isGroup      = dataset.isGroup;
-    let isSeckill    = dataset.isSeckill;
+    
     if (router == -1 || router == '-1') {
       return;
     }
@@ -2273,10 +2277,6 @@ App({
       this.turnToPage('/pages/groupGoodsDetail/groupGoodsDetail?detail=' + data_id);
       return;
     }    
-    if (isSeckill && isSeckill == 1) {
-      this.turnToPage('/pages/goodsDetail/goodsDetail?detail=' + data_id +'&goodsType=seckill');
-      return;
-    }
     if (page_form != '') {
       if(router == 'tostoreDetail'){
         this.turnToPage('/pages/toStoreDetail/toStoreDetail?detail=' + data_id);
@@ -2741,15 +2741,6 @@ App({
             break;
           }
         }
-      }else if(listType === 'video-list'){
-        for (let index in pageInstance.videoListComps) {
-          let params = pageInstance.videoListComps[index];
-          if (params.param.id === listid) {
-            search_compid = params.compid;
-            form = params.param.form;
-            break;
-          }
-        }
       }
 
       search_compData = pageInstance.data[search_compid];
@@ -2818,14 +2809,6 @@ App({
               res.data[index].distance = util.formatDistance(distance);
             }
             newdata[search_compid + '.franchisee_data'] = page == 1 ? res.data : search_compData.franchisee_data.concat(res.data);
-          }else if(listType == 'video-list'){
-            let rdata = res.data;
-
-            for (var i = 0; i < rdata.length; i++) {
-              rdata[i].video_view = that.handlingNumber(rdata[i].video_view);
-            }
-            newdata[search_compid + '.video_data'] = page == 1 ? rdata : search_compData.video_data.concat(rdata);
-
           }
 
           newdata[search_compid + '.is_search'] = true;
@@ -3800,16 +3783,6 @@ console.log(eventParams);
   tapToTransferPageHandler: function () {
     this.turnToPage('/pages/transferPage/transferPage');
   },
-  tapToSeckillHandler: function (event) {
-    if (event.currentTarget.dataset.eventParams) {
-      let goods = JSON.parse(event.currentTarget.dataset.eventParams),
-          seckill_id = goods['seckill_id'],
-          seckill_type = goods['seckill_type'];
-      if (!!seckill_id) {
-        this.turnToPage('/pages/goodsDetail/goodsDetail?goodsType=seckill&detail=' + seckill_id);
-      }
-    }
-  },
   tapToPromotionHandler: function (event) {
     this._isOpenPromotion();
   },
@@ -4027,8 +4000,7 @@ console.log(eventParams);
     let param        = {
       goods_id: pageInstance.data.goodsInfo.id,
       model_id: pageInstance.data.selectGoodsModelInfo.modelId || '',
-      num: pageInstance.data.selectGoodsModelInfo.buyCount,
-      is_seckill : ''
+      num: pageInstance.data.selectGoodsModelInfo.buyCount
     };
 
     this.sendRequest({
@@ -4050,8 +4022,7 @@ console.log(eventParams);
     let param        = {
       goods_id: pageInstance.data.goodsInfo.id,
       model_id: pageInstance.data.selectGoodsModelInfo.modelId || '',
-      num: pageInstance.data.selectGoodsModelInfo.buyCount,
-      is_seckill : ''
+      num: pageInstance.data.selectGoodsModelInfo.buyCount
     };
     let that = this;
     this.sendRequest({
@@ -4299,15 +4270,6 @@ console.log(eventParams);
     return  s;
   },
 
-
-
-
-
-  /**
-   *  全局参数get、set部分 start
-   *  
-   */
-
   // 获取首页router
   getHomepageRouter: function () {
     return this.globalData.homepageRouter;
@@ -4319,13 +4281,24 @@ console.log(eventParams);
     return this.globalData.defaultPhoto;
   },
   getSessionKey: function () {
-    return this.globalData.sessionKey;
+    var sessionKey = this.globalData.sessionKey;
+    return sessionKey ? sessionKey : wx.getStorageSync('session_key');
   },
   setSessionKey: function (session_key) {
     this.globalData.sessionKey = session_key;
     this.setStorage({
       key: 'session_key',
       data: session_key
+    })
+  },
+  getSessionId: function () {
+    return wx.getStorageSync('session_id');
+  },
+  setSessionId: function (session_id) {
+    //this.globalData.sessionId = session_id;
+    this.setStorage({
+      key: 'session_id',
+      data: session_id
     })
   },
   getUserInfo: function () {
