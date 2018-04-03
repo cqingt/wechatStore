@@ -4,9 +4,11 @@
       <view>
         <text style="color:#333;margin-right:5px;">物流状态</text>
         <text class="logistics-order-status" wx:if="{{ info.state == 1 }}">无物流信息</text>
-        <text class="logistics-order-status" wx:if="{{ info.state == 2 }}">在途中</text>
-        <text class="logistics-order-status success" wx:if="{{ info.state == 3 }}">已签收</text>
-        <text class="logistics-order-status error" wx:if="{{ info.state == 4 }}">问题件</text>
+        <text class="logistics-order-status" wx:if="{{ info.state == 2 }}">已揽收</text>
+        <text class="logistics-order-status" wx:if="{{ info.state == 3 }}">运送中</text>
+        <text class="logistics-order-status" wx:if="{{ info.state == 4 }}">派送中</text>
+        <text class="logistics-order-status success" wx:if="{{ info.state == 5 }}">已签收</text>
+        <text class="logistics-order-status error" wx:if="{{ info.state == 6 }}">问题件</text>
       </view>
       <view style="margin-top:10px;font-size:12px;line-height:17px;">
         <view>承运公司：<text class="logistics-company">{{ info.express_name }}</text></view>
